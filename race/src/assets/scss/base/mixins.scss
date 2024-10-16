@@ -1,0 +1,175 @@
+//
+// Mixins
+// --------------------------------------------------
+@function em($pixels, $context: $base-font-size) {
+  @return #{calc($pixels / $context)}em;
+}
+
+// Mixins for Resize
+@mixin is-mobile {
+  .is-mobile & {
+    @content;
+  }
+}
+@mixin is-desktop {
+  .is-desktop & {
+    @content;
+  }
+}
+
+@mixin placeholder {
+  &::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    @content;
+  }
+
+  &:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    @content;
+  }
+
+  &::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    @content;
+  }
+
+  &:-ms-input-placeholder {
+    /* Microsoft Edge,  Internet Explorer 10-11 */
+    @content;
+  }
+
+  &::placeholder {
+    /* Most modern browsers support this now. */
+    @content;
+  }
+}
+
+@mixin autoFill($color) {
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill {
+    background: transparent;
+    -webkit-box-shadow: 0 0 0 em(1000) transparent inset;
+    transition: background-color 9999s ease-in-out 0s;
+    -webkit-text-fill-color: $color;
+  }
+}
+
+@mixin hover {
+  @media (hover), (min-width: 0\0), (min--moz-device-pixel-ratio: 0) {
+    &:hover:not(:active) {
+      @content;
+    }
+  }
+}
+
+@mixin mediaIE10 {
+  @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+    /* IE10+ specific styles go here */
+    @content;
+  }
+}
+
+// https://css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing/
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
+
+@mixin rem($property, $values...) {
+  $max: length($values);
+  $pxValues: '';
+  $remValues: '';
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $pxValues: #{$pxValues + $value * 10}px;
+
+    @if $i < $max {
+      $pxValues: #{$pxValues + ' '};
+    }
+  }
+
+  @for $i from 1 through $max {
+    $value: strip-unit(nth($values, $i));
+    $remValues: #{$remValues + $value}rem;
+
+    @if $i < $max {
+      $remValues: #{$remValues + ' '};
+    }
+  }
+
+  #{$property}: $pxValues;
+  #{$property}: $remValues;
+}
+
+// Clearfix
+@mixin clearfix {
+  &::before,
+  &::after {
+    display: table;
+    content: '';
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+// Text overflow
+// Requires inline-block or block for proper styling
+@mixin text-overflow {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// Resize anything
+@mixin resizable($direction) {
+  overflow: auto; // Safari fix
+  resize: $direction; // Options: horizontal, vertical, both
+}
+
+@mixin animation($animate...) {
+  $max: length($animate);
+  $animations: '';
+
+  -webkit-animation: $animations;
+  -moz-animation: $animations;
+  -o-animation: $animations;
+  animation: $animations;
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ', '};
+    }
+  }
+}
+
+@mixin keyframes($animationName) {
+  @-webkit-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-moz-keyframes #{$animationName} {
+    @content;
+  }
+
+  @-o-keyframes #{$animationName} {
+    @content;
+  }
+
+  @keyframes #{$animationName} {
+    @content;
+  }
+}
+//USAGE
+//@include keyframes(move-the-object) {
+//	0%   { left: 100px; }
+//	100% { left: 200px; }
+//}
+//
+//.object-to-animate {
+//	@include animation('move-the-object .5s 1', 'move-the-object-again .5s 1 .5s');
+//}

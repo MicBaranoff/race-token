@@ -1,0 +1,5 @@
+@import "mixins";
+
+// fonts path /public/fonts/
+
+@include font-face($font-family-regular, "#{$font-path}MTSWide-Medium", $medium, normal);
