@@ -18,7 +18,7 @@ defineProps({
   <button type="button" :class="['c-button-simple', `c-button-simple--theme-${theme}`]">
     <component :is="icons[icon]" class="c-button-simple__icon" />
     <span class="c-button-simple__font">
-      slot
+      <slot></slot>
     </span>
   </button>
 </template>
@@ -31,6 +31,7 @@ defineProps({
   align-items: center;
   justify-content: center;
   gap: 8px;
+  padding: 0 16px;
   border: 1px solid $color-black;
   color: $color-black;
 
@@ -44,10 +45,12 @@ defineProps({
     line-height: 150%;
     letter-spacing: 0.01em;
     text-align: center;
+    white-space: nowrap;
   }
 
   &__icon {
     max-height: 16px;
+    min-width: 16px;
   }
 
   &--theme-black {

@@ -1,5 +1,6 @@
 <script setup>
 import Footer from "@/components/common/Footer.vue";
+import GameStats from "@/components/blocks/GameStats.vue";
 import CButton from "@/components/ui/CButton.vue";
 import CButtonIconWithText from "@/components/ui/CButtonIconWithText.vue";
 import ResultPopup from "@/components/popups/ResultPopup.vue";
@@ -16,12 +17,13 @@ import ResultPopup from "@/components/popups/ResultPopup.vue";
         sound on <br> (S)
       </CButtonIconWithText>
     </div>
-    <Footer />
+    <GameStats />
   </div>
 </template>
 
 <style scoped lang="scss">
 .game-screen {
+  padding-bottom: 90px;
 
   &__font {}
 

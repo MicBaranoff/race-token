@@ -2,4 +2,7 @@
 
 // fonts path /public/fonts/
 
-@include font-face($font-family-regular, "#{$font-path}MTSWide-Medium", $medium, normal);
+@include font-face('SharpSans', "#{$font-path}SharpSansMedium", $medium, normal);
+@include font-face('SharpSans', "#{$font-path}SharpSansBold", $bold, normal);
+@include font-face('Pixelmix', "#{$font-path}pixelmix", $regular, normal);
+@include font-face('Pixelmix', "#{$font-path}pixelmix_bold", $bold, normal);

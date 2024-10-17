@@ -9,7 +9,7 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
     <GameInfoRow />
 
     <div class="result-popup__holder">
-      <CButtonSimpleText theme="yellow" icon="rating">OPEN LEADERBOARD</CButtonSimpleText>
+      <CButtonSimpleText class="result-popup__top-btn" theme="yellow" icon="rating">OPEN LEADERBOARD</CButtonSimpleText>
       <div class="result-popup__title">
         <h2 class="result-popup__font result-popup__font--title">congrats!</h2>
       </div>
@@ -43,6 +43,7 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
   background: url("/images/shadow.png") center / 100% 100% no-repeat;
   text-align: center;
 
+
   &__font {
     &--title {
       font-size: 64px;
@@ -50,6 +51,8 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
       text-transform: uppercase;
       text-align: center;
       color: $color-white;
+      font-family: $font-family-accent;
+      font-weight: $bold;
     }
 
     &--subtitle {
@@ -86,6 +89,8 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
     }
   }
 
+  &__holder{ padding-top: 12px; }
+
   &__title {
     margin-bottom: 24px;
   }
@@ -99,6 +104,10 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
     margin-bottom: 48px;
     display: flex;
     justify-content: center;
+  }
+
+  &__top-btn {
+    margin: 0 auto 24px;
   }
   &__info {
     margin: 0 auto;
