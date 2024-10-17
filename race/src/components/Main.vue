@@ -1,12 +1,16 @@
 <script setup>
 import Header from "@/components/common/Header.vue";
 import Start from "@/components/screens/Start.vue";
+import ChooseCar from "@/components/screens/ChooseCar.vue";
+import Game from "@/components/screens/Game.vue";
 </script>
 
 <template>
   <div class="main-container">
     <Header/>
-    <Start />
+<!--    <Start />-->
+<!--    <ChooseCar />-->
+    <Game />
   </div>
 </template>
 

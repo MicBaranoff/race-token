@@ -1,6 +1,8 @@
 <script setup>
   import RacerLogoIcon from '@/assets/svg/racer-legends-main-yellow.svg';
+
   import CButton from "@/components/ui/CButton.vue";
+  import CButtonIcon from "@/components/ui/CButtonIcon.vue";
 </script>
 
 <template>
@@ -13,7 +15,10 @@
       <div class="start-screen__main">
         <div class="start-screen__decor start-screen__decor--bottom"></div>
         <div class="start-screen__col">
-
+          <div class="start-screen__button--row">
+            <CButtonIcon icon="sound-on" />
+            <span class="start-screen__font start-screen__font--button">sound off <br> (S)</span>
+          </div>
         </div>
 
         <div class="start-screen__center">
@@ -22,7 +27,14 @@
         </div>
 
         <div class="start-screen__col">
-
+          <div class="start-screen__button--row start-screen__button--row--reverse">
+            <span class="start-screen__font start-screen__font--button">check out leaderboard</span>
+            <CButtonIcon icon="rating" />
+          </div>
+          <div class="start-screen__button--row start-screen__button--row--reverse">
+            <span class="start-screen__font start-screen__font--button">follow <br> us on x</span>
+            <CButtonIcon icon="x" />
+          </div>
         </div>
       </div>
     </div>
@@ -32,6 +44,16 @@
 <style scoped lang="scss">
 .start-screen {
   width: 100%;
+
+  &__font {
+    &--button {
+      font-weight: $medium;
+      font-size: 16px;
+      line-height: 120%;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+  }
 
   &__video {
     width: 100%;
@@ -72,6 +94,18 @@
   &__button {
     &--default {
       margin-bottom: 16px;
+    }
+
+    &--row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    &--row--reverse {
+      justify-content: flex-end;
+      text-align: right;
+      margin-top: 24px;
     }
   }
 
