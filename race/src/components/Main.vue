@@ -9,8 +9,8 @@ import Game from '@/components/screens/Game.vue';
   <div class="main-container">
     <Header />
     <!--    <Start />-->
-    <!--    <ChooseCar />-->
-    <Game />
+    <ChooseCar />
+    <!--    <Game />-->
   </div>
 </template>
 

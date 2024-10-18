@@ -1,39 +1,55 @@
 <script setup>
-  import RacerLogoIcon from '@/assets/svg/racer-legends-main-yellow.svg';
-
-  import CButton from "@/components/ui/CButton.vue";
-  import CButtonIcon from "@/components/ui/CButtonIcon.vue";
+import CButton from '@/components/ui/CButton.vue';
+import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 </script>
 
 <template>
   <div class="start-screen">
     <div class="start-screen__holder">
       <div class="start-screen__video">
-        <RacerLogoIcon class="start-screen__logo" />
+        <img src="/images/start-logo.svg" class="start-screen__logo" />
       </div>
 
       <div class="start-screen__main">
         <div class="start-screen__decor start-screen__decor--bottom"></div>
-        <div class="start-screen__col">
-          <div class="start-screen__button--row">
-            <CButtonIcon icon="sound-on" />
-            <span class="start-screen__font start-screen__font--button">sound off <br> (S)</span>
+        <div class="start-screen__main-container">
+          <div class="start-screen__col">
+            <div class="start-screen__button--row">
+              <CButtonIcon icon="sound-on" />
+              <span class="start-screen__font start-screen__font--button"
+                >sound off <br />
+                (S)</span
+              >
+            </div>
           </div>
-        </div>
 
-        <div class="start-screen__center">
-          <CButton class="start-screen__button start-screen__button--default" theme="black">start</CButton>
-          <CButton>rating</CButton>
-        </div>
-
-        <div class="start-screen__col">
-          <div class="start-screen__button--row start-screen__button--row--reverse">
-            <span class="start-screen__font start-screen__font--button">check out leaderboard</span>
-            <CButtonIcon icon="rating" />
+          <div class="start-screen__center">
+            <CButton
+              class="start-screen__button start-screen__button--default"
+              theme="black"
+              >start</CButton
+            >
+            <CButton>rating</CButton>
           </div>
-          <div class="start-screen__button--row start-screen__button--row--reverse">
-            <span class="start-screen__font start-screen__font--button">follow <br> us on x</span>
-            <CButtonIcon icon="x" />
+
+          <div class="start-screen__col">
+            <div
+              class="start-screen__button--row start-screen__button--row--reverse"
+            >
+              <span class="start-screen__font start-screen__font--button"
+                >check out leaderboard</span
+              >
+              <CButtonIcon icon="rating" />
+            </div>
+            <div
+              class="start-screen__button--row start-screen__button--row--reverse"
+            >
+              <span class="start-screen__font start-screen__font--button"
+                >follow <br />
+                us on x</span
+              >
+              <CButtonIcon icon="x" />
+            </div>
           </div>
         </div>
       </div>
@@ -44,6 +60,7 @@
 <style scoped lang="scss">
 .start-screen {
   width: 100%;
+  background: $color-primary;
 
   &__font {
     &--button {
@@ -64,7 +81,6 @@
 
   &__logo {
     width: 556px;
-    height: 210px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -72,11 +88,15 @@
   }
 
   &__main {
-    background: $color-primary;
     position: relative;
     height: 345px;
     padding: 40px;
+  }
 
+  &__main-container {
+    max-width: 1280px;
+    height: 100%;
+    margin: 0 auto;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
@@ -118,7 +138,7 @@
       right: 0;
       width: 100%;
       height: 54px;
-      background: url("/images/bottom-decor.png") center / 1280px 100% repeat-x;
+      background: url('/images/bottom-decor.png') center / 1280px 100% repeat-x;
     }
   }
 }
