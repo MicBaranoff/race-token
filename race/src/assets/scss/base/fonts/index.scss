@@ -4,5 +4,7 @@
 
 @include font-face('SharpSans', "#{$font-path}SharpSansMedium", $medium, normal);
 @include font-face('SharpSans', "#{$font-path}SharpSansBold", $bold, normal);
+@include font-face('Silkscreen', "#{$font-path}Silkscreen-Regular", $regular, normal);
+@include font-face('Silkscreen', "#{$font-path}Silkscreen-Bold", $bold, normal);
 @include font-face('Pixelmix', "#{$font-path}pixelmix", $regular, normal);
 @include font-face('Pixelmix', "#{$font-path}pixelmix_bold", $bold, normal);

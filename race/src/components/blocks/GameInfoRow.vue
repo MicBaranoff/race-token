@@ -5,48 +5,84 @@
 <template>
   <div class="game-info-row">
     <div class="game-info-row__holder">
-      <div class="game-info-row__left">
-        <div class="game-info-row__left-row">
-          <span class="game-info-row__font game-info-row__font--text">
-            best <br> score:
-          </span>
-          <span class="game-info-row__font game-info-row__font--score">228</span>
-        </div>
-        <div class="game-info-row__left-row">
-          <span class="game-info-row__font game-info-row__font--text">
-            best <br> time:
-          </span>
-          <span class="game-info-row__font game-info-row__font--time">00:56:19</span>
-        </div>
+      <div class="game-info-row__table-row  game-info-row__table-head">
+        <span>#</span>
+        <span>PLAYER</span>
+        <span>SCORE</span>
+        <span>TIME</span>
       </div>
-      <img src="/images/slash.svg" alt="" class="game-info-row__slash">
-      <div class="game-info-row__right">
-        <div class="game-info-row__table">
-          <div class="game-info-row__table-row">
-            <span>01</span>
-            <span>0x4A6Bf9c7E1d2</span>
-            <span>02:28:08</span>
-            <span>862</span>
-          </div>
-          <div class="game-info-row__table-row">
-            <span>01</span>
-            <span>0x4A6Bf9c7E1d2</span>
-            <span>02:28:08</span>
-            <span>862</span>
-          </div>
-          <div class="game-info-row__table-row">
-            <span>01</span>
-            <span>0x4A6Bf9c7E1d2</span>
-            <span>02:28:08</span>
-            <span>862</span>
-          </div>
-          <img class="game-info-row__table-line" src="/images/line.png" alt="">
-          <div class="game-info-row__table-row game-info-row__table-row--main">
-            <span>01</span>
-            <span>0x4A6Bf9c7E1d2</span>
-            <span>02:28:08</span>
-            <span>862</span>
-          </div>
+      <div class="game-info-row__table">
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div :class="['game-info-row__table-row', {'game-info-row__table-row--active': true}]">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span><span style="margin-right: 13px" class="game-info-row__font game-info-row__font--accent">needs validation </span> (862) </span>
+          <span>02:28:08</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
+        </div>
+        <div class="game-info-row__table-row">
+          <span>01</span>
+          <span>0x4A6Bf9c7E1d2</span>
+          <span>02:28:08</span>
+          <span>862</span>
         </div>
       </div>
     </div>
@@ -56,66 +92,33 @@
 <style scoped lang="scss">
   .game-info-row {
     border-bottom: 2px solid $color-primary;
-    padding: 14px 50px 17px;
+    background: rgba(16, 16, 16, 0.8);
 
     &__font {
-      &--text {
-        font-weight: $medium;
-        font-size: 16px;
-        line-height: 110%;
-        letter-spacing: -0.02em;
-        text-transform: uppercase;
-        text-align: right;
-        color: $color-primary;
-      }
-
-      &--score {
-        font-size: 48px;
-        line-height: 110%;
-        text-transform: uppercase;
-        text-align: center;
-        color: $color-primary;
-      }
-
-      &--time {
-        font-size: 22px;
-        line-height: 110%;
-        text-transform: uppercase;
-        text-align: center;
+      &--accent {
         color: $color-primary;
       }
     }
 
     &__holder {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 24px;
-    }
-
-    &__slash {
-      width: 44px;
-      height: 96px;
-    }
-
-    &__left-row {
-      display: flex;
-      align-items: center;
-      gap: 24px;
-      text-align: right;
-      margin-bottom: 11px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-
-      span:first-child {
-        width: 76px;
-      }
     }
 
     &__table {
-      width: 440px;
+      width: 100%;
+      height: 169px;
+      overflow-y: scroll;
+
+      &::-webkit-scrollbar {
+        width: 16px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: $color-grey-light;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: $color-primary;
+      }
     }
 
     &__table-line {
@@ -128,28 +131,30 @@
     &__table-row {
       display: flex;
       margin-bottom: 6px;
+      color: $color-grey-light;
+      padding: 0 21px;
 
       span {
-        display: block;
         font-weight: $medium;
-        font-size: 16px;
-        line-height: 110%;
+        font-size: 14px;
+        line-height: 140%;
         text-transform: uppercase;
-        color: $color-primary;
       }
 
       span:nth-child(1) {
-        width: 52px;
+        width: 10%;
+        text-align: left;
       }
       span:nth-child(2) {
-        width: 230px;
+        width: 40%;
+        text-align: left;
       }
       span:nth-child(3) {
-        width: 90px;
+        width: 40%;
         text-align: right;
       }
       span:nth-child(4) {
-        width: 58px;
+        width: 10%;
         text-align: right;
       }
 
@@ -158,6 +163,27 @@
           color: $color-white;
         }
       }
+
+      &--active {
+        background: $color-grey-light;
+        color: $color-white-1;
+
+
+        span {
+          font-weight: $bold;
+        }
+      }
+    }
+
+    &__table-head {
+      background: $color-primary;
+      color: $color-black;
+      margin-bottom: 2px;
+
+      span {
+        font-weight: $bold;
+      }
+
     }
   }
 </style>

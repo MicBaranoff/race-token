@@ -1,21 +1,21 @@
 <script setup>
-import Header from "@/components/common/Header.vue";
-import Start from "@/components/screens/Start.vue";
-import ChooseCar from "@/components/screens/ChooseCar.vue";
-import Game from "@/components/screens/Game.vue";
+import Header from '@/components/common/Header.vue';
+import Start from '@/components/screens/Start.vue';
+import ChooseCar from '@/components/screens/ChooseCar.vue';
+import Game from '@/components/screens/Game.vue';
 </script>
 
 <template>
   <div class="main-container">
-    <Header/>
-<!--    <Start />-->
-<!--    <ChooseCar />-->
+    <Header />
+    <!--    <Start />-->
+    <!--    <ChooseCar />-->
     <Game />
   </div>
 </template>
 
-<style scoped>
-  .main-container {
-    &__holder {}
-  }
+<style lang="scss" scoped>
+.main-container {
+  background: $color-black;
+}
 </style>

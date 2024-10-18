@@ -1,6 +1,7 @@
 <script setup>
 import GameInfoRow from "@/components/blocks/GameInfoRow.vue";
 import CButton from "@/components/ui/CButton.vue";
+import CButtonExtra from "@/components/ui/CButtonExtra.vue";
 import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
 </script>
 
@@ -9,27 +10,36 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
     <GameInfoRow />
 
     <div class="result-popup__holder">
-      <CButtonSimpleText class="result-popup__top-btn" theme="yellow" icon="rating">OPEN LEADERBOARD</CButtonSimpleText>
+      <div class="result-popup__row">
+        <div class="result-popup__subtext">
+          <span class="result-popup__font result-popup__font--subtext">
+          The top 3 players, along with one randomly selected player from the leaderboard, will win a prize from <b>RocketX</b>.
+        </span>
+        </div>
+
+        <CButtonSimpleText class="result-popup__top-btn" theme="white" icon="rating">OPEN LEADERBOARD</CButtonSimpleText>
+      </div>
+
       <div class="result-popup__title">
         <h2 class="result-popup__font result-popup__font--title">congrats!</h2>
       </div>
       <div class="result-popup__subtitle">
-        <h2 class="result-popup__font result-popup__font--subtitle">your best score 228</h2>
+        <h2 class="result-popup__font result-popup__font--subtitle">your
+          <span class="result-popup__font result-popup__font--accent">best score 228</span>
+        </h2>
       </div>
       <div class="result-popup__text">
         <span class="result-popup__font result-popup__font--text">
-          BECOME <span class="result-popup__font result-popup__font--accent">TOP 10</span> PLAYERS <br>
-          TO WIN some $RVF
+         You’re one step closer to winning!
         </span>
       </div>
       <div class="result-popup__button">
-        <CButton theme="yellow">WANNA PLAY MORE?</CButton>
+        <CButtonExtra theme="yellow">Validate your best score</CButtonExtra>
       </div>
 
       <div class="result-popup__info">
         <span class="result-popup__font result-popup__font--info">
-          follow rocketx & share your score to GET
-          <span class="result-popup__font result-popup__font--accent">5 MORE TRIES!</span>
+          Click to share your score on X and <i>secure</i> your <i>spot</i> DURING THE COMPETITION!
         </span>
       </div>
     </div>
@@ -47,38 +57,57 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
   &__font {
     &--title {
       font-size: 64px;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.13em;
       text-transform: uppercase;
       text-align: center;
-      color: $color-white;
+      color: $color-white-1;
       font-family: $font-family-accent;
       font-weight: $bold;
+      -webkit-text-stroke: 1px $color-black;
     }
 
     &--subtitle {
       font-size: 32px;
       line-height: 101%;
-      letter-spacing: 0.02em;
+      letter-spacing: -0.13em;
+      text-transform: uppercase;
+      text-align: center;
+      color: $color-white-1;
+      font-family: $font-family-accent;
+      font-weight: $bold;
+      -webkit-text-stroke: 1px $color-black;
+    }
+
+    &--text {
+      font-weight: $medium;
+      font-size: 16px;
+      line-height: 140%;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-align: center;
       color: $color-white;
     }
 
-    &--text {
-      font-weight: $bold;
-      font-size: 20px;
+    &--subtext {
+      display: block;
+      font-weight: $medium;
+      font-size: 9px;
       line-height: 140%;
-      letter-spacing: 0.01em;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
-      text-align: center;
-      color: $color-white;
+      text-align: left;
+      color: $color-primary;
+    }
+
+    &--accent {
+      color: $color-primary;
     }
 
     &--info {
       font-weight: $medium;
-      font-size: 16px;
-      line-height: 140%;
-      letter-spacing: -0.02em;
+      font-size: 12px;
+      line-height: 150%;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       text-align: center;
       color: $color-white;
@@ -89,7 +118,16 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
     }
   }
 
-  &__holder{ padding-top: 12px; }
+  &__holder{
+    padding: 12px 16px;
+  }
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+  }
 
   &__title {
     margin-bottom: 24px;
@@ -100,20 +138,20 @@ import CButtonSimpleText from "@/components/ui/CButtonSimpleText.vue";
   &__text {
     margin-bottom: 29px;
   }
+
+  &__subtext{
+    max-width: 375px;
+  }
   &__button {
-    margin-bottom: 48px;
+    margin-bottom: 24px;
     display: flex;
     justify-content: center;
   }
-
-  &__top-btn {
-    margin: 0 auto 24px;
-  }
   &__info {
     margin: 0 auto;
-    width: 326px;
-    height: 72px;
-    background: url('/images/info-bg.png') center / 100% 100% no-repeat;
+    width: 365px;
+    height: 76px;
+    background: $color-black;
     padding: 15px 20px;
   }
 }

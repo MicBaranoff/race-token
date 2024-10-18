@@ -5,7 +5,7 @@ defineProps({
   theme: {
     default: 'black',
     validator(value) {
-      return ['black', 'yellow', 'stroke'].includes(value)
+      return ['black', 'yellow', 'white'].includes(value)
     }
   },
   icon: {
@@ -40,10 +40,10 @@ defineProps({
   }
 
   &__font {
-    font-weight: 700;
-    font-size: 16px;
+    font-weight: $bold;
+    font-size: 14px;
     line-height: 150%;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.03em;
     text-align: center;
     white-space: nowrap;
   }
@@ -68,6 +68,16 @@ defineProps({
 
     &:hover {
       background: $color-black;
+    }
+  }
+
+  &--theme-white {
+    border: 1px solid $color-white;
+    color: $color-white;
+
+    &:hover {
+      background: $color-white;
+      color: $color-black;
     }
   }
 }
