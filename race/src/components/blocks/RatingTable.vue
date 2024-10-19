@@ -45,8 +45,8 @@
         <span
           ><span
             style="margin-right: 13px"
-            class="game-info-row__font game-info-row__font--accent"
-            >VALIDATION proceeds </span
+            class="rating-table__font rating-table__font--accent"
+            >NEEDS VALIDATION </span
           >02:28:08</span
         >
         <span>862</span>
@@ -192,6 +192,12 @@
   height: 100%;
   border: 2px solid #4a4b48;
   padding: 10px 12px;
+
+  &__font {
+    &--accent {
+      color: $color-primary;
+    }
+  }
 
   &__holder {
     width: 100%;

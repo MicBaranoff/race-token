@@ -3,6 +3,7 @@ import Footer from '@/components/common/Footer.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import Close from '@/assets/svg/close.svg';
 import RatingTable from '@/components/blocks/RatingTable.vue';
+import CButtonExtra from '@/components/ui/CButtonExtra.vue';
 </script>
 
 <template>
@@ -36,6 +37,9 @@ import RatingTable from '@/components/blocks/RatingTable.vue';
 
         <div class="leaderboard-screen__table">
           <RatingTable />
+          <CButtonExtra class="leaderboard-screen__button"
+            >Validate your best score</CButtonExtra
+          >
         </div>
       </div>
 
@@ -87,6 +91,13 @@ import RatingTable from '@/components/blocks/RatingTable.vue';
       text-align: center;
       color: $color-primary;
     }
+  }
+
+  &__button {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   &__holder {
@@ -142,6 +153,7 @@ import RatingTable from '@/components/blocks/RatingTable.vue';
     height: 529px;
     background: $color-black;
     margin: 0 auto;
+    position: relative;
   }
 }
 </style>

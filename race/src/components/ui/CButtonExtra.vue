@@ -3,10 +3,10 @@ defineProps({
   theme: {
     default: 'yellow',
     validator(value) {
-      return ['yellow'].includes(value)
-    }
+      return ['yellow'].includes(value);
+    },
   },
-})
+});
 </script>
 
 <template>
@@ -23,12 +23,13 @@ defineProps({
   display: block;
   padding: 20px;
   height: 64px;
-  background: url('/images/buttons/stroke-button.png') center / 100% 100% no-repeat;
+  background: url('/images/buttons/stroke-button.png') center / 100% 100%
+    no-repeat;
   color: $color-black;
 
   &__font {
     font-weight: $bold;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 120%;
     letter-spacing: 0.02em;
     text-transform: uppercase;
@@ -39,7 +40,8 @@ defineProps({
   }
 
   &--theme-yellow {
-    background: url('/images/buttons/button-extra-bg.png') center / 100% 100% no-repeat;
+    background: url('/images/buttons/button-extra-bg.png') center / 100% 100%
+      no-repeat;
     color: $color-black;
     position: relative;
 
@@ -52,7 +54,6 @@ defineProps({
       left: 5%;
       content: '';
       box-shadow: 0 8px 50px 0 rgba(236, 243, 53, 0.4);
-
     }
   }
 }
