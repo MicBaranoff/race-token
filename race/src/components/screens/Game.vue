@@ -4,13 +4,15 @@ import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import ResultPopup from '@/components/popups/ResultPopup.vue';
 import ControlsPic from '@/components/blocks/ControlsPic.vue';
+import GuidePopup from '@/components/popups/GuidePopup.vue';
 </script>
 
 <template>
   <div class="game-screen">
     <div class="game-screen__holder">
       <div class="game-screen__container">
-        <ResultPopup />
+        <!--        <ResultPopup />-->
+        <GuidePopup />
       </div>
 
       <CButtonIconWithText class="game-screen__sound-btn" icon="sound-on">
