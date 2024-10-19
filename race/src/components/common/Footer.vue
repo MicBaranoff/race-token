@@ -49,6 +49,9 @@
     align-items: center;
     height: 100%;
     padding: 10px 40px 0;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
   }
 
   &__logo {
