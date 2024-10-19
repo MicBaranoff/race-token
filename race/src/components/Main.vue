@@ -4,6 +4,7 @@ import Start from '@/components/screens/Start.vue';
 import ChooseCar from '@/components/screens/ChooseCar.vue';
 import Game from '@/components/screens/Game.vue';
 import Guide from '@/components/screens/Guide.vue';
+import Leaderboard from '@/components/screens/Leaderboard.vue';
 </script>
 
 <template>
@@ -12,7 +13,8 @@ import Guide from '@/components/screens/Guide.vue';
     <!--    <Start />-->
     <!--    <ChooseCar />-->
     <!--    <Game />-->
-    <Guide />
+    <!--    <Guide />-->
+    <Leaderboard />
   </div>
 </template>
 

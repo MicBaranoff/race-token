@@ -1,16 +1,27 @@
 <script setup>
 defineProps({
   theme: {
-    default: 'stroke',
+    default: 'stroke-black',
     validator(value) {
-      return ['black', 'yellow', 'stroke'].includes(value)
-    }
+      return ['black', 'yellow', 'stroke-yellow', 'stroke-black'].includes(
+        value
+      );
+    },
   },
-})
+  size: {
+    default: 'l',
+    validator(value) {
+      return ['m', 'l', 'xl'].includes(value);
+    },
+  },
+});
 </script>
 
 <template>
-  <button type="button" :class="['c-button', `c-button--theme-${theme}`]">
+  <button
+    type="button"
+    :class="['c-button', `c-button--theme-${theme}`, `c-button--size-${size}`]"
+  >
     <span class="c-button__text c-button__font">
       <slot />
     </span>
@@ -20,11 +31,16 @@ defineProps({
 <style scoped lang="scss">
 .c-button {
   min-width: 290px;
-  display: block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
   height: 64px;
-  background: url('/images/buttons/stroke-button.png') center / 100% 100% no-repeat;
+  background: url('/images/buttons/stroke-button.png') center / 100% 100%
+    no-repeat;
   color: $color-black;
+
+  $parent: &;
 
   &__font {
     font-weight: $bold;
@@ -39,13 +55,29 @@ defineProps({
   }
 
   &--theme-black {
-    background: url('/images/buttons/black-button.png') center / 100% 100% no-repeat;
+    background: url('/images/buttons/black-button.png') center / 100% 100%
+      no-repeat;
     color: $color-primary;
   }
 
   &--theme-yellow {
-    background: url('/images/buttons/yellow-button.png') center / 100% 100% no-repeat;
+    background: url('/images/buttons/yellow-button.png') center / 100% 100%
+      no-repeat;
     color: $color-black;
+  }
+
+  &--theme-stroke-yellow {
+    background: url('/images/buttons/stroke-yellow.png') center / 100% 100%
+      no-repeat;
+    color: $color-primary;
+  }
+
+  &--size-m {
+    #{$parent} {
+      &__font {
+        font-size: 16px;
+      }
+    }
   }
 }
 </style>

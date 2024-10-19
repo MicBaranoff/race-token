@@ -3,8 +3,10 @@ import Footer from '@/components/common/Footer.vue';
 import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import ResultPopup from '@/components/popups/ResultPopup.vue';
+import PausePopup from '@/components/popups/PausePopup.vue';
+import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 import ControlsPic from '@/components/blocks/ControlsPic.vue';
-import GuidePopup from '@/components/popups/GuidePopup.vue';
+import Health from '@/components/blocks/Health.vue';
 </script>
 
 <template>
@@ -12,7 +14,8 @@ import GuidePopup from '@/components/popups/GuidePopup.vue';
     <div class="game-screen__holder">
       <div class="game-screen__container">
         <!--        <ResultPopup />-->
-        <GuidePopup />
+        <!--        <PausePopup />-->
+        <CrashedPopup />
       </div>
 
       <CButtonIconWithText class="game-screen__sound-btn" icon="sound-on">
@@ -26,6 +29,7 @@ import GuidePopup from '@/components/popups/GuidePopup.vue';
       </CButtonIconWithText>
 
       <ControlsPic class="game-screen__controls-info" />
+      <Health class="game-screen__health" />
     </div>
     <GameStats />
   </div>
@@ -76,6 +80,12 @@ import GuidePopup from '@/components/popups/GuidePopup.vue';
     position: absolute;
     bottom: 64px;
     right: 46px;
+  }
+
+  &__health {
+    position: absolute;
+    bottom: 64px;
+    left: 16px;
   }
 }
 </style>
