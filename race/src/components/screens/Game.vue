@@ -1,21 +1,27 @@
 <script setup>
+import { ref } from 'vue';
+
 import Footer from '@/components/common/Footer.vue';
 import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
+import ControlsPic from '@/components/blocks/ControlsPic.vue';
+import Health from '@/components/blocks/Health.vue';
+
 import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
-import ControlsPic from '@/components/blocks/ControlsPic.vue';
-import Health from '@/components/blocks/Health.vue';
+
+const currentComponent = ref(ResultPopup);
 </script>
 
 <template>
   <div class="game-screen">
     <div class="game-screen__holder">
       <div class="game-screen__container">
-        <!--        <ResultPopup />-->
+        <component :is="currentComponent" />
+        <ResultPopup />
         <!--        <PausePopup />-->
-        <CrashedPopup />
+        <!--        <CrashedPopup />-->
       </div>
 
       <CButtonIconWithText class="game-screen__sound-btn" icon="sound-on">
@@ -32,6 +38,12 @@ import Health from '@/components/blocks/Health.vue';
       <Health class="game-screen__health" />
     </div>
     <GameStats />
+  </div>
+
+  <div class="app-nav">
+    <button @click="currentComponent = ResultPopup">ResultPopup</button>
+    <button @click="currentComponent = PausePopup">PausePopup</button>
+    <button @click="currentComponent = CrashedPopup">CrashedPopup</button>
   </div>
 </template>
 
@@ -86,6 +98,21 @@ import Health from '@/components/blocks/Health.vue';
     position: absolute;
     bottom: 64px;
     left: 16px;
+  }
+}
+
+.app-nav {
+  position: fixed;
+  z-index: 100;
+  bottom: 60px;
+  right: 10px;
+  padding: 5px;
+  background: rgba(#fff, 0.4);
+
+  button {
+    padding: 5px;
+    border: 1px solid black;
+    margin: 2px;
   }
 }
 </style>

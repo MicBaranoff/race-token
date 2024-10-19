@@ -27,9 +27,9 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
             <CButton
               class="start-screen__button start-screen__button--default"
               theme="black"
-              >start</CButton
+              >CONNECT WALLET</CButton
             >
-            <CButton>rating</CButton>
+            <CButton>START GAME</CButton>
           </div>
 
           <div class="start-screen__col">
@@ -41,14 +41,18 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
               >
               <CButtonIcon icon="rating" />
             </div>
-            <div
-              class="start-screen__button--row start-screen__button--row--reverse"
-            >
-              <span class="start-screen__font start-screen__font--button"
-                >follow <br />
-                us on x</span
-              >
-              <CButtonIcon icon="x" />
+          </div>
+
+          <div class="start-screen__footer">
+            <div class="start-screen__footer-holder">
+              <a href="#" class="start-screen__font start-screen__font--text"
+                >About Competition
+              </a>
+              <img
+                class="start-screen__footer-logo"
+                src="/images/rocket-logo-mini.svg"
+                alt="rocket"
+              />
             </div>
           </div>
         </div>
@@ -70,6 +74,37 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
       letter-spacing: 0.02em;
       text-transform: uppercase;
     }
+
+    &--text {
+      font-weight: $medium;
+      font-size: 14px;
+      line-height: 130%;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: $color-black;
+    }
+  }
+
+  &__footer {
+    padding: 0 40px 23px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  &__footer-holder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+
+  &__footer-logo {
+    display: block;
+    width: 126px;
   }
 
   &__video {
@@ -90,7 +125,7 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
   &__main {
     position: relative;
     height: 345px;
-    padding: 40px;
+    padding: 40px 40px 100px;
   }
 
   &__main-container {
@@ -108,7 +143,6 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 
   &__center {
     width: 326px;
-    padding-bottom: 60px;
   }
 
   &__button {
