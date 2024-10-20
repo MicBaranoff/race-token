@@ -1,0 +1,25 @@
+.v-popper {
+  $parent: &;
+
+  &--theme-tooltip {
+    #{$parent} {
+      &__inner {
+        border-radius: 0 !important;
+        background: $color-black !important;
+        padding: 10px 5px !important;
+        font-weight: $medium !important;
+        font-size: 10px !important;
+        line-height: 120% !important;
+        letter-spacing: 0.04em !important;
+        text-align: center !important;
+        color: $color-primary !important;
+        max-width: 280px !important;
+      }
+
+      &__arrow-outer {
+        border-color: $color-black !important;
+
+      }
+    }
+  }
+}

@@ -1,6 +1,8 @@
 <script setup>
 import CButton from '@/components/ui/CButton.vue';
 import CButtonIcon from '@/components/ui/CButtonIcon.vue';
+import CQuestion from '@/components/ui/CQuestion.vue';
+import Timer from '@/components/blocks/Timer.vue';
 </script>
 
 <template>
@@ -29,7 +31,15 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
               theme="black"
               >CONNECT WALLET</CButton
             >
-            <CButton>START GAME</CButton>
+            <div class="start-screen__button start-screen__button--start">
+              <div class="start-screen__timer">
+                <span class="start-screen__font start-screen__font--timer"
+                  >0/8 tries resets in</span
+                >
+                <Timer theme="black" />
+              </div>
+              <CButton disabled>START GAME</CButton>
+            </div>
           </div>
 
           <div class="start-screen__col">
@@ -45,8 +55,15 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 
           <div class="start-screen__footer">
             <div class="start-screen__footer-holder">
-              <a href="#" class="start-screen__font start-screen__font--text"
+              <a
+                href="#"
+                class="start-screen__font start-screen__font--text start-screen__footer-link"
                 >About Competition
+                <CQuestion
+                  position="top"
+                  text="The top 3 players, along with one randomly selected player from the leaderboard, will
+            win a prize from RocketX."
+                />
               </a>
               <img
                 class="start-screen__footer-logo"
@@ -83,6 +100,16 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
       text-transform: uppercase;
       color: $color-black;
     }
+
+    &--timer {
+      color: $color-black;
+      font-weight: $medium;
+      font-size: 12px;
+      line-height: 140%;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      text-align: center;
+    }
   }
 
   &__footer {
@@ -105,6 +132,12 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
   &__footer-logo {
     display: block;
     width: 126px;
+  }
+
+  &__footer-link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   &__video {
@@ -141,13 +174,19 @@ import CButtonIcon from '@/components/ui/CButtonIcon.vue';
     width: 260px;
   }
 
-  &__center {
-    width: 326px;
+  &__timer {
+    position: absolute;
+    right: -150px;
+    text-align: center;
   }
 
   &__button {
     &--default {
       margin-bottom: 16px;
+    }
+
+    &--start {
+      position: relative;
     }
 
     &--row {

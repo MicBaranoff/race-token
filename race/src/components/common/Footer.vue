@@ -1,11 +1,19 @@
-<script setup></script>
+<script setup>
+import CQuestion from '@/components/ui/CQuestion.vue';
+</script>
 
 <template>
   <footer class="footer-base">
     <div class="footer-base__decor"></div>
 
     <div class="footer-base__holder">
-      <a href="#" class="footer-base__font">About Competition </a>
+      <a href="#" class="footer-base__font footer-base__link"
+        >About Competition
+        <CQuestion
+          position="top"
+          text="The top 3 players, along with one randomly selected player from the leaderboard, will
+            win a prize from RocketX."
+      /></a>
       <img
         class="footer-base__logo"
         src="/images/rocket-logo-mini.svg"
@@ -41,6 +49,12 @@
     background:
       url('/images/header-decor.png') center / 1280px 100% repeat-x,
       #000000;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   &__holder {

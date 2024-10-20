@@ -1,11 +1,16 @@
-import './assets/scss/app.scss'
+import './assets/scss/app.scss';
+import 'floating-vue/dist/style.css';
 
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
-import App from './App.vue'
+import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import App from './App.vue';
 
-const app = createApp(App)
+import { vTooltip } from 'floating-vue';
 
-app.use(createPinia())
+const app = createApp(App);
 
-app.mount('#app')
+app.use(createPinia());
+
+app.directive('tooltip', vTooltip);
+
+app.mount('#app');

@@ -1,7 +1,7 @@
 <script setup>
 import Heart from '@/assets/svg/heart.svg';
 import HeartEmpty from '@/assets/svg/heart-empty.svg';
-import TimerWhite from '@/components/blocks/TimerWhite.vue';
+import TimerWhite from '@/components/blocks/Timer.vue';
 </script>
 
 <template>

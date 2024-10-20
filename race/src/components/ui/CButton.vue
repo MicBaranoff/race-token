@@ -40,6 +40,11 @@ defineProps({
     no-repeat;
   color: $color-black;
 
+  &[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   $parent: &;
 
   &__font {
