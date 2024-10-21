@@ -3,12 +3,19 @@ import CButton from '@/components/ui/CButton.vue';
 import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 import CQuestion from '@/components/ui/CQuestion.vue';
 import Timer from '@/components/blocks/Timer.vue';
+import { useAudio } from '@/composables/useAudio.js';
+
+const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
 </script>
 
 <template>
   <div class="start-screen">
     <div class="start-screen__holder">
       <div class="start-screen__video">
+        <video autoplay loop muted>
+          <source src="/videos/trailer-2.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
         <img src="/images/start-logo.svg" class="start-screen__logo" />
       </div>
 
@@ -16,10 +23,21 @@ import Timer from '@/components/blocks/Timer.vue';
         <div class="start-screen__decor start-screen__decor--bottom"></div>
         <div class="start-screen__main-container">
           <div class="start-screen__col">
-            <div class="start-screen__button--row">
-              <CButtonIcon icon="sound-on" />
+            <div
+              v-if="isPlayingMenu"
+              @click="playMenu"
+              class="start-screen__button--row"
+            >
+              <CButtonIcon icon="sound-off" />
               <span class="start-screen__font start-screen__font--button"
                 >sound off <br />
+                (S)</span
+              >
+            </div>
+            <div v-else class="start-screen__button--row">
+              <CButtonIcon @click="pauseMenu" icon="sound-on" />
+              <span class="start-screen__font start-screen__font--button"
+                >sound on <br />
                 (S)</span
               >
             </div>
@@ -145,6 +163,13 @@ import Timer from '@/components/blocks/Timer.vue';
     height: 484px;
     background: url('/images/video.jpg') center / cover no-repeat;
     position: relative;
+
+    video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      filter: grayscale(1);
+    }
   }
 
   &__logo {

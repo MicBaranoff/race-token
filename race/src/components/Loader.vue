@@ -1,4 +1,39 @@
-<script setup></script>
+<script setup>
+import { ref, computed, onMounted, defineEmits } from 'vue';
+
+const emit = defineEmits(['onLoad']);
+
+const progress = ref(0);
+const isLoading = ref(false);
+
+const blocksCount = 20;
+
+const filledBlocks = computed(() =>
+  Math.floor((progress.value / 100) * blocksCount)
+);
+
+onMounted(() => {
+  startLoading();
+});
+
+const startLoading = () => {
+  if (isLoading.value) return;
+
+  isLoading.value = true;
+  progress.value = 0;
+
+  const interval = setInterval(() => {
+    if (progress.value < 100) {
+      progress.value += 5;
+    } else {
+      clearInterval(interval);
+      isLoading.value = false;
+
+      emit('onLoad');
+    }
+  }, 300);
+};
+</script>
 
 <template>
   <div class="game-loader">
@@ -12,35 +47,17 @@
     <div class="game-loader__block">
       <div class="game-loader__progress">
         <span
-          class="game-loader__progress-item game-loader__progress-item--active"
-        ></span
-        ><span
-          class="game-loader__progress-item game-loader__progress-item--active"
-        ></span
-        ><span
-          class="game-loader__progress-item game-loader__progress-item--active"
-        ></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span
-        ><span class="game-loader__progress-item"></span>
+          v-for="block in blocksCount"
+          :key="block + 'load'"
+          :class="[
+            'game-loader__progress-item',
+            { 'game-loader__progress-item--active': block < filledBlocks },
+          ]"
+        ></span>
       </div>
       <div class="game-loader__block-row">
         <span class="game-loader__font">Loading...</span>
-        <span class="game-loader__font">5%</span>
+        <span class="game-loader__font">{{ progress }}%</span>
       </div>
     </div>
   </div>

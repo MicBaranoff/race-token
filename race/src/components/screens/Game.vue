@@ -11,6 +11,10 @@ import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
+import { useAudio } from '@/composables/useAudio.js';
+
+const { isPlayingMenu, playMenu, pauseMenu, playPause } = useAudio();
+
 const currentComponent = ref(ResultPopup);
 </script>
 
@@ -24,12 +28,30 @@ const currentComponent = ref(ResultPopup);
         <!--        <CrashedPopup />-->
       </div>
 
-      <CButtonIconWithText class="game-screen__sound-btn" icon="sound-on">
+      <CButtonIconWithText
+        v-if="isPlayingMenu"
+        @click="playMenu"
+        class="game-screen__sound-btn"
+        icon="sound-off"
+      >
+        sound off <br />
+        (S)
+      </CButtonIconWithText>
+      <CButtonIconWithText
+        v-else
+        @click="pauseMenu"
+        class="game-screen__sound-btn"
+        icon="sound-on"
+      >
         sound on <br />
         (S)
       </CButtonIconWithText>
 
-      <CButtonIconWithText class="game-screen__play-btn" icon="pause">
+      <CButtonIconWithText
+        @click="playPause"
+        class="game-screen__play-btn"
+        icon="pause"
+      >
         pause <br />
         (p)
       </CButtonIconWithText>
@@ -77,6 +99,7 @@ const currentComponent = ref(ResultPopup);
   }
 
   &__sound-btn {
+    width: 100px;
     position: absolute;
     top: 32px;
     left: 42px;

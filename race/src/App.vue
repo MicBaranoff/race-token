@@ -1,15 +1,31 @@
 <script setup>
-import { ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 
 import Main from '@/components/Main.vue';
 import Loader from '@/components/Loader.vue';
 import Trailer from '@/components/Trailer.vue';
 
-const currentComponent = ref(Main);
+import { usePreloadVideo } from '@/composables/preloadVideo.js';
+
+const { preloadVideos } = usePreloadVideo();
+
+onBeforeMount(() => {
+  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(
+    (res) => {
+      console.log(res);
+    }
+  );
+});
+
+const currentComponent = ref(Loader);
 </script>
 
 <template>
-  <component :is="currentComponent" />
+  <component
+    @onLoad="currentComponent = Trailer"
+    @trailerFinished="currentComponent = Main"
+    :is="currentComponent"
+  />
   <!--  <Main />-->
   <!--  <Loader />-->
   <!--  <Trailer />-->

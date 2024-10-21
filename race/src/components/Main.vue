@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import Header from '@/components/common/Header.vue';
 import Start from '@/components/screens/Start.vue';
@@ -7,6 +7,13 @@ import ChooseCar from '@/components/screens/ChooseCar.vue';
 import Game from '@/components/screens/Game.vue';
 import Guide from '@/components/screens/Guide.vue';
 import Leaderboard from '@/components/screens/Leaderboard.vue';
+import { useAudio } from '@/composables/useAudio.js';
+
+const { playMenu } = useAudio();
+
+onMounted(() => {
+  playMenu();
+});
 
 const currentComponent = ref(Start);
 </script>

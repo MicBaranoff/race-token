@@ -1,17 +1,38 @@
-<script setup></script>
+<script setup>
+import { defineEmits, ref } from 'vue';
+
+const emit = defineEmits(['trailerFinished']);
+
+const showInfo = ref(false);
+
+setTimeout(() => {
+  showInfo.value = true;
+}, 3000);
+
+setTimeout(() => {
+  emit('trailerFinished');
+}, 5500);
+</script>
 
 <template>
   <div class="game-trailer">
-    <div class="game-trailer__video"></div>
-    <div class="game-trailer__overlay">
-      <div class="game-trailer__logo">
-        <img src="/images/start-logo.svg" alt="logo" />
-      </div>
-
-      <div class="game-trailer__info">
-        <img src="/images/trailer/info.svg" alt="logo" />
-      </div>
+    <div class="game-trailer__video">
+      <video autoplay loop muted>
+        <source src="/videos/trailer-2.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+      </video>
     </div>
+    <transition name="fade">
+      <div v-if="showInfo" class="game-trailer__overlay">
+        <div class="game-trailer__logo">
+          <img src="/images/start-logo.svg" alt="logo" />
+        </div>
+
+        <div class="game-trailer__info">
+          <img src="/images/trailer/info.svg" alt="logo" />
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -19,7 +40,7 @@
 .game-trailer {
   width: 100vw;
   height: 100dvh;
-
+  overflow: hidden;
   position: relative;
 
   &__video {
@@ -29,6 +50,12 @@
     right: 0;
     bottom: 0;
     background: url('/images/trailer/trailer.jpg') center / cover no-repeat;
+
+    video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__overlay {

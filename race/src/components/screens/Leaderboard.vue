@@ -10,6 +10,10 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
   <div class="leaderboard-screen">
     <div class="leaderboard-screen__holder">
       <div class="leaderboard-screen__container">
+        <video autoplay loop muted>
+          <source src="/videos/trailer.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
         <div class="leaderboard-screen__head">
           <div class="leaderboard-screen__title">
             <span
@@ -119,6 +123,32 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%),
       url('/images/game.jpg') center / cover no-repeat;
+
+    &:before {
+      position: absolute;
+      content: '';
+      display: block;
+      z-index: 2;
+      background: linear-gradient(
+        180deg,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.8) 100%
+      );
+      width: 100%;
+      height: 100%;
+    }
+
+    video {
+      object-fit: cover;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+    }
+
+    > div {
+      position: relative;
+      z-index: 3;
+    }
   }
 
   &__sound-btn {
