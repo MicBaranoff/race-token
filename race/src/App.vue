@@ -17,7 +17,7 @@ onBeforeMount(() => {
   );
 });
 
-const currentComponent = ref(Loader);
+const currentComponent = ref(Main);
 </script>
 
 <template>

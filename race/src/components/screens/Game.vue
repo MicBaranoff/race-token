@@ -6,6 +6,7 @@ import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import ControlsPic from '@/components/blocks/ControlsPic.vue';
 import Health from '@/components/blocks/Health.vue';
+import Game from '@/components/blocks/Game/Game.vue';
 
 import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
@@ -15,15 +16,16 @@ import { useAudio } from '@/composables/useAudio.js';
 
 const { isPlayingMenu, playMenu, pauseMenu, playPause } = useAudio();
 
-const currentComponent = ref(ResultPopup);
+const currentComponent = ref(null);
 </script>
 
 <template>
   <div class="game-screen">
     <div class="game-screen__holder">
       <div class="game-screen__container">
-        <component :is="currentComponent" />
-        <ResultPopup />
+        <Game class="game-screen__main" />
+        <component class="game-screen__popup" :is="currentComponent" />
+        <!--        <ResultPopup />-->
         <!--        <PausePopup />-->
         <!--        <CrashedPopup />-->
       </div>
@@ -80,6 +82,20 @@ const currentComponent = ref(ResultPopup);
   &__font {
   }
 
+  &__popup {
+    position: relative;
+    z-index: 2;
+  }
+
+  &__main {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   &__holder {
     display: flex;
     align-items: center;
@@ -96,6 +112,7 @@ const currentComponent = ref(ResultPopup);
     background:
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
+    position: relative;
   }
 
   &__sound-btn {

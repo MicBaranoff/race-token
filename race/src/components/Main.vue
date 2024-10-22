@@ -15,7 +15,7 @@ onMounted(() => {
   playMenu();
 });
 
-const currentComponent = ref(Start);
+const currentComponent = ref(Game);
 </script>
 
 <template>
