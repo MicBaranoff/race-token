@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, useTemplateRef } from 'vue';
 
 import Footer from '@/components/common/Footer.vue';
 import GameStats from '@/components/blocks/GameStats.vue';
@@ -13,21 +13,70 @@ import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
 import { useAudio } from '@/composables/useAudio.js';
+import { useTimer } from '@/composables/useTimer.js';
+
+const { resetTimer, pauseTimer, resumeTimer } = useTimer();
 
 const { isPlayingMenu, playMenu, pauseMenu, playPause } = useAudio();
 
 const currentComponent = ref(null);
+const gameScores = ref(null);
+const gameRerender = ref(0);
+const gameRef = ref(null);
+const isPaused = ref(false);
+
+const onGameEnd = (data) => {
+  currentComponent.value = CrashedPopup;
+  gameScores.value = data.score;
+};
+
+const onRestart = () => {
+  currentComponent.value = null;
+  gameRerender.value++;
+  resetTimer();
+};
+
+const onResume = () => {
+  playPause();
+  currentComponent.value = null;
+  gameRef.value.gameTogglePause();
+  isPaused.value = false;
+  resumeTimer();
+};
+
+const pauseBtnClickHandler = () => {
+  playPause();
+
+  isPaused.value = !isPaused.value;
+  gameRef.value.gameTogglePause(isPaused.value);
+
+  if (isPaused.value) {
+    currentComponent.value = PausePopup;
+    pauseTimer();
+  } else {
+    currentComponent.value = null;
+    resumeTimer();
+  }
+};
 </script>
 
 <template>
   <div class="game-screen">
     <div class="game-screen__holder">
       <div class="game-screen__container">
-        <Game class="game-screen__main" />
-        <component class="game-screen__popup" :is="currentComponent" />
-        <!--        <ResultPopup />-->
-        <!--        <PausePopup />-->
-        <!--        <CrashedPopup />-->
+        <Game
+          ref="gameRef"
+          :key="gameRerender"
+          @on-game-end="onGameEnd"
+          class="game-screen__main"
+        />
+        <component
+          :score="gameScores"
+          @on-restart="onRestart"
+          @on-resume="onResume"
+          class="game-screen__popup"
+          :is="currentComponent"
+        />
       </div>
 
       <CButtonIconWithText
@@ -50,11 +99,21 @@ const currentComponent = ref(null);
       </CButtonIconWithText>
 
       <CButtonIconWithText
-        @click="playPause"
+        v-if="!isPaused"
+        @click="pauseBtnClickHandler"
         class="game-screen__play-btn"
         icon="pause"
       >
         pause <br />
+        (p)
+      </CButtonIconWithText>
+      <CButtonIconWithText
+        v-else
+        @click="pauseBtnClickHandler"
+        class="game-screen__play-btn"
+        icon="play"
+      >
+        continue <br />
         (p)
       </CButtonIconWithText>
 
@@ -123,6 +182,7 @@ const currentComponent = ref(null);
   }
 
   &__play-btn {
+    width: 100px;
     position: absolute;
     top: 32px;
     right: 64px;

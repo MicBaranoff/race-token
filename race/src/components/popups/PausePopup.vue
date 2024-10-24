@@ -1,5 +1,8 @@
 <script setup>
 import CButton from '@/components/ui/CButton.vue';
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['onResume']);
 </script>
 
 <template>
@@ -14,7 +17,7 @@ import CButton from '@/components/ui/CButton.vue';
         </span>
       </div>
       <div class="pause-popup__button">
-        <CButton theme="yellow">CONTINUE</CButton>
+        <CButton @click="emit('onResume')" theme="yellow">CONTINUE</CButton>
       </div>
     </div>
   </div>

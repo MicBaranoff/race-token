@@ -2,6 +2,15 @@
 import CButton from '@/components/ui/CButton.vue';
 import GameInfoRow from '@/components/blocks/GameInfoRow.vue';
 import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
+import { defineEmits } from 'vue';
+
+defineProps({
+  score: {
+    type: Number,
+  },
+});
+
+const emit = defineEmits(['onRestart']);
 </script>
 
 <template>
@@ -27,11 +36,16 @@ import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
         <h2 class="crash-popup__font crash-popup__font--subtitle">
           your
           <span class="crash-popup__font crash-popup__font--accent"
-            >best score 228</span
+            >best score {{ score }}</span
           >
         </h2>
       </div>
-      <CButton class="crash-popup__button" theme="yellow">TRY AGAIN</CButton>
+      <CButton
+        @click="emit('onRestart')"
+        class="crash-popup__button"
+        theme="yellow"
+        >TRY AGAIN</CButton
+      >
       <CButton class="crash-popup__button" theme="stroke-yellow" size="m"
         >Share and VALIDATE YOUR SCORE</CButton
       >
