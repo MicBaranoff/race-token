@@ -1,29 +1,36 @@
 <script setup>
-import { onBeforeMount, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import Main from '@/components/Main.vue';
 import Loader from '@/components/Loader.vue';
 import Trailer from '@/components/Trailer.vue';
 
-import { usePreloadVideo } from '@/composables/preloadVideo.js';
+import { useAudio } from '@/composables/useAudio.js';
+import { useGame } from '@/composables/useGame.js';
 
-const { preloadVideos } = usePreloadVideo();
+const { playMenu, pauseMenu, isPlayingMenu } = useAudio();
+const { createGame, loadResources } = useGame();
 
-onBeforeMount(() => {
-  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(
-    (res) => {
-      console.log(res);
-    }
-  );
+const currentComponent = ref(Loader);
+
+onMounted(() => {
+  createGame();
+  loadResources();
 });
 
-const currentComponent = ref(Main);
+const trailerFinishedHandler = () => {
+  currentComponent.value = Main;
+  playMenu();
+};
 </script>
 
 <template>
   <component
     @onLoad="currentComponent = Trailer"
-    @trailerFinished="currentComponent = Main"
+    @trailerFinished="trailerFinishedHandler"
+    @playMenuSound="playMenu"
+    @stopMenuSound="pauseMenu"
+    :isPlayingMenu="isPlayingMenu"
     :is="currentComponent"
   />
   <!--  <Main />-->

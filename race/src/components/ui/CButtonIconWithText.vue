@@ -1,22 +1,22 @@
 <script setup>
-import CButtonIcon from "@/components/ui/CButtonIcon.vue";
+import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 
 defineProps({
   theme: {
     default: 'yellow',
     validator(value) {
-      return ['black', 'yellow', 'stroke'].includes(value)
-    }
+      return ['black', 'yellow', 'stroke'].includes(value);
+    },
   },
   icon: {
     type: String,
-  }
-})
+  },
+});
 </script>
 
 <template>
   <div class="button-icon-text">
-    <CButtonIcon class="button-icon-text__btn" :theme="theme" :icon="icon"/>
+    <CButtonIcon class="button-icon-text__btn" :theme="theme" :icon="icon" />
 
     <span class="button-icon-text__font">
       <slot></slot>
@@ -30,6 +30,11 @@ defineProps({
   flex-direction: column;
   align-items: center;
   text-align: center;
+
+  &[disabled] {
+    opacity: 0.4;
+    pointer-events: none;
+  }
 
   &__font {
     font-weight: $medium;

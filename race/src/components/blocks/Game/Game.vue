@@ -3,35 +3,35 @@ import {
   onBeforeUnmount,
   onMounted,
   useTemplateRef,
-  ref,
   defineEmits,
+  defineProps,
+  ref,
 } from 'vue';
 
-import Game from './game.js';
+import GameLighter from '@/components/blocks/GameLighter.vue';
+
+import { useGame } from '@/composables/useGame.js';
+
+const { initGame, startGame, togglePause, destroyGame } = useGame();
 
 const gameContainer = useTemplateRef('game-block');
-const gameInstance = ref(null);
+
 const emit = defineEmits(['onGameEnd', 'onGamePaused']);
 
+const props = defineProps({
+  currentCar: {
+    default: false,
+  },
+});
+
+const gameStarted = ref(false);
+
 onMounted(() => {
-  gameInstance.value = new Game({
-    container: gameContainer.value,
-  });
-
-  gameInstance.value.init();
-
-  window.addEventListener('game-end', gameEndHandler);
-
-  setTimeout(() => {
-    gameInstance.value.start();
-  }, 1000);
+  gameInit();
 });
 
 onBeforeUnmount(() => {
-  gameInstance.value.destroy();
-  gameInstance.value = null;
-
-  window.removeEventListener('game-end', gameEndHandler);
+  gameDestroy();
 });
 
 const gameEndHandler = (event) => {
@@ -41,18 +41,49 @@ const gameEndHandler = (event) => {
 };
 
 const gameTogglePause = () => {
-  gameInstance.value.togglePause();
+  togglePause();
+};
+
+const gameInit = () => {
+  initGame(gameContainer.value, gameEndHandler, props.currentCar);
+
+  setTimeout(() => {
+    //
+  }, 2000);
+};
+
+const gameStart = () => {
+  startGame();
+  gameStarted.value = true;
+};
+
+const gameDestroy = () => {
+  destroyGame(gameEndHandler);
 };
 
 defineExpose({ gameTogglePause });
 </script>
 
 <template>
-  <div ref="game-block" class="game-block"></div>
+  <div ref="game-block" class="game-block">
+    <transition name="fade">
+      <GameLighter
+        v-if="!gameStarted"
+        class="game-block__lighter"
+        @startGame="gameStart"
+      ></GameLighter>
+    </transition>
+  </div>
 </template>
 
 <style scoped lang="scss">
 .game-block {
-  background: #000;
+  background: #fff;
+  position: relative;
+
+  &__lighter {
+    position: absolute;
+    top: 0;
+  }
 }
 </style>

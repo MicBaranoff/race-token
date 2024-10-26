@@ -6,7 +6,7 @@ import PauseSound from '@/assets/audio/PAUSE.mp3';
 
 const isPlayingMenu = ref(false);
 
-export function useAudio() {
+export const useAudio = () => {
   const mainMenuSound = useSound(MenuSound, { volume: 1 });
   const pauseSound = useSound(PauseSound, { volume: 1 });
 
@@ -32,4 +32,4 @@ export function useAudio() {
     pauseMenu,
     playPause,
   };
-}
+};

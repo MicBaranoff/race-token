@@ -12,7 +12,8 @@ onMounted(() => {
     score.value = event.detail.points;
   });
 
-  window.addEventListener('game-init', () => {
+  window.addEventListener('game-start', () => {
+    score.value = 0;
     resetTimer();
     startTimer();
   });

@@ -2,16 +2,47 @@
 import Footer from '@/components/common/Footer.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import GuidePopup from '@/components/popups/GuidePopup.vue';
+
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'skipTutorial']);
+
+defineProps({
+  isPlayingMenu: {
+    default: false,
+  },
+});
 </script>
 
 <template>
   <div class="guide-screen">
     <div class="guide-screen__holder">
       <div class="guide-screen__container">
-        <GuidePopup class="guide-screen__popup" />
+        <video autoplay loop muted>
+          <source src="/videos/trailer-2.mp4" type="video/mp4" />
+          Your browser does not support HTML5 video.
+        </video>
+        <GuidePopup
+          @skipTutorial="emit('skipTutorial')"
+          class="guide-screen__popup"
+        />
       </div>
 
-      <CButtonIconWithText class="guide-screen__sound-btn" icon="sound-on">
+      <CButtonIconWithText
+        v-if="isPlayingMenu"
+        @click="emit('playMenuSound')"
+        class="guide-screen__sound-btn"
+        icon="sound-off"
+      >
+        sound off <br />
+        (S)
+      </CButtonIconWithText>
+      <CButtonIconWithText
+        v-else
+        @click="emit('stopMenuSound')"
+        class="guide-screen__sound-btn"
+        icon="sound-on"
+      >
         sound on <br />
         (S)
       </CButtonIconWithText>
@@ -48,6 +79,12 @@ import GuidePopup from '@/components/popups/GuidePopup.vue';
     background:
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   &__popup {
@@ -58,6 +95,7 @@ import GuidePopup from '@/components/popups/GuidePopup.vue';
   }
 
   &__sound-btn {
+    width: 100px;
     position: absolute;
     top: 32px;
     left: 42px;

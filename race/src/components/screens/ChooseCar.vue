@@ -9,6 +9,14 @@ import cars from '@/configs/cars.js';
 
 const currentCarIndex = ref(0);
 
+const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'onChooseCar']);
+
+defineProps({
+  isPlayingMenu: {
+    default: false,
+  },
+});
+
 const currentCarImage = computed(() => {
   return cars[currentCarIndex.value].image;
 });
@@ -69,11 +77,29 @@ const goPrev = () => {
         </div>
 
         <div class="choose-car__button choose-car__button--main">
-          <CButton theme="yellow">START RACE</CButton>
+          <CButton
+            @click="emit('onCarChoose', cars[currentCarIndex].id)"
+            theme="yellow"
+            >START RACE</CButton
+          >
         </div>
       </div>
 
-      <CButtonIconWithText class="choose-car__sound-btn" icon="sound-on">
+      <CButtonIconWithText
+        v-if="isPlayingMenu"
+        @click="emit('playMenuSound')"
+        class="choose-car__sound-btn"
+        icon="sound-off"
+      >
+        sound off <br />
+        (S)
+      </CButtonIconWithText>
+      <CButtonIconWithText
+        v-else
+        @click="emit('stopMenuSound')"
+        class="choose-car__sound-btn"
+        icon="sound-on"
+      >
         sound on <br />
         (S)
       </CButtonIconWithText>
@@ -117,6 +143,7 @@ const goPrev = () => {
   }
 
   &__sound-btn {
+    width: 100px;
     position: absolute;
     top: 32px;
     left: 42px;
@@ -133,6 +160,8 @@ const goPrev = () => {
     justify-content: center;
     width: 100%;
     height: 756px;
+    max-width: 1280px;
+    margin: 0 auto;
     background: $color-black;
     position: relative;
   }

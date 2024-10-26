@@ -18,6 +18,7 @@ export function useTimer() {
   };
   const startTimer = () => {
     if (intervalId.value) return;
+
     intervalId.value = setInterval(() => {
       if (isPaused.value) return;
 

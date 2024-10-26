@@ -1,19 +1,35 @@
 <script setup>
-import { ref, computed, onMounted, defineEmits } from 'vue';
+import { ref, computed, onMounted, defineEmits, watch } from 'vue';
+import { usePreloadVideo } from '@/composables/preloadVideo.js';
+
+const { preloadVideos } = usePreloadVideo();
 
 const emit = defineEmits(['onLoad']);
 
 const progress = ref(0);
 const isLoading = ref(false);
+const videoLoaded = ref(false);
+const gameLoaded = ref(false);
 
 const blocksCount = 20;
 
 const filledBlocks = computed(() =>
   Math.floor((progress.value / 100) * blocksCount)
 );
+const allLoaded = computed(() => {
+  return videoLoaded.value && gameLoaded.value;
+});
 
 onMounted(() => {
   startLoading();
+
+  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(() => {
+    videoLoaded.value = true;
+  });
+});
+
+watch(allLoaded, () => {
+  emit('onLoad');
 });
 
 const startLoading = () => {
@@ -22,16 +38,13 @@ const startLoading = () => {
   isLoading.value = true;
   progress.value = 0;
 
-  const interval = setInterval(() => {
-    if (progress.value < 100) {
-      progress.value += 5;
-    } else {
-      clearInterval(interval);
-      isLoading.value = false;
+  window.addEventListener('game-loading', (event) => {
+    progress.value = Math.round(event.detail.progress);
 
-      emit('onLoad');
+    if (progress.value === 100) {
+      gameLoaded.value = true;
     }
-  }, 300);
+  });
 };
 </script>
 

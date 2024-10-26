@@ -30,22 +30,28 @@ const coins = [
   './images/game/coins/COIN_9.png',
 ];
 
+const lives = 8;
+const score = 0;
+const elapsedTime = 0;
+
+const speedX = 0;
+const trackSpeed = 10;
+const moveSpeed = 5;
+const carNpcSpeed = 8;
+
 class Game {
-  constructor({ container }) {
-    this.container = container;
+  constructor() {
+    this.containcser = undefined;
     this.app = undefined;
     this.loader = null;
 
     this.playerCar = null;
+    this.currentCar = null;
     this.track = null;
     this.trackSideLeft = null;
     this.trackSideRight = null;
 
-    this.speedX = 0;
-    this.trackSpeed = 5;
-    this.moveSpeed = 5;
-    this.obstacleSpeed = 5;
-    this.carNpcSpeed = 4;
+    this.isInvincible = false;
 
     this.isPaused = false;
 
@@ -56,11 +62,6 @@ class Game {
     this.carTextures = [];
     this.coinTextures = [];
 
-    this.lives = 8;
-    this.score = 0;
-    this.elapsedTime = 0;
-    this.isInvincible = false;
-
     this.generateObstaclesTicker = undefined;
     this.generateCoinsTicker = undefined;
     this.increaseDifficultyTicker = undefined;
@@ -68,31 +69,35 @@ class Game {
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
   }
 
-  init(callBack) {
+  init(container, currentCar) {
+    this.container = container;
+    this.currentCar = currentCar;
+
     const { width, height } = this.container.getBoundingClientRect();
 
     this.app = new PIXI.Application({
       width,
       height,
       backgroundColor: 0x2f2741,
-      antialias: true,
+      antialias: false,
+      resolution: 1,
     });
-
-    this.app.renderer.autoDensity = true;
 
     this.container.appendChild(this.app.view);
 
-    this.loadResources(callBack);
+    this.setup();
   }
 
   loadResources() {
     this.loader = new PIXI.Loader();
 
     this.loader
-      .add('car', './images/game/CAR_1.png')
+      .add('car_1', './images/game/CAR_1.png')
+      .add('car_2', './images/game/CAR_2.png')
+      .add('car_3', './images/game/CAR_3.png')
       .add('track', './images/game/ROAD.png')
-      .add('side-left', './images/game/LEFT_SIDE.png')
-      .add('side-right', './images/game/RIGHT_SIDE.png');
+      .add('side-left', './images/game/LEFT_SIDE.jpg')
+      .add('side-right', './images/game/RIGHT_SIDE.jpg');
 
     obstacles.forEach((url, index) => {
       this.loader.add('obstacle' + (index + 1), url);
@@ -106,8 +111,18 @@ class Game {
       this.loader.add('coin' + (index + 1), url);
     });
 
+    this.loader.onProgress.add((loader) => {
+      window.dispatchEvent(
+        new CustomEvent('game-loading', {
+          detail: {
+            progress: loader.progress,
+          },
+        })
+      );
+    });
+
     this.loader.load(() => {
-      this.setup();
+      window.dispatchEvent(new CustomEvent('game-loaded'));
     });
   }
 
@@ -128,15 +143,14 @@ class Game {
     this.createPlayerCar();
     this.addControls();
 
-    this.generateObstaclesTicker = setInterval(
-      this.generateObstacles.bind(this),
-      1000
-    );
-    this.generateCoinsTicker = setInterval(this.generateCoins.bind(this), 2000);
-    this.increaseDifficultyTicker = setInterval(
-      this.increaseDifficulty.bind(this),
-      500
-    );
+    this.speedX = speedX;
+    this.trackSpeed = trackSpeed;
+    this.moveSpeed = moveSpeed;
+    this.carNpcSpeed = carNpcSpeed;
+
+    this.lives = lives;
+    this.score = score;
+    this.elapsedTime = elapsedTime;
 
     // document.addEventListener('visibilitychange', () => {
     //   if (document.hidden) {
@@ -145,11 +159,24 @@ class Game {
     //     this.app.ticker.start();
     //   }
     // });
+
+    window.dispatchEvent(new CustomEvent('game-init'));
   }
 
   start() {
-    this.app.ticker.add(this.gameLoop.bind(this));
-    window.dispatchEvent(new CustomEvent('game-init'));
+    window.dispatchEvent(new CustomEvent('game-start'));
+
+    this.generateObstaclesTicker = setInterval(
+      this.generateObstacles.bind(this),
+      900
+    );
+    this.generateCoinsTicker = setInterval(this.generateCoins.bind(this), 1800);
+    this.increaseDifficultyTicker = setInterval(
+      this.increaseDifficulty.bind(this),
+      3000
+    );
+
+    this.app.ticker.add(this.gameLoop.bind(this), PIXI.UPDATE_PRIORITY.LOW);
   }
 
   createTrack() {
@@ -183,9 +210,12 @@ class Game {
   }
 
   createPlayerCar() {
-    this.playerCar = new PIXI.Sprite(this.loader.resources['car'].texture);
+    this.playerCar = new PIXI.Sprite(
+      this.loader.resources[this.currentCar].texture
+    );
     this.playerCar.x = this.app.view.width / 2 - this.playerCar.width / 2;
     this.playerCar.y = this.app.view.height - this.playerCar.height - 20;
+    this.playerCar.zIndex = 10;
     this.app.stage.addChild(this.playerCar);
   }
 
@@ -210,6 +240,7 @@ class Game {
 
       const minX = this.track.x;
       const maxX = this.track.x + this.track.width - obstacle.width;
+
       obstacle.x = Math.random() * (maxX - minX) + minX;
       obstacle.y = -obstacle.height;
       obstacle.type = isCar
@@ -232,7 +263,6 @@ class Game {
     let positionValid = false;
 
     while (!positionValid) {
-      // Случайная монета
       coin = new PIXI.Sprite(
         this.coinTextures[Math.floor(Math.random() * this.coinTextures.length)]
       );
@@ -251,18 +281,18 @@ class Game {
     this.app.stage.addChild(coin);
   }
 
-  updateObstacles() {
-    this.obstacles.forEach((obstacle, index) => {
+  updateObstacles(delta) {
+    for (let i = 0; i < this.obstacles.length; i++) {
+      const obstacle = this.obstacles[i];
+
       if (obstacle.type === obstacleTypes.TYPE_CAR)
-        obstacle.y += this.carNpcSpeed - Math.random();
+        obstacle.y += (this.carNpcSpeed - Math.random()) * delta;
 
       if (obstacle.type === obstacleTypes.TYPE_OBSTACLE)
-        obstacle.y += this.trackSpeed;
+        obstacle.y += this.trackSpeed * delta;
 
-      // Проверка столкновения с игроком
       if (this.isColliding(this.playerCar, obstacle) && !this.isInvincible) {
         this.lives--;
-        console.log(`Lives left: ${this.lives}`);
 
         this.startBlinking();
 
@@ -278,33 +308,35 @@ class Game {
           this.endGame();
         }
         this.app.stage.removeChild(obstacle);
-        this.obstacles.splice(index, 1);
+        this.obstacles.splice(i, 1);
       }
 
       if (obstacle.y > this.app.view.height) {
         this.app.stage.removeChild(obstacle);
-        this.obstacles.splice(index, 1);
+        this.obstacles.splice(i, 1);
       }
-    });
+    }
   }
 
-  updateCoins() {
-    this.coins.forEach((coin, index) => {
-      coin.y += this.carNpcSpeed;
+  updateCoins(delta) {
+    for (let i = 0; i < this.coins.length; i++) {
+      const coin = this.coins[i];
+
+      coin.y += this.carNpcSpeed * delta;
 
       if (this.isColliding(this.playerCar, coin)) {
         this.score += 10;
         this.app.stage.removeChild(coin);
-        this.coins.splice(index, 1);
+        this.coins.splice(i, 1);
 
         this._eventPoints(this.score);
       }
 
       if (coin.y > this.app.view.height) {
         this.app.stage.removeChild(coin);
-        this.coins.splice(index, 1);
+        this.coins.splice(i, 1);
       }
-    });
+    }
   }
 
   checkNoOverlap(newObject, existingObjects) {
@@ -348,20 +380,12 @@ class Game {
     clearInterval(this.generateCoinsTicker);
     clearInterval(this.increaseDifficultyTicker);
 
-    // this.obstacles.forEach((obstacle) => this.app.stage.removeChild(obstacle));
-    // this.coins.forEach((coin) => this.app.stage.removeChild(coin));
-    // this.app.stage.removeChild(this.playerCar);
-
     window.dispatchEvent(
       new CustomEvent('game-end', {
         detail: {
           score: this.score,
         },
       })
-    );
-
-    console.log(
-      `Game Over! Time: ${this.elapsedTime.toFixed(2)} seconds, Score: ${this.score}`
     );
   }
 
@@ -385,6 +409,29 @@ class Game {
       texture: true,
       baseTexture: true,
     });
+
+    this.container = undefined;
+    this.app = undefined;
+
+    this.playerCar = null;
+    this.track = null;
+    this.trackSideLeft = null;
+    this.trackSideRight = null;
+
+    this.isInvincible = false;
+
+    this.isPaused = false;
+
+    this.obstacles = [];
+    this.coins = [];
+
+    this.obstacleTextures = [];
+    this.carTextures = [];
+    this.coinTextures = [];
+
+    this.generateObstaclesTicker = undefined;
+    this.generateCoinsTicker = undefined;
+    this.increaseDifficultyTicker = undefined;
   }
 
   togglePause() {
@@ -399,8 +446,8 @@ class Game {
   increaseDifficulty() {
     if (this.isPaused) return;
 
-    this.trackSpeed += 0.01;
-    this.carNpcSpeed += 0.01;
+    this.trackSpeed += 0.2;
+    this.carNpcSpeed += 0.2;
   }
 
   addControls() {
@@ -417,8 +464,8 @@ class Game {
     if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') this.speedX = 0;
   }
 
-  gameLoop() {
-    const deltaSpeed = this.trackSpeed;
+  gameLoop(delta) {
+    const deltaSpeed = this.trackSpeed * delta;
 
     this.playerCar.x += this.speedX;
 
@@ -432,9 +479,9 @@ class Game {
     if (this.playerCar.x < minX) this.playerCar.x = minX;
     if (this.playerCar.x > maxX) this.playerCar.x = maxX;
 
-    this.updateObstacles();
+    this.updateObstacles(delta);
 
-    this.updateCoins();
+    this.updateCoins(delta);
 
     this.elapsedTime += this.app.ticker.deltaMS / 1000;
   }

@@ -10,8 +10,10 @@ const lives = ref(livesInitial);
 onMounted(() => {
   window.addEventListener('update-lives', (event) => {
     lives.value = event.detail.lives;
+  });
 
-    console.log(lives.value);
+  window.addEventListener('game-init', () => {
+    lives.value = livesInitial;
   });
 });
 </script>

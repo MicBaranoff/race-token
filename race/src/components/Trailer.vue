@@ -1,17 +1,19 @@
 <script setup>
 import { defineEmits, ref } from 'vue';
 
+import CButton from '@/components/ui/CButton.vue';
+
 const emit = defineEmits(['trailerFinished']);
 
 const showInfo = ref(false);
 
 setTimeout(() => {
   showInfo.value = true;
-}, 3000);
+}, 1000);
 
-setTimeout(() => {
+const onButtonClickHandler = () => {
   emit('trailerFinished');
-}, 5500);
+};
 </script>
 
 <template>
@@ -27,7 +29,12 @@ setTimeout(() => {
         <div class="game-trailer__logo">
           <img src="/images/start-logo.svg" alt="logo" />
         </div>
-
+        <CButton
+          @click="onButtonClickHandler"
+          class="game-trailer__button"
+          theme="yellow"
+          >CONTINUE</CButton
+        >
         <div class="game-trailer__info">
           <img src="/images/trailer/info.svg" alt="logo" />
         </div>
@@ -92,6 +99,10 @@ setTimeout(() => {
     width: 100%;
     max-width: 556px;
     margin: 0 auto;
+  }
+
+  &__button {
+    margin: 0 auto 56px;
   }
 }
 </style>

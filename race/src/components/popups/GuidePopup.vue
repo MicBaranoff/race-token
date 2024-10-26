@@ -1,5 +1,9 @@
 <script setup>
 import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
+
+import { defineEmits } from 'vue';
+
+const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'skipTutorial']);
 </script>
 
 <template>
@@ -10,7 +14,9 @@ import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
           RACE GUIDE
         </span>
       </div>
-      <CButtonSimpleText icon="skip">SKIP</CButtonSimpleText>
+      <CButtonSimpleText @click="emit('skipTutorial')" icon="skip"
+        >SKIP</CButtonSimpleText
+      >
     </div>
     <div class="guide-popup__row">
       <div class="guide-popup__item">

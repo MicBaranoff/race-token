@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { defineEmits, ref } from 'vue';
 
 import Header from '@/components/common/Header.vue';
 import Start from '@/components/screens/Start.vue';
@@ -7,26 +7,37 @@ import ChooseCar from '@/components/screens/ChooseCar.vue';
 import Game from '@/components/screens/Game.vue';
 import Guide from '@/components/screens/Guide.vue';
 import Leaderboard from '@/components/screens/Leaderboard.vue';
-import { useAudio } from '@/composables/useAudio.js';
 
-const { playMenu } = useAudio();
+const currentComponent = ref(Start);
+const currentCar = ref(null);
 
-onMounted(() => {
-  playMenu();
+defineProps({
+  isPlayingMenu: {
+    default: false,
+  },
 });
 
-const currentComponent = ref(Game);
+const emit = defineEmits(['playMenuSound', 'stopMenuSound']);
+
+const onChooseCarHandler = (car) => {
+  currentCar.value = car;
+  currentComponent.value = Guide;
+};
 </script>
 
 <template>
   <div class="main-container">
     <Header />
-    <component :is="currentComponent" />
-    <!--    <Start />-->
-    <!--    <ChooseCar />-->
-    <!--    <Game />-->
-    <!--    <Guide />-->
-    <!--    <Leaderboard />-->
+    <component
+      @playMenuSound="emit('playMenuSound')"
+      @stopMenuSound="emit('stopMenuSound')"
+      @onStartClick="currentComponent = ChooseCar"
+      @skipTutorial="currentComponent = Game"
+      @onCarChoose="onChooseCarHandler"
+      :isPlayingMenu="isPlayingMenu"
+      :currentCar="currentCar"
+      :is="currentComponent"
+    />
   </div>
 
   <div class="app-nav">

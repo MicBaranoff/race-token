@@ -3,9 +3,15 @@ import CButton from '@/components/ui/CButton.vue';
 import CButtonIcon from '@/components/ui/CButtonIcon.vue';
 import CQuestion from '@/components/ui/CQuestion.vue';
 import Timer from '@/components/blocks/Timer.vue';
-import { useAudio } from '@/composables/useAudio.js';
+import { defineEmits } from 'vue';
 
-const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
+const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'onStartClick']);
+
+defineProps({
+  isPlayingMenu: {
+    default: false,
+  },
+});
 </script>
 
 <template>
@@ -25,7 +31,7 @@ const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
           <div class="start-screen__col">
             <div
               v-if="isPlayingMenu"
-              @click="playMenu"
+              @click="emit('playMenuSound')"
               class="start-screen__button--row"
             >
               <CButtonIcon icon="sound-off" />
@@ -34,7 +40,11 @@ const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
                 (S)</span
               >
             </div>
-            <div v-else class="start-screen__button--row">
+            <div
+              v-else
+              @click="emit('stopMenuSound')"
+              class="start-screen__button--row"
+            >
               <CButtonIcon @click="pauseMenu" icon="sound-on" />
               <span class="start-screen__font start-screen__font--button"
                 >sound on <br />
@@ -47,6 +57,7 @@ const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
             <CButton
               class="start-screen__button start-screen__button--default"
               theme="black"
+              disabled
               >CONNECT WALLET</CButton
             >
             <div class="start-screen__button start-screen__button--start">
@@ -56,7 +67,7 @@ const { isPlayingMenu, playMenu, pauseMenu } = useAudio();
                 >
                 <Timer theme="black" />
               </div>
-              <CButton disabled>START GAME</CButton>
+              <CButton @click="emit('onStartClick')">START GAME</CButton>
             </div>
           </div>
 

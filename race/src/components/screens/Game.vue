@@ -1,7 +1,6 @@
 <script setup>
-import { ref, useTemplateRef } from 'vue';
+import { defineEmits, ref } from 'vue';
 
-import Footer from '@/components/common/Footer.vue';
 import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import ControlsPic from '@/components/blocks/ControlsPic.vue';
@@ -17,23 +16,38 @@ import { useTimer } from '@/composables/useTimer.js';
 
 const { resetTimer, pauseTimer, resumeTimer } = useTimer();
 
-const { isPlayingMenu, playMenu, pauseMenu, playPause } = useAudio();
+const { playPause } = useAudio();
 
 const currentComponent = ref(null);
 const gameScores = ref(null);
 const gameRerender = ref(0);
 const gameRef = ref(null);
 const isPaused = ref(false);
+const isGameEnd = ref(false);
+
+const emit = defineEmits(['playMenuSound', 'stopMenuSound']);
+
+defineProps({
+  isPlayingMenu: {
+    default: false,
+  },
+  currentCar: {
+    default: null,
+  },
+});
 
 const onGameEnd = (data) => {
   currentComponent.value = CrashedPopup;
   gameScores.value = data.score;
+  isGameEnd.value = true;
 };
 
 const onRestart = () => {
   currentComponent.value = null;
-  gameRerender.value++;
   resetTimer();
+  isGameEnd.value = false;
+
+  gameRerender.value++;
 };
 
 const onResume = () => {
@@ -67,6 +81,7 @@ const pauseBtnClickHandler = () => {
         <Game
           ref="gameRef"
           :key="gameRerender"
+          :currentCar="currentCar"
           @on-game-end="onGameEnd"
           class="game-screen__main"
         />
@@ -81,7 +96,7 @@ const pauseBtnClickHandler = () => {
 
       <CButtonIconWithText
         v-if="isPlayingMenu"
-        @click="playMenu"
+        @click="emit('playMenuSound')"
         class="game-screen__sound-btn"
         icon="sound-off"
       >
@@ -90,7 +105,7 @@ const pauseBtnClickHandler = () => {
       </CButtonIconWithText>
       <CButtonIconWithText
         v-else
-        @click="pauseMenu"
+        @click="emit('stopMenuSound')"
         class="game-screen__sound-btn"
         icon="sound-on"
       >
@@ -99,7 +114,7 @@ const pauseBtnClickHandler = () => {
       </CButtonIconWithText>
 
       <CButtonIconWithText
-        v-if="!isPaused"
+        v-if="!isPaused && !isGameEnd"
         @click="pauseBtnClickHandler"
         class="game-screen__play-btn"
         icon="pause"
@@ -108,7 +123,7 @@ const pauseBtnClickHandler = () => {
         (p)
       </CButtonIconWithText>
       <CButtonIconWithText
-        v-else
+        v-if="isPaused && !isGameEnd"
         @click="pauseBtnClickHandler"
         class="game-screen__play-btn"
         icon="play"
