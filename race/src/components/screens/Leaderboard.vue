@@ -12,7 +12,7 @@ const emit = defineEmits(['onCloseLeaders']);
   <div class="leaderboard-screen">
     <div class="leaderboard-screen__holder">
       <div class="leaderboard-screen__container">
-        <video autoplay loop muted>
+        <video playsinline autoplay loop muted>
           <source src="/videos/trailer.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>

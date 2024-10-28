@@ -19,7 +19,7 @@ const onButtonClickHandler = () => {
 <template>
   <div class="game-trailer">
     <div class="game-trailer__video">
-      <video autoplay loop muted>
+      <video playsinline autoplay loop muted>
         <source src="/videos/trailer-2.mp4" type="video/mp4" />
         Your browser does not support HTML5 video.
       </video>

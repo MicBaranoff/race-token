@@ -6,13 +6,13 @@ export function usePreloadVideo() {
         video.src = url;
         video.preload = 'auto';
         video.muted = true;
-        video.playsInline = true;
+        video.setAttribute('playsinline', true);
         video.style.display = 'none';
         document.body.appendChild(video);
 
-        video.oncanplaythrough = () => {
-          document.body.removeChild(video);
+        video.onloadedmetadata = () => {
           resolve(url);
+          document.body.removeChild(video);
         };
 
         video.onerror = (error) => {

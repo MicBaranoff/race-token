@@ -18,7 +18,7 @@ defineProps({
   <div class="start-screen">
     <div class="start-screen__holder">
       <div class="start-screen__video">
-        <video autoplay loop muted>
+        <video playsinline autoplay loop muted>
           <source src="/videos/trailer-2.mp4" type="video/mp4" />
           Your browser does not support HTML5 video.
         </video>

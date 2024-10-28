@@ -17,7 +17,7 @@ import X from '@/assets/svg/x.svg';
             <div class="validate-screen__block">
               <div class="validate-screen__block-view">
                 <div class="validate-screen__block-video">
-                  <video src=""></video>
+                  <video playsinline loop muted src=""></video>
                 </div>
                 <div class="validate-screen__block-content">
                   <div class="validate-screen__block-ico">
