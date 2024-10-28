@@ -12,7 +12,8 @@ import GameLighter from '@/components/blocks/GameLighter.vue';
 
 import { useGame } from '@/composables/useGame.js';
 
-const { initGame, startGame, togglePause, destroyGame } = useGame();
+const { initGame, startGame, togglePause, destroyGame, onKeyDown, onKeyUp } =
+  useGame();
 
 const gameContainer = useTemplateRef('game-block');
 
@@ -25,6 +26,8 @@ const props = defineProps({
 });
 
 const gameStarted = ref(false);
+const isLeftArrowActive = ref(false);
+const isRightArrowActive = ref(false);
 
 onMounted(() => {
   gameInit();
@@ -58,6 +61,28 @@ const gameDestroy = () => {
   destroyGame(gameEndHandler);
 };
 
+const onTouchArrow = (e) => {
+  console.log(e);
+  if (e === 'left') {
+    onKeyDown({ key: 'ArrowLeft' });
+    isLeftArrowActive.value = true;
+  } else {
+    onKeyDown({ key: 'ArrowRight' });
+    isRightArrowActive.value = true;
+  }
+};
+
+const onTouchArrowEnd = (e) => {
+  console.log(e);
+  if (e === 'left') {
+    onKeyUp({ key: 'ArrowLeft' });
+    isLeftArrowActive.value = false;
+  } else {
+    onKeyUp({ key: 'ArrowRight' });
+    isRightArrowActive.value = false;
+  }
+};
+
 defineExpose({ gameTogglePause });
 </script>
 
@@ -70,6 +95,27 @@ defineExpose({ gameTogglePause });
         @startGame="gameStart"
       ></GameLighter>
     </transition>
+
+    <div v-if="gameStarted" class="game-block__nav desktop-hide">
+      <button
+        @touchstart="onTouchArrow('left')"
+        @touchend="onTouchArrowEnd('left')"
+        class="game-block__arrow"
+        :class="{ 'game-block__arrow--active': isLeftArrowActive }"
+      >
+        <img src="/images/game/nav/left.svg" alt="" />
+        <img src="/images/game/nav/left-active.svg" alt="" />
+      </button>
+      <button
+        @touchstart="onTouchArrow('right')"
+        @touchend="onTouchArrowEnd('right')"
+        class="game-block__arrow"
+        :class="{ 'game-block__arrow--active': isRightArrowActive }"
+      >
+        <img src="/images/game/nav/right.svg" alt="" />
+        <img src="/images/game/nav/right-active.svg" alt="" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -81,6 +127,37 @@ defineExpose({ gameTogglePause });
   &__lighter {
     position: absolute;
     top: 0;
+  }
+
+  &__nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px;
+    user-select: none;
+
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+
+  &__arrow {
+    width: 52px;
+    height: 86px;
+
+    img:nth-child(2) {
+      display: none;
+    }
+
+    &--active {
+      img:nth-child(1) {
+        display: none;
+      }
+      img:nth-child(2) {
+        display: block;
+      }
+    }
   }
 }
 </style>

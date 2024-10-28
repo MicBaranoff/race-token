@@ -468,7 +468,6 @@ class Game {
   }
 
   onKeyDown(e) {
-    console.log(e);
     if (e.key === 'ArrowLeft') this.speedX = -this.moveSpeed;
     if (e.key === 'ArrowRight') this.speedX = this.moveSpeed;
   }

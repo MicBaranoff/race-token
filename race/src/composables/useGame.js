@@ -31,12 +31,22 @@ export function useGame() {
     gameInstance.value.loadResources();
   };
 
+  const onKeyDown = (e) => {
+    gameInstance.value.onKeyDown(e);
+  };
+
+  const onKeyUp = (e) => {
+    gameInstance.value.onKeyUp(e);
+  };
+
   return {
     createGame,
     initGame,
     startGame,
     togglePause,
     destroyGame,
+    onKeyDown,
+    onKeyUp,
     loadResources,
     gameInstance,
   };
