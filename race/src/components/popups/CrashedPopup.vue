@@ -10,7 +10,7 @@ defineProps({
   },
 });
 
-const emit = defineEmits(['onRestart']);
+const emit = defineEmits(['onRestart', 'goToLeaders']);
 </script>
 
 <template>
@@ -22,6 +22,7 @@ const emit = defineEmits(['onRestart']);
         <div class="crash-popup__subtext mobile-hide"></div>
 
         <CButtonSimpleText
+          @click="emit('goToLeaders')"
           class="crash-popup__top-btn"
           theme="white"
           icon="rating"

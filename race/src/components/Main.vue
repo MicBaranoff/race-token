@@ -34,6 +34,8 @@ const onChooseCarHandler = (car) => {
       @stopMenuSound="emit('stopMenuSound')"
       @onStartClick="currentComponent = ChooseCar"
       @skipTutorial="currentComponent = Game"
+      @goToLeaders="currentComponent = Leaderboard"
+      @onCloseLeaders="currentComponent = Start"
       @onCarChoose="onChooseCarHandler"
       :isPlayingMenu="isPlayingMenu"
       :currentCar="currentCar"

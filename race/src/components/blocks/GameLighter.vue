@@ -32,9 +32,9 @@ onMounted(() => {
   const interval = setInterval(() => {
     current.value++;
 
-    if (current.value === countsConfig.length) {
+    if (current.value === countsConfig.length - 1) {
       clearInterval(interval);
-      // emit('startGame');
+      emit('startGame');
     }
   }, 1000);
 });

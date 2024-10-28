@@ -3,6 +3,8 @@ import GameInfoRow from '@/components/blocks/GameInfoRow.vue';
 import CButtonExtra from '@/components/ui/CButtonExtra.vue';
 import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
 
+const emit = defineEmits(['goToLeaders']);
+
 defineProps({
   score: {
     type: Number,
@@ -24,6 +26,7 @@ defineProps({
         </div>
 
         <CButtonSimpleText
+          @click="emit('goToLeaders')"
           class="result-popup__top-btn"
           theme="white"
           icon="rating"

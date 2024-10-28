@@ -4,6 +4,8 @@ import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import Close from '@/assets/svg/close.svg';
 import RatingTable from '@/components/blocks/RatingTable.vue';
 import CButtonExtra from '@/components/ui/CButtonExtra.vue';
+
+const emit = defineEmits(['onCloseLeaders']);
 </script>
 
 <template>
@@ -31,7 +33,10 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
           </div>
 
           <button class="leaderboard-screen__close">
-            <Close class="leaderboard-screen__close-ico" />
+            <Close
+              @click="emit('onCloseLeaders')"
+              class="leaderboard-screen__close-ico"
+            />
             <span
               class="leaderboard-screen__font leaderboard-screen__font--close mobile-hide"
               >Close</span

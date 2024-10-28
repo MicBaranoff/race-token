@@ -26,7 +26,7 @@ const isPaused = ref(false);
 const isGameEnd = ref(false);
 const isGameStarted = ref(false);
 
-const emit = defineEmits(['playMenuSound', 'stopMenuSound']);
+const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
 defineProps({
   isPlayingMenu: {
@@ -92,6 +92,7 @@ const pauseBtnClickHandler = () => {
           :score="gameScores"
           @on-restart="onRestart"
           @on-resume="onResume"
+          @goToLeaders="emit('goToLeaders')"
           class="game-screen__popup"
           :is="currentComponent"
         />
