@@ -30,6 +30,10 @@ import CQuestion from '@/components/ui/CQuestion.vue';
   height: 85px;
   position: relative;
 
+  @include is-mobile {
+    height: 50px;
+  }
+
   &__font {
     font-weight: $medium;
     font-size: 14px;
@@ -37,6 +41,10 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: $color-black;
+
+    @include is-mobile {
+      font-size: 10px;
+    }
   }
 
   &__decor {
@@ -66,11 +74,19 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     width: 100%;
     max-width: 1280px;
     margin: 0 auto;
+
+    @include is-mobile {
+      padding: 14px 10px 0;
+    }
   }
 
   &__logo {
     display: block;
     width: 126px;
+
+    @include is-mobile {
+      width: 90px;
+    }
   }
 }
 </style>

@@ -33,7 +33,7 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
           <button class="leaderboard-screen__close">
             <Close class="leaderboard-screen__close-ico" />
             <span
-              class="leaderboard-screen__font leaderboard-screen__font--close"
+              class="leaderboard-screen__font leaderboard-screen__font--close mobile-hide"
               >Close</span
             >
           </button>
@@ -74,6 +74,11 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
       text-align: center;
       font-family: $font-family-accent;
       color: $color-primary;
+
+      @include is-mobile {
+        font-size: 36px;
+        letter-spacing: -0.13em;
+      }
     }
 
     &--info {
@@ -84,6 +89,12 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
       letter-spacing: 0.04em;
       text-transform: uppercase;
       color: $color-black;
+
+      @include is-mobile {
+        font-size: 8px;
+        line-height: 140%;
+        letter-spacing: 0.04em;
+      }
     }
 
     &--close {
@@ -114,6 +125,10 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     margin: 0 auto;
     background: $color-black;
     position: relative;
+
+    @include is-mobile {
+      height: calc(100dvh - 62px - 50px);
+    }
   }
 
   &__container {
@@ -123,6 +138,11 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%),
       url('/images/game.jpg') center / cover no-repeat;
+
+    @include is-mobile {
+      width: 100%;
+      height: 100%;
+    }
 
     &:before {
       position: absolute;
@@ -161,6 +181,19 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     display: flex;
     justify-content: space-between;
     padding: 22px 20px 0;
+
+    @include is-mobile {
+      flex-wrap: wrap;
+    }
+  }
+
+  &__title {
+    @include is-mobile {
+      order: 3;
+      margin-top: 16px;
+      text-align: center;
+      width: 100%;
+    }
   }
 
   &__close-ico {
@@ -168,6 +201,12 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     width: 44px;
     height: 44px;
     margin: 0 auto 19px;
+
+    @include is-mobile {
+      width: 32px;
+      height: 32px;
+      margin: 0;
+    }
   }
 
   &__info {
@@ -176,6 +215,13 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     height: 58px;
     background: $color-primary;
     padding: 8px 16px;
+
+    @include is-mobile {
+      width: 264px;
+      padding: 8px 16px;
+      height: auto;
+      margin: 0;
+    }
   }
 
   &__table {
@@ -184,6 +230,12 @@ import CButtonExtra from '@/components/ui/CButtonExtra.vue';
     background: $color-black;
     margin: 0 auto;
     position: relative;
+
+    @include is-mobile {
+      width: 332px;
+      height: 360px;
+      margin-top: 24px;
+    }
   }
 }
 </style>

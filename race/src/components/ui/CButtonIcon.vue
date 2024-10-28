@@ -1,21 +1,24 @@
 <script setup>
-import icons from "@/configs/icons.js";
+import icons from '@/configs/icons.js';
 
 defineProps({
   theme: {
     default: 'stroke',
     validator(value) {
-      return ['black', 'yellow', 'stroke'].includes(value)
-    }
+      return ['black', 'yellow', 'stroke'].includes(value);
+    },
   },
   icon: {
     type: String,
-  }
-})
+  },
+});
 </script>
 
 <template>
-  <button type="button" :class="['c-button-icon', `c-button-icon--theme-${theme}`]">
+  <button
+    type="button"
+    :class="['c-button-icon', `c-button-icon--theme-${theme}`]"
+  >
     <component :is="icons[icon]" class="c-button-icon__icon" />
   </button>
 </template>
@@ -28,8 +31,15 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url('/images/buttons/icon-btn-bg-black.jpg') center / 100% 100% no-repeat;
+  background: url('/images/buttons/icon-btn-bg-black.jpg') center / 100% 100%
+    no-repeat;
   color: $color-primary;
+
+  @include is-mobile {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+  }
 
   &:active {
     scale: 0.95;
@@ -38,15 +48,23 @@ defineProps({
   &__icon {
     max-width: 45px;
     max-height: 35px;
+
+    @include is-mobile {
+      width: 25px;
+      min-width: 25px;
+      height: 16px;
+    }
   }
 
   &--theme-black {
-    background: url('/images/buttons/icon-btn-bg-black.jpg') center / 100% 100% no-repeat;
+    background: url('/images/buttons/icon-btn-bg-black.jpg') center / 100% 100%
+      no-repeat;
     color: $color-primary;
   }
 
   &--theme-yellow {
-    background: url('/images/buttons/icon-btn-bg-yellow.jpg') center / 100% 100% no-repeat;
+    background: url('/images/buttons/icon-btn-bg-yellow.jpg') center / 100% 100%
+      no-repeat;
     color: $color-black;
   }
 }

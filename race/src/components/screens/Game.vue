@@ -24,6 +24,7 @@ const gameRerender = ref(0);
 const gameRef = ref(null);
 const isPaused = ref(false);
 const isGameEnd = ref(false);
+const isGameStarted = ref(false);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound']);
 
@@ -40,6 +41,7 @@ const onGameEnd = (data) => {
   currentComponent.value = CrashedPopup;
   gameScores.value = data.score;
   isGameEnd.value = true;
+  isGameStarted.value = false;
 };
 
 const onRestart = () => {
@@ -82,7 +84,8 @@ const pauseBtnClickHandler = () => {
           ref="gameRef"
           :key="gameRerender"
           :currentCar="currentCar"
-          @on-game-end="onGameEnd"
+          @onGameEnd="onGameEnd"
+          @onGameStart="isGameStarted = true"
           class="game-screen__main"
         />
         <component
@@ -132,8 +135,11 @@ const pauseBtnClickHandler = () => {
         (p)
       </CButtonIconWithText>
 
-      <ControlsPic class="game-screen__controls-info" />
-      <Health class="game-screen__health" />
+      <transition name="fade">
+        <ControlsPic v-if="!isGameStarted" class="game-screen__controls-info" />
+      </transition>
+
+      <Health class="game-screen__health mobile-hide" />
     </div>
     <GameStats />
   </div>
@@ -152,6 +158,11 @@ const pauseBtnClickHandler = () => {
   margin: 0 auto;
   padding-bottom: 90px;
   overflow: hidden;
+
+  @include is-mobile {
+    height: calc(100dvh - 62px);
+    padding-bottom: 0;
+  }
 
   &__font {
   }
@@ -178,6 +189,11 @@ const pauseBtnClickHandler = () => {
     height: 756px;
     background: $color-black;
     position: relative;
+
+    @include is-mobile {
+      height: calc(100% - 102px);
+      overflow: hidden;
+    }
   }
 
   &__container {
@@ -187,13 +203,24 @@ const pauseBtnClickHandler = () => {
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
     position: relative;
+
+    @include is-mobile {
+      height: 100%;
+    }
   }
 
   &__sound-btn {
     width: 100px;
     position: absolute;
+    z-index: 11;
     top: 32px;
     left: 42px;
+
+    @include is-mobile {
+      width: auto;
+      top: 16px;
+      left: 14px;
+    }
   }
 
   &__play-btn {
@@ -201,18 +228,36 @@ const pauseBtnClickHandler = () => {
     position: absolute;
     top: 32px;
     right: 64px;
+    z-index: 11;
+
+    @include is-mobile {
+      width: auto;
+      top: 16px;
+      right: 14px;
+    }
   }
 
   &__controls-info {
     position: absolute;
     bottom: 64px;
     right: 46px;
+
+    @include is-mobile {
+      bottom: 0;
+      left: 0;
+    }
   }
 
   &__health {
     position: absolute;
     bottom: 64px;
     left: 16px;
+
+    @include is-mobile {
+      position: absolute;
+      bottom: 64px;
+      left: 16px;
+    }
   }
 }
 

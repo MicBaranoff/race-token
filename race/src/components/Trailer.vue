@@ -36,7 +36,12 @@ const onButtonClickHandler = () => {
           >CONTINUE</CButton
         >
         <div class="game-trailer__info">
-          <img src="/images/trailer/info.svg" alt="logo" />
+          <img class="mobile-hide" src="/images/trailer/info.svg" alt="logo" />
+          <img
+            class="desktop-hide"
+            src="/images/trailer/info-mob.svg"
+            alt="logo"
+          />
         </div>
       </div>
     </transition>
@@ -81,6 +86,11 @@ const onButtonClickHandler = () => {
       rgba(#101010, 0.8) 100%
     );
     padding-bottom: 75px;
+
+    @include is-mobile {
+      padding: 38px 32px;
+      justify-content: space-between;
+    }
   }
 
   &__info {
@@ -88,6 +98,10 @@ const onButtonClickHandler = () => {
     width: 100%;
     max-width: 1045px;
     margin: 0 auto;
+
+    @include is-mobile {
+      max-width: 284px;
+    }
   }
 
   &__logo {
@@ -99,10 +113,20 @@ const onButtonClickHandler = () => {
     width: 100%;
     max-width: 556px;
     margin: 0 auto;
+
+    @include is-mobile {
+      position: static;
+      transform: none;
+    }
   }
 
   &__button {
     margin: 0 auto 56px;
+
+    @include is-mobile {
+      margin: 0;
+      order: 3;
+    }
   }
 }
 </style>

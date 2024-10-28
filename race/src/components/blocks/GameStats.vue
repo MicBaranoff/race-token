@@ -2,6 +2,7 @@
 import { onMounted, ref, onBeforeUnmount } from 'vue';
 
 import { useTimer } from '@/composables/useTimer.js';
+import Health from '@/components/blocks/Health.vue';
 
 const { formattedTime, startTimer, stopTimer, resetTimer } = useTimer();
 
@@ -44,6 +45,8 @@ onBeforeUnmount(() => {
     <div class="game-stats__title game-stats__title--right">
       <span class="game-stats__font game-stats__font--title">time</span>
     </div>
+
+    <Health class="game-stats__health desktop-hide" />
   </div>
 </template>
 
@@ -60,6 +63,19 @@ onBeforeUnmount(() => {
   transform: translateX(-50%);
   z-index: 2;
 
+  @include is-mobile {
+    position: relative;
+    z-index: 3;
+    height: 110px;
+    width: 100%;
+    width: 360px;
+    transform: none;
+    left: 0;
+    margin-top: -8px;
+    background: url('/images/game-stats-mob.png') center / 100% 100% no-repeat;
+    overflow: hidden;
+  }
+
   &__font {
     &--title {
       font-weight: $regular;
@@ -69,6 +85,12 @@ onBeforeUnmount(() => {
       text-transform: uppercase;
       color: $color-primary;
       font-family: $font-family-accent;
+
+      @include is-mobile {
+        font-size: 14px;
+        line-height: 140%;
+        letter-spacing: -0.13em;
+      }
     }
 
     &--value {
@@ -79,6 +101,11 @@ onBeforeUnmount(() => {
       color: $color-primary;
       font-weight: $bold;
       font-family: $font-family-accent;
+
+      @include is-mobile {
+        font-size: 16px;
+        line-height: 140%;
+      }
     }
   }
 
@@ -90,16 +117,35 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
 
+    @include is-mobile {
+      width: 100px;
+      height: 40px;
+    }
+
     &--left {
       left: 50%;
       top: 35px;
       transform: translateX(-480px);
+
+      @include is-mobile {
+        left: 50%;
+        top: auto;
+        bottom: -3px;
+        transform: translateX(-120px);
+      }
     }
 
     &--right {
       right: 50%;
       top: 35px;
       transform: translateX(480px);
+
+      @include is-mobile {
+        right: 50%;
+        top: auto;
+        bottom: -3px;
+        transform: translateX(120px);
+      }
     }
   }
 
@@ -111,10 +157,22 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
 
+    @include is-mobile {
+      width: 100px;
+      height: 40px;
+    }
+
     &--left {
       left: 50%;
       top: 35px;
       transform: translateX(-260px);
+
+      @include is-mobile {
+        left: 50%;
+        top: auto;
+        bottom: 20px;
+        transform: translateX(-120px);
+      }
     }
 
     &--right {
@@ -122,7 +180,21 @@ onBeforeUnmount(() => {
       right: calc(50% - 10px);
       top: 35px;
       transform: translateX(290px);
+
+      @include is-mobile {
+        right: 50%;
+        top: auto;
+        bottom: 20px;
+        transform: translateX(130px);
+      }
     }
+  }
+
+  &__health {
+    position: absolute;
+    top: 29px;
+    left: 50%;
+    transform: translateX(-50%);
   }
 }
 </style>

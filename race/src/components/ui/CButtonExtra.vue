@@ -27,12 +27,23 @@ defineProps({
     no-repeat;
   color: $color-black;
 
+  @include is-mobile {
+    min-width: 222px;
+    padding: 6px;
+    height: 55px;
+  }
+
   &__font {
     font-weight: $bold;
     font-size: 18px;
     line-height: 120%;
     letter-spacing: 0.02em;
     text-transform: uppercase;
+
+    @include is-mobile {
+      font-size: 16px;
+      line-height: 120%;
+    }
   }
 
   &:active {

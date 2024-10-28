@@ -40,6 +40,12 @@ defineProps({
     no-repeat;
   color: $color-black;
 
+  @include is-mobile {
+    min-width: 222px;
+    padding: 6px;
+    height: 36px;
+  }
+
   &[disabled] {
     opacity: 0.3;
     pointer-events: none;
@@ -53,6 +59,11 @@ defineProps({
     line-height: 100%;
     letter-spacing: 0.01em;
     text-transform: uppercase;
+
+    @include is-mobile {
+      font-size: 16px;
+      line-height: 150%;
+    }
   }
 
   &:active {
@@ -81,6 +92,10 @@ defineProps({
     #{$parent} {
       &__font {
         font-size: 16px;
+
+        @include is-mobile {
+          font-size: 11px;
+        }
       }
     }
   }

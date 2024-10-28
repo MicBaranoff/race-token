@@ -45,7 +45,7 @@
         <span
           ><span
             style="margin-right: 13px"
-            class="rating-table__font rating-table__font--accent"
+            class="rating-table__font rating-table__font--accent mobile-hide"
             >NEEDS VALIDATION </span
           >02:28:08</span
         >
@@ -205,8 +205,16 @@
     overflow-y: scroll;
     padding-right: 12px;
 
+    @include is-mobile {
+      padding-right: 6px;
+    }
+
     &::-webkit-scrollbar {
       width: 16px;
+
+      @include is-mobile {
+        width: 4px;
+      }
     }
 
     &::-webkit-scrollbar-track {
@@ -238,11 +246,20 @@
     color: $color-grey-light;
     padding: 0 21px;
 
+    @include is-mobile {
+      padding: 0 5px;
+    }
+
     span {
       font-weight: $medium;
       font-size: 14px;
       line-height: 140%;
       text-transform: uppercase;
+
+      @include is-mobile {
+        font-size: 11px;
+        line-height: 140%;
+      }
     }
 
     span:nth-child(1) {
@@ -256,6 +273,10 @@
     span:nth-child(3) {
       width: 45%;
       text-align: right;
+
+      @include is-mobile {
+        width: 45%;
+      }
     }
     span:nth-child(4) {
       width: 10%;

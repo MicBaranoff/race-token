@@ -1,18 +1,12 @@
-//
-// Mixins
-// --------------------------------------------------
-@function em($pixels, $context: $base-font-size) {
-  @return #{calc($pixels / $context)}em;
-}
 
 // Mixins for Resize
 @mixin is-mobile {
-  .is-mobile & {
+  @media screen and (max-width: 1024px) {
     @content;
   }
 }
 @mixin is-desktop {
-  .is-desktop & {
+  @media screen and (min-width: 1024px) {
     @content;
   }
 }

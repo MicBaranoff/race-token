@@ -1,21 +1,24 @@
 <script setup>
-import icons from "@/configs/icons.js";
+import icons from '@/configs/icons.js';
 
 defineProps({
   theme: {
     default: 'black',
     validator(value) {
-      return ['black', 'yellow', 'white'].includes(value)
-    }
+      return ['black', 'yellow', 'white'].includes(value);
+    },
   },
   icon: {
     type: String,
-  }
-})
+  },
+});
 </script>
 
 <template>
-  <button type="button" :class="['c-button-simple', `c-button-simple--theme-${theme}`]">
+  <button
+    type="button"
+    :class="['c-button-simple', `c-button-simple--theme-${theme}`]"
+  >
     <component :is="icons[icon]" class="c-button-simple__icon" />
     <span class="c-button-simple__font">
       <slot></slot>

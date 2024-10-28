@@ -54,11 +54,7 @@ defineProps({
 <style scoped lang="scss">
 .guide-screen {
   width: 100%;
-
   overflow: hidden;
-
-  &__font {
-  }
 
   &__holder {
     display: flex;
@@ -70,6 +66,10 @@ defineProps({
     margin: 0 auto;
     background: $color-black;
     position: relative;
+
+    @include is-mobile {
+      height: calc(100dvh - 62px - 50px);
+    }
   }
 
   &__container {
@@ -79,6 +79,10 @@ defineProps({
     background:
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
+
+    @include is-mobile {
+      height: 100%;
+    }
 
     video {
       width: 100%;
@@ -92,6 +96,12 @@ defineProps({
     bottom: 24px;
     left: 24px;
     right: 24px;
+
+    @include is-mobile {
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+    }
   }
 
   &__sound-btn {
@@ -99,6 +109,12 @@ defineProps({
     position: absolute;
     top: 32px;
     left: 42px;
+
+    @include is-mobile {
+      width: auto;
+      top: 16px;
+      left: 14px;
+    }
   }
 }
 </style>

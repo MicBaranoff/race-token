@@ -40,40 +40,43 @@ const goPrev = () => {
       <div class="choose-car__container">
         <div class="choose-car__title">
           <h2 class="choose-car__font choose-car__font--title">
-            CHOOSE YOUR RACE CAR
+            CHOOSE YOUR <br class="desktop-hide" />
+            RACE CAR
           </h2>
         </div>
 
-        <div class="choose-car__picker">
-          <button
-            @click="goPrev"
-            class="choose-car__arrow choose-car__arrow--prev"
-          >
-            <img src="/images/nav/prev.svg" alt="" />
-            <img src="/images/nav/prev-active.svg" alt="" />
-          </button>
-          <div class="choose-car__picker-picture">
-            <img :src="currentCarImage" alt="" />
+        <div>
+          <div class="choose-car__picker">
+            <button
+              @click="goPrev"
+              class="choose-car__arrow choose-car__arrow--prev"
+            >
+              <img src="/images/nav/prev.svg" alt="" />
+              <img src="/images/nav/prev-active.svg" alt="" />
+            </button>
+            <div class="choose-car__picker-picture">
+              <img :src="currentCarImage" alt="" />
+            </div>
+            <button
+              @click="goNext"
+              class="choose-car__arrow choose-car__arrow--next"
+            >
+              <img src="/images/nav/next.svg" alt="" />
+              <img src="/images/nav/next-active.svg" alt="" />
+            </button>
           </div>
-          <button
-            @click="goNext"
-            class="choose-car__arrow choose-car__arrow--next"
-          >
-            <img src="/images/nav/next.svg" alt="" />
-            <img src="/images/nav/next-active.svg" alt="" />
-          </button>
-        </div>
 
-        <div class="choose-car__dots">
-          <button
-            v-for="(item, index) in cars"
-            :key="item.id + 'dot'"
-            :class="[
-              'choose-car__dot',
-              { 'choose-car__dot--active': index === currentCarIndex },
-            ]"
-            @click="currentCarIndex = index"
-          ></button>
+          <div class="choose-car__dots">
+            <button
+              v-for="(item, index) in cars"
+              :key="item.id + 'dot'"
+              :class="[
+                'choose-car__dot',
+                { 'choose-car__dot--active': index === currentCarIndex },
+              ]"
+              @click="currentCarIndex = index"
+            ></button>
+          </div>
         </div>
 
         <div class="choose-car__button choose-car__button--main">
@@ -114,11 +117,18 @@ const goPrev = () => {
 
   &__font {
     &--title {
-      font-weight: 400;
-      font-size: 40px;
-      line-height: 60%;
-      letter-spacing: 0.01em;
+      font-family: $font-family-accent;
+      font-weight: $bold;
+      font-size: 48px;
+      line-height: 90%;
+      letter-spacing: -0.13em;
       color: $color-primary;
+
+      @include is-mobile {
+        font-size: 24px;
+        line-height: 1;
+        letter-spacing: -0.13em;
+      }
     }
   }
 
@@ -128,6 +138,10 @@ const goPrev = () => {
     justify-content: center;
     gap: 16px;
     margin-top: 42px;
+
+    @include is-mobile {
+      gap: 8px;
+    }
   }
 
   &__dot {
@@ -136,6 +150,12 @@ const goPrev = () => {
     border: 2px solid #d9d9d9;
     width: 12px;
     height: 12px;
+
+    @include is-mobile {
+      width: 8px;
+      height: 8px;
+      border: 1px solid #d9d9d9;
+    }
 
     &--active {
       background: #d9d9d9;
@@ -147,11 +167,19 @@ const goPrev = () => {
     position: absolute;
     top: 32px;
     left: 42px;
+
+    @include is-mobile {
+      display: none;
+    }
   }
 
   &__title {
     text-align: center;
     margin-bottom: 158px;
+
+    @include is-mobile {
+      margin: 0;
+    }
   }
 
   &__holder {
@@ -164,6 +192,11 @@ const goPrev = () => {
     margin: 0 auto;
     background: $color-black;
     position: relative;
+
+    @include is-mobile {
+      height: calc(100dvh - 62px - 50px);
+      padding: 16px 14px;
+    }
   }
 
   &__picker {
@@ -175,6 +208,12 @@ const goPrev = () => {
   &__picker-picture {
     width: 444px;
     height: 256px;
+
+    @include is-mobile {
+      width: 202px;
+      height: 119px;
+    }
+
     img {
       width: 100%;
       height: 100%;
@@ -185,11 +224,20 @@ const goPrev = () => {
     display: flex;
     justify-content: center;
     margin-top: 40px;
+
+    @include is-mobile {
+      margin: 0;
+    }
   }
 
   &__arrow {
     width: 48px;
     height: 256px;
+
+    @include is-mobile {
+      width: 24px;
+      height: 80px;
+    }
 
     &:active {
       scale: 0.95;
@@ -219,6 +267,17 @@ const goPrev = () => {
     height: 692px;
     background: $color-grey;
     padding: 32px 79px;
+
+    @include is-mobile {
+      width: 100%;
+      height: 100%;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+
+      padding: 8px 0 40px 0;
+    }
   }
 }
 </style>

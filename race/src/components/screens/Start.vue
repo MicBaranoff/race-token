@@ -35,7 +35,8 @@ defineProps({
               class="start-screen__button--row"
             >
               <CButtonIcon icon="sound-off" />
-              <span class="start-screen__font start-screen__font--button"
+              <span
+                class="start-screen__font start-screen__font--button mobile-hide"
                 >sound off <br />
                 (S)</span
               >
@@ -46,7 +47,8 @@ defineProps({
               class="start-screen__button--row"
             >
               <CButtonIcon @click="pauseMenu" icon="sound-on" />
-              <span class="start-screen__font start-screen__font--button"
+              <span
+                class="start-screen__font start-screen__font--button mobile-hide"
                 >sound on <br />
                 (S)</span
               >
@@ -61,13 +63,14 @@ defineProps({
               >CONNECT WALLET</CButton
             >
             <div class="start-screen__button start-screen__button--start">
+              <CButton @click="emit('onStartClick')">START GAME</CButton>
               <div class="start-screen__timer">
                 <span class="start-screen__font start-screen__font--timer"
                   >0/8 tries resets in</span
                 >
-                <Timer theme="black" />
+                <br />
+                <Timer class="start-screen__timer-time" theme="black" />
               </div>
-              <CButton @click="emit('onStartClick')">START GAME</CButton>
             </div>
           </div>
 
@@ -75,7 +78,8 @@ defineProps({
             <div
               class="start-screen__button--row start-screen__button--row--reverse"
             >
-              <span class="start-screen__font start-screen__font--button"
+              <span
+                class="start-screen__font start-screen__font--button mobile-hide"
                 >check out leaderboard</span
               >
               <CButtonIcon icon="rating" />
@@ -128,6 +132,10 @@ defineProps({
       letter-spacing: 0.02em;
       text-transform: uppercase;
       color: $color-black;
+
+      @include is-mobile {
+        font-size: 10px;
+      }
     }
 
     &--timer {
@@ -147,6 +155,10 @@ defineProps({
     bottom: 0;
     left: 0;
     right: 0;
+
+    @include is-mobile {
+      padding: 0 14px 9px;
+    }
   }
 
   &__footer-holder {
@@ -158,9 +170,20 @@ defineProps({
     margin: 0 auto;
   }
 
+  &__center {
+    @include is-mobile {
+      height: 100%;
+      padding-top: 70px;
+    }
+  }
+
   &__footer-logo {
     display: block;
     width: 126px;
+
+    @include is-mobile {
+      width: 90px;
+    }
   }
 
   &__footer-link {
@@ -174,6 +197,10 @@ defineProps({
     height: 484px;
     background: url('/images/video.jpg') center / cover no-repeat;
     position: relative;
+
+    @include is-mobile {
+      height: calc(100dvh - 360px - 62px);
+    }
 
     video {
       object-fit: cover;
@@ -189,12 +216,21 @@ defineProps({
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    @include is-mobile {
+      width: 255px;
+    }
   }
 
   &__main {
     position: relative;
     height: 345px;
     padding: 40px 40px 100px;
+
+    @include is-mobile {
+      height: 360px;
+      padding: 0 14px 39px;
+    }
   }
 
   &__main-container {
@@ -214,11 +250,26 @@ defineProps({
     position: absolute;
     right: -150px;
     text-align: center;
+
+    @include is-mobile {
+      position: static;
+      margin-top: 8px;
+    }
+
+    &-time {
+      @include is-mobile {
+        margin-top: 4px;
+      }
+    }
   }
 
   &__button {
     &--default {
       margin-bottom: 16px;
+
+      @include is-mobile {
+        margin-bottom: 8px;
+      }
     }
 
     &--start {

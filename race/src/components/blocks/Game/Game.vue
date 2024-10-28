@@ -16,7 +16,7 @@ const { initGame, startGame, togglePause, destroyGame } = useGame();
 
 const gameContainer = useTemplateRef('game-block');
 
-const emit = defineEmits(['onGameEnd', 'onGamePaused']);
+const emit = defineEmits(['onGameEnd', 'onGamePaused', 'onGameStart']);
 
 const props = defineProps({
   currentCar: {
@@ -46,14 +46,11 @@ const gameTogglePause = () => {
 
 const gameInit = () => {
   initGame(gameContainer.value, gameEndHandler, props.currentCar);
-
-  setTimeout(() => {
-    //
-  }, 2000);
 };
 
 const gameStart = () => {
   startGame();
+  emit('onGameStart');
   gameStarted.value = true;
 };
 

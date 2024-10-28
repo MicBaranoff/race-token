@@ -32,13 +32,13 @@ onMounted(() => {
         />
       </div>
     </div>
-    <div class="health-block__text">
+    <div class="health-block__text mobile-hide">
       <span class="health-block__font health-block__font--text">
         {{ lives }}/{{ livesInitial }} <br />
         tries reset in
       </span>
     </div>
-    <TimerWhite />
+    <TimerWhite class="mobile-hide" />
   </div>
 </template>
 
@@ -64,6 +64,10 @@ onMounted(() => {
 
   &__item {
     width: 32px;
+
+    @include is-mobile {
+      width: 19px;
+    }
   }
   &__ico {
     width: 100%;
@@ -76,6 +80,14 @@ onMounted(() => {
     grid-auto-flow: column;
     width: 88px;
     margin: 0 auto 24px;
+
+    @include is-mobile {
+      display: flex;
+      gap: 8px;
+      width: auto;
+      justify-content: center;
+      margin: 0;
+    }
   }
 }
 </style>

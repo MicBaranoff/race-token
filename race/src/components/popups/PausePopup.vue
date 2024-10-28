@@ -11,7 +11,7 @@ const emit = defineEmits(['onResume']);
       <div class="pause-popup__title">
         <h2 class="pause-popup__font pause-popup__font--title">pause</h2>
       </div>
-      <div class="pause-popup__text">
+      <div class="pause-popup__text mobile-hide">
         <span class="pause-popup__font pause-popup__font--text">
           PRESS (P)
         </span>
@@ -40,6 +40,11 @@ const emit = defineEmits(['onResume']);
       font-family: $font-family-accent;
       font-weight: $bold;
       -webkit-text-stroke: 1px $color-black;
+
+      @include is-mobile {
+        font-size: 36px;
+        letter-spacing: -0.13em;
+      }
     }
 
     &--text {
@@ -60,10 +65,19 @@ const emit = defineEmits(['onResume']);
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    @include is-mobile {
+      justify-content: flex-start;
+      padding-top: 76px;
+    }
   }
 
   &__title {
     margin-bottom: 24px;
+
+    @include is-mobile {
+      margin-bottom: 8px;
+    }
   }
   &__text {
     margin-bottom: 40px;

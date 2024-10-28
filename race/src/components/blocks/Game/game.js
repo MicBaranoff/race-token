@@ -1,5 +1,7 @@
 import * as PIXI from 'pixi.js';
 
+const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
 const obstacleTypes = {
   TYPE_CAR: 'typeCar',
   TYPE_OBSTACLE: 'typeObstacle',
@@ -38,6 +40,8 @@ const speedX = 0;
 const trackSpeed = 10;
 const moveSpeed = 5;
 const carNpcSpeed = 8;
+
+const mobileScale = 0.5;
 
 class Game {
   constructor() {
@@ -96,8 +100,11 @@ class Game {
       .add('car_2', './images/game/CAR_2.png')
       .add('car_3', './images/game/CAR_3.png')
       .add('track', './images/game/ROAD.png')
+      .add('track-mob', './images/game/ROAD-mob.png')
       .add('side-left', './images/game/LEFT_SIDE.jpg')
-      .add('side-right', './images/game/RIGHT_SIDE.jpg');
+      .add('side-left-mob', './images/game/LEFT_SIDE-mob.jpg')
+      .add('side-right', './images/game/RIGHT_SIDE.jpg')
+      .add('side-right-mob', './images/game/RIGHT_SIDE-mob.jpg');
 
     obstacles.forEach((url, index) => {
       this.loader.add('obstacle' + (index + 1), url);
@@ -181,8 +188,8 @@ class Game {
 
   createTrack() {
     this.track = new PIXI.TilingSprite(
-      this.loader.resources['track'].texture,
-      352,
+      this.loader.resources[!isMobile ? 'track' : 'track-mob'].texture,
+      isMobile ? 145 : 352,
       this.app.view.height
     );
     this.track.x = this.app.view.width / 2 - this.track.width / 2;
@@ -190,8 +197,8 @@ class Game {
     this.app.stage.addChild(this.track);
 
     this.trackSideLeft = new PIXI.TilingSprite(
-      this.loader.resources['side-left'].texture,
-      230,
+      this.loader.resources[!isMobile ? 'side-left' : 'side-left-mob'].texture,
+      isMobile ? 73 : 230,
       this.app.view.height,
       1
     );
@@ -200,8 +207,10 @@ class Game {
     this.app.stage.addChild(this.trackSideLeft);
 
     this.trackSideRight = new PIXI.TilingSprite(
-      this.loader.resources['side-right'].texture,
-      230,
+      this.loader.resources[
+        !isMobile ? 'side-right' : 'side-right-mob'
+      ].texture,
+      isMobile ? 73 : 230,
       this.app.view.height
     );
     this.trackSideRight.x = this.app.view.width - this.trackSideRight.width;
@@ -216,6 +225,7 @@ class Game {
     this.playerCar.x = this.app.view.width / 2 - this.playerCar.width / 2;
     this.playerCar.y = this.app.view.height - this.playerCar.height - 20;
     this.playerCar.zIndex = 10;
+    isMobile && this.playerCar.scale.set(mobileScale);
     this.app.stage.addChild(this.playerCar);
   }
 
@@ -243,6 +253,7 @@ class Game {
 
       obstacle.x = Math.random() * (maxX - minX) + minX;
       obstacle.y = -obstacle.height;
+      isMobile && obstacle.scale.set(mobileScale);
       obstacle.type = isCar
         ? obstacleTypes.TYPE_CAR
         : obstacleTypes.TYPE_OBSTACLE;
@@ -271,6 +282,7 @@ class Game {
       const maxX = this.track.x + this.track.width - coin.width;
       coin.x = Math.random() * (maxX - minX) + minX;
       coin.y = -coin.height;
+      isMobile && coin.scale.set(mobileScale);
 
       positionValid =
         this.checkNoOverlap(coin, this.obstacles) &&
@@ -456,6 +468,7 @@ class Game {
   }
 
   onKeyDown(e) {
+    console.log(e);
     if (e.key === 'ArrowLeft') this.speedX = -this.moveSpeed;
     if (e.key === 'ArrowRight') this.speedX = this.moveSpeed;
   }

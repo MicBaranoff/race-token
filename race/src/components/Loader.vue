@@ -52,7 +52,12 @@ const startLoading = () => {
   <div class="game-loader">
     <img
       src="/images/loader/loader-logo.svg"
-      class="game-loader__logo"
+      class="game-loader__logo mobile-hide"
+      alt="logo"
+    />
+    <img
+      src="/images/start-logo.svg"
+      class="game-loader__logo desktop-hide"
       alt="logo"
     />
     <img src="/images/loader/giga.svg" class="game-loader__giga" alt="giga" />
@@ -89,12 +94,21 @@ const startLoading = () => {
   justify-content: space-between;
   align-items: center;
 
+  @include is-mobile {
+    background: url('/images/loader/loader-bg-mob.jpg') center / cover no-repeat;
+    padding: 28px 22px;
+  }
+
   &__font {
     font-weight: $bold;
     font-size: 24px;
     line-height: 100%;
     letter-spacing: 0.01em;
     color: $color-primary;
+
+    @include is-mobile {
+      font-size: 20px;
+    }
   }
 
   &__logo {
@@ -102,6 +116,10 @@ const startLoading = () => {
     width: 100%;
     max-width: 1100px;
     margin: 0 auto;
+
+    @include is-mobile {
+      max-width: 255px;
+    }
   }
 
   &__giga {
@@ -110,6 +128,12 @@ const startLoading = () => {
     position: absolute;
     right: 42px;
     bottom: 42px;
+
+    @include is-mobile {
+      width: 52px;
+      right: 26px;
+      bottom: 114px;
+    }
   }
 
   &__progress {
@@ -119,6 +143,13 @@ const startLoading = () => {
     gap: 8px;
     height: 64px;
     background: $color-black;
+
+    @include is-mobile {
+      padding: 7px 0;
+      position: relative;
+      gap: 4px;
+      height: 34px;
+    }
 
     &:before {
       content: '';
@@ -151,6 +182,11 @@ const startLoading = () => {
     width: 22px;
     height: 44px;
     background: rgba(236, 243, 53, 0.1);
+
+    @include is-mobile {
+      width: 10px;
+      height: 20px;
+    }
 
     &--active {
       background: $color-primary;

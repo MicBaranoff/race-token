@@ -18,7 +18,7 @@ defineProps({
   <div class="button-icon-text">
     <CButtonIcon class="button-icon-text__btn" :theme="theme" :icon="icon" />
 
-    <span class="button-icon-text__font">
+    <span class="button-icon-text__font mobile-hide">
       <slot></slot>
     </span>
   </div>
@@ -47,6 +47,10 @@ defineProps({
 
   &__btn {
     margin-bottom: 16px;
+
+    @include is-mobile {
+      margin-bottom: 0;
+    }
   }
 }
 </style>

@@ -34,7 +34,7 @@ onMounted(() => {
 
     if (current.value === countsConfig.length) {
       clearInterval(interval);
-      emit('startGame');
+      // emit('startGame');
     }
   }, 1000);
 });
@@ -63,7 +63,10 @@ onMounted(() => {
   background: url('/images/lighter/light-shadow.png') center / 100% 100%
     no-repeat;
   text-align: center;
-  text-align: center;
+
+  @include is-mobile {
+    height: 224px;
+  }
 
   &__font {
     font-size: 64px;
@@ -74,6 +77,11 @@ onMounted(() => {
     font-family: $font-family-accent;
     font-weight: $bold;
     -webkit-text-stroke: 1px $color-black;
+
+    @include is-mobile {
+      font-size: 36px;
+      letter-spacing: -0.13em;
+    }
   }
 
   &__holder {
@@ -82,15 +90,29 @@ onMounted(() => {
     justify-content: center;
     align-items: center;
     height: 100%;
+
+    @include is-mobile {
+      justify-content: flex-start;
+      padding-top: 24px;
+    }
   }
 
   &__main {
     width: 274px;
     margin-bottom: 8px;
+
+    @include is-mobile {
+      width: 142px;
+      margin-bottom: 4px;
+    }
   }
 
   &__text {
     min-height: 82px;
+
+    @include is-mobile {
+      min-height: 40px;
+    }
   }
 }
 </style>

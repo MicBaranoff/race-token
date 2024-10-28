@@ -23,6 +23,12 @@ defineProps({
   padding: 8px 10px;
   border: 2px solid;
   color: $color-white-1;
+  display: inline-block;
+
+  @include is-mobile {
+    padding: 0 4px;
+    border: 1px solid;
+  }
 
   &__font {
     font-size: 16px;
@@ -30,6 +36,10 @@ defineProps({
     letter-spacing: 0.08em;
     text-transform: uppercase;
     text-align: center;
+
+    @include is-mobile {
+      font-size: 12px;
+    }
   }
 
   &--theme {

@@ -15,11 +15,11 @@ const emit = defineEmits(['onRestart']);
 
 <template>
   <div class="crash-popup">
-    <GameInfoRow />
+    <GameInfoRow class="mobile-hide" />
 
     <div class="crash-popup__holder">
       <div class="crash-popup__row">
-        <div class="crash-popup__subtext"></div>
+        <div class="crash-popup__subtext mobile-hide"></div>
 
         <CButtonSimpleText
           class="crash-popup__top-btn"
@@ -76,7 +76,11 @@ const emit = defineEmits(['onRestart']);
       color: $color-white-1;
       font-family: $font-family-accent;
       font-weight: $bold;
-      -webkit-text-stroke: 1px $color-black;
+
+      @include is-mobile {
+        font-size: 36px;
+        letter-spacing: -0.13em;
+      }
     }
 
     &--subtitle {
@@ -88,7 +92,11 @@ const emit = defineEmits(['onRestart']);
       color: $color-white-1;
       font-family: $font-family-accent;
       font-weight: $bold;
-      -webkit-text-stroke: 1px $color-black;
+
+      @include is-mobile {
+        font-size: 24px;
+        letter-spacing: -0.13em;
+      }
     }
 
     &--text {
@@ -124,6 +132,12 @@ const emit = defineEmits(['onRestart']);
       text-transform: uppercase;
       text-align: center;
       color: $color-white;
+
+      @include is-mobile {
+        font-size: 10px;
+        line-height: 150%;
+        letter-spacing: 0.04em;
+      }
     }
 
     &--accent {
@@ -133,6 +147,10 @@ const emit = defineEmits(['onRestart']);
 
   &__holder {
     padding: 12px 16px;
+
+    @include is-mobile {
+      padding-top: 16px;
+    }
   }
 
   &__row {
@@ -140,13 +158,25 @@ const emit = defineEmits(['onRestart']);
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
+
+    @include is-mobile {
+      justify-content: center;
+    }
   }
 
   &__title {
     margin-bottom: 24px;
+
+    @include is-mobile {
+      margin-bottom: 8px;
+    }
   }
   &__subtitle {
     margin-bottom: 35px;
+
+    @include is-mobile {
+      margin-bottom: 16px;
+    }
   }
   &__text {
     margin-bottom: 29px;
@@ -160,6 +190,11 @@ const emit = defineEmits(['onRestart']);
     margin: 0 auto 16px;
     display: flex;
     justify-content: center;
+
+    @include is-mobile {
+      width: 222px;
+      margin: 0 auto 8px;
+    }
   }
   &__info {
     margin: 0 auto;
@@ -167,6 +202,13 @@ const emit = defineEmits(['onRestart']);
     height: 76px;
     background: $color-black;
     padding: 15px 20px;
+
+    @include is-mobile {
+      padding: 8px 18px;
+      width: 100%;
+      height: auto;
+      margin-top: 16px;
+    }
   }
 }
 </style>

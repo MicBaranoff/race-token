@@ -21,6 +21,7 @@ defineProps({
       content: text,
       placement: position,
       distance: 10,
+      triggers: ['click', 'hover', 'touch'],
     }"
     type="button"
     class="c-question"
