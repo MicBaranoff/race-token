@@ -93,7 +93,7 @@ class Game {
   }
 
   loadResources() {
-    this.loader = new PIXI.Loader();
+    this.loader = PIXI.Loader.shared;
 
     this.loader
       .add('car_1', './images/game/CAR_1.png')
