@@ -11,6 +11,7 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@pixi/assets": "^6.5.10",
     "@vueuse/sound": "^2.0.1",
     "floating-vue": "^5.2.2",
     "pinia": "^2.2.4",

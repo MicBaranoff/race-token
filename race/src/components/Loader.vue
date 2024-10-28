@@ -23,9 +23,13 @@ const allLoaded = computed(() => {
 onMounted(() => {
   startLoading();
 
-  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(() => {
-    videoLoaded.value = true;
-  });
+  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(
+    (res) => {
+      console.log(res);
+      console.log('videoLoaded');
+      videoLoaded.value = true;
+    }
+  );
 });
 
 watch(allLoaded, () => {
@@ -39,10 +43,14 @@ const startLoading = () => {
   progress.value = 0;
 
   window.addEventListener('game-loading', (event) => {
-    progress.value = Math.round(event.detail.progress);
+    progress.value = Math.round(event.detail.progress * 100);
+
+    console.log(progress.value);
 
     if (progress.value === 100) {
       gameLoaded.value = true;
+
+      console.log('gameLoaded');
     }
   });
 };

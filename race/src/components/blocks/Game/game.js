@@ -1,4 +1,5 @@
 import * as PIXI from 'pixi.js';
+import { Assets } from '@pixi/assets';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -48,6 +49,7 @@ class Game {
     this.containcser = undefined;
     this.app = undefined;
     this.loader = null;
+    this.assets = null;
 
     this.playerCar = null;
     this.currentCar = null;
@@ -92,58 +94,95 @@ class Game {
     this.setup();
   }
 
-  loadResources() {
-    this.loader = PIXI.Loader.shared;
+  async loadResources() {
+    // this.loader = Assets;
 
-    this.loader
-      .add('car_1', './images/game/CAR_1.png')
-      .add('car_2', './images/game/CAR_2.png')
-      .add('car_3', './images/game/CAR_3.png')
-      .add('track', './images/game/ROAD.png')
-      .add('track-mob', './images/game/ROAD-mob.png')
-      .add('side-left', './images/game/LEFT_SIDE.jpg')
-      .add('side-left-mob', './images/game/LEFT_SIDE-mob.jpg')
-      .add('side-right', './images/game/RIGHT_SIDE.jpg')
-      .add('side-right-mob', './images/game/RIGHT_SIDE-mob.jpg');
+    let assets = [
+      { name: 'car_1', srcs: './images/game/CAR_1.png' },
+      { name: 'car_2', srcs: './images/game/CAR_2.png' },
+      { name: 'car_3', srcs: './images/game/CAR_3.png' },
+      { name: 'track', srcs: './images/game/ROAD.png' },
+      { name: 'track-mob', srcs: './images/game/ROAD-mob.png' },
+      { name: 'side-left', srcs: './images/game/LEFT_SIDE.jpg' },
+      { name: 'side-left-mob', srcs: './images/game/LEFT_SIDE-mob.jpg' },
+      { name: 'side-right', srcs: './images/game/RIGHT_SIDE.jpg' },
+      { name: 'side-right-mob', srcs: './images/game/RIGHT_SIDE-mob.jpg' },
+    ];
+
+    // this.loader
+    //   .add('car_1', './images/game/CAR_1.png')
+    //   .add('car_2', './images/game/CAR_2.png')
+    //   .add('car_3', './images/game/CAR_3.png')
+    //   .add('track', './images/game/ROAD.png')
+    //   .add('track-mob', './images/game/ROAD-mob.png')
+    //   .add('side-left', './images/game/LEFT_SIDE.jpg')
+    //   .add('side-left-mob', './images/game/LEFT_SIDE-mob.jpg')
+    //   .add('side-right', './images/game/RIGHT_SIDE.jpg')
+    //   .add('side-right-mob', './images/game/RIGHT_SIDE-mob.jpg');
 
     obstacles.forEach((url, index) => {
-      this.loader.add('obstacle' + (index + 1), url);
+      assets.push({ name: 'obstacle' + (index + 1), srcs: url });
     });
 
     cars.forEach((url, index) => {
-      this.loader.add('car' + (index + 1), url);
+      assets.push({ name: 'car' + (index + 1), srcs: url });
     });
 
     coins.forEach((url, index) => {
-      this.loader.add('coin' + (index + 1), url);
+      assets.push({ name: 'coin' + (index + 1), srcs: url });
     });
 
-    this.loader.onProgress.add((loader) => {
+    const assetManifest = {
+      bundles: [
+        {
+          name: 'gameAssets',
+          assets: [...assets],
+        },
+      ],
+    };
+
+    await Assets.init({ manifest: assetManifest });
+
+    this.assets = await Assets.loadBundle('gameAssets', (progress) => {
       window.dispatchEvent(
         new CustomEvent('game-loading', {
           detail: {
-            progress: loader.progress,
+            progress: progress,
           },
         })
       );
     });
 
-    this.loader.load(() => {
-      window.dispatchEvent(new CustomEvent('game-loaded'));
-    });
+    console.log(this.assets);
+
+    window.dispatchEvent(new CustomEvent('game-loaded'));
+
+    // this.loader.onProgress.add((loader) => {
+    //   window.dispatchEvent(
+    //     new CustomEvent('game-loading', {
+    //       detail: {
+    //         progress: loader.progress,
+    //       },
+    //     })
+    //   );
+    // });
+    //
+    // this.loader.load(() => {
+    //   window.dispatchEvent(new CustomEvent('game-loaded'));
+    // });
   }
 
   setup() {
     this.obstacleTextures = obstacles.map((_url, index) => {
-      return this.loader.resources['obstacle' + (index + 1)].texture;
+      return this.assets['obstacle' + (index + 1)];
     });
 
     this.carTextures = obstacles.map((_url, index) => {
-      return this.loader.resources['car' + (index + 1)].texture;
+      return this.assets['car' + (index + 1)];
     });
 
     this.coinTextures = obstacles.map((_url, index) => {
-      return this.loader.resources['coin' + (index + 1)].texture;
+      return this.assets['coin' + (index + 1)];
     });
 
     this.createTrack();
@@ -188,7 +227,7 @@ class Game {
 
   createTrack() {
     this.track = new PIXI.TilingSprite(
-      this.loader.resources[!isMobile ? 'track' : 'track-mob'].texture,
+      this.assets[!isMobile ? 'track' : 'track-mob'],
       isMobile ? 145 : 352,
       this.app.view.height
     );
@@ -197,7 +236,7 @@ class Game {
     this.app.stage.addChild(this.track);
 
     this.trackSideLeft = new PIXI.TilingSprite(
-      this.loader.resources[!isMobile ? 'side-left' : 'side-left-mob'].texture,
+      this.assets[!isMobile ? 'side-left' : 'side-left-mob'],
       isMobile ? 73 : 230,
       this.app.view.height,
       1
@@ -207,9 +246,7 @@ class Game {
     this.app.stage.addChild(this.trackSideLeft);
 
     this.trackSideRight = new PIXI.TilingSprite(
-      this.loader.resources[
-        !isMobile ? 'side-right' : 'side-right-mob'
-      ].texture,
+      this.assets[!isMobile ? 'side-right' : 'side-right-mob'],
       isMobile ? 73 : 230,
       this.app.view.height
     );
@@ -219,9 +256,7 @@ class Game {
   }
 
   createPlayerCar() {
-    this.playerCar = new PIXI.Sprite(
-      this.loader.resources[this.currentCar].texture
-    );
+    this.playerCar = new PIXI.Sprite(this.assets[this.currentCar]);
     this.playerCar.x = this.app.view.width / 2 - this.playerCar.width / 2;
     this.playerCar.y = this.app.view.height - this.playerCar.height - 20;
     this.playerCar.zIndex = 10;
