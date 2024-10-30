@@ -45,12 +45,8 @@ const startLoading = () => {
   window.addEventListener('game-loading', (event) => {
     progress.value = Math.round(event.detail.progress * 100);
 
-    console.log(progress.value);
-
     if (progress.value === 100) {
       gameLoaded.value = true;
-
-      console.log('gameLoaded');
     }
   });
 };

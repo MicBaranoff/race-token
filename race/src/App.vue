@@ -8,7 +8,7 @@ import Trailer from '@/components/Trailer.vue';
 import { useAudio } from '@/composables/useAudio.js';
 import { useGame } from '@/composables/useGame.js';
 
-const { playMenu, pauseMenu, isPlayingMenu } = useAudio();
+const { playMenu, muteSounds, unmuteSounds, isMuted } = useAudio();
 const { createGame, loadResources } = useGame();
 
 const currentComponent = ref(Loader);
@@ -28,20 +28,11 @@ const trailerFinishedHandler = () => {
   <component
     @onLoad="currentComponent = Trailer"
     @trailerFinished="trailerFinishedHandler"
-    @playMenuSound="playMenu"
-    @stopMenuSound="pauseMenu"
-    :isPlayingMenu="isPlayingMenu"
+    @playMenuSound="unmuteSounds"
+    @stopMenuSound="muteSounds"
+    :isPlayingMenu="isMuted"
     :is="currentComponent"
   />
-  <!--  <Main />-->
-  <!--  <Loader />-->
-  <!--  <Trailer />-->
-
-  <div class="app-nav">
-    <button @click="currentComponent = Main">Main</button>
-    <button @click="currentComponent = Loader">Loader</button>
-    <button @click="currentComponent = Trailer">Trailer</button>
-  </div>
 </template>
 
 <style lang="scss" scoped>

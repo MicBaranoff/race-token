@@ -2,12 +2,30 @@
 import CButton from '@/components/ui/CButton.vue';
 import GameInfoRow from '@/components/blocks/GameInfoRow.vue';
 import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
-import { defineEmits } from 'vue';
+import { defineEmits, onMounted, ref } from 'vue';
+
+const randomTitle = [
+  'YOU CRASHED OUT',
+  'YOU NEED TO QUIT',
+  'NAH YOU JUST BAD',
+  "DON'T TRY AGAIN",
+  'GET A JOB',
+  'END IT ALL',
+  'YOU A SIMP',
+  'YOU A LOSER',
+];
+
+const currentTitle = ref(randomTitle[0]);
 
 defineProps({
   score: {
     type: Number,
   },
+});
+
+onMounted(() => {
+  currentTitle.value =
+    randomTitle[Math.floor(Math.random() * randomTitle.length + 1)];
 });
 
 const emit = defineEmits(['onRestart', 'goToLeaders']);
@@ -31,7 +49,9 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
       </div>
 
       <div class="crash-popup__title">
-        <h2 class="crash-popup__font crash-popup__font--title">you crashed!</h2>
+        <h2 class="crash-popup__font crash-popup__font--title">
+          {{ currentTitle }}
+        </h2>
       </div>
       <div class="crash-popup__subtitle">
         <h2 class="crash-popup__font crash-popup__font--subtitle">
@@ -45,10 +65,10 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
         @click="emit('onRestart')"
         class="crash-popup__button"
         theme="yellow"
-        >TRY AGAIN</CButton
+        >REDEEM YOURSELF</CButton
       >
-      <CButton class="crash-popup__button" theme="stroke-yellow" size="m"
-        >Share and VALIDATE YOUR SCORE</CButton
+      <CButton class="crash-popup__button" theme="stroke-yellow"
+        >FLEX ON THE HATERS</CButton
       >
 
       <div class="crash-popup__info">

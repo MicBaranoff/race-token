@@ -1,5 +1,7 @@
 <script setup>
-import { defineEmits, ref } from 'vue';
+import { defineEmits, onBeforeUnmount, onMounted, ref } from 'vue';
+
+import soundEvents from '@/configs/soundEvents.js';
 
 import GameStats from '@/components/blocks/GameStats.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
@@ -11,12 +13,9 @@ import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
-import { useAudio } from '@/composables/useAudio.js';
 import { useTimer } from '@/composables/useTimer.js';
 
-const { resetTimer, pauseTimer, resumeTimer } = useTimer();
-
-const { playPause } = useAudio();
+const { pauseTimer, resumeTimer } = useTimer();
 
 const currentComponent = ref(null);
 const gameScores = ref(null);
@@ -25,6 +24,7 @@ const gameRef = ref(null);
 const isPaused = ref(false);
 const isGameEnd = ref(false);
 const isGameStarted = ref(false);
+const showPauseBtn = ref(true);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -37,31 +37,65 @@ defineProps({
   },
 });
 
-const onGameEnd = (data) => {
+onMounted(() => {
+  window.addEventListener('update-lives', showCrashed);
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('update-lives', showCrashed);
+});
+
+const showCrashed = () => {
   currentComponent.value = CrashedPopup;
+
+  // window.dispatchEvent(new CustomEvent(soundEvents.PAUSE));
+  window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
+
+  isPaused.value = !isPaused.value;
+  showPauseBtn.value = false;
+  gameRef.value.gameTogglePause(isPaused.value);
+
+  pauseTimer();
+};
+
+const onGameEnd = (data) => {
+  currentComponent.value = ResultPopup;
   gameScores.value = data.score;
   isGameEnd.value = true;
   isGameStarted.value = false;
+  showPauseBtn.value = false;
+
+  window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
+  window.dispatchEvent(new CustomEvent(soundEvents.WIN));
 };
+//
+// const onRestart = () => {
+//   currentComponent.value = null;
+//   resetTimer();
+//   isGameEnd.value = false;
+//
+//   gameRerender.value++;
+// };
 
-const onRestart = () => {
-  currentComponent.value = null;
-  resetTimer();
-  isGameEnd.value = false;
-
-  gameRerender.value++;
+const onGameStart = () => {
+  window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
+  showPauseBtn.value = true;
+  isGameStarted.value = true;
 };
 
 const onResume = () => {
-  playPause();
+  window.dispatchEvent(new CustomEvent(soundEvents.PAUSE));
+  window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
+
   currentComponent.value = null;
   gameRef.value.gameTogglePause();
   isPaused.value = false;
+  showPauseBtn.value = true;
   resumeTimer();
 };
 
 const pauseBtnClickHandler = () => {
-  playPause();
+  window.dispatchEvent(new CustomEvent(soundEvents.PAUSE));
 
   isPaused.value = !isPaused.value;
   gameRef.value.gameTogglePause(isPaused.value);
@@ -85,12 +119,12 @@ const pauseBtnClickHandler = () => {
           :key="gameRerender"
           :currentCar="currentCar"
           @onGameEnd="onGameEnd"
-          @onGameStart="isGameStarted = true"
+          @onGameStart="onGameStart"
           class="game-screen__main"
         />
         <component
           :score="gameScores"
-          @on-restart="onRestart"
+          @on-restart="onResume"
           @on-resume="onResume"
           @goToLeaders="emit('goToLeaders')"
           class="game-screen__popup"
@@ -118,7 +152,7 @@ const pauseBtnClickHandler = () => {
       </CButtonIconWithText>
 
       <CButtonIconWithText
-        v-if="!isPaused && !isGameEnd"
+        v-if="!isPaused && !isGameEnd && showPauseBtn"
         @click="pauseBtnClickHandler"
         class="game-screen__play-btn"
         icon="pause"
@@ -127,7 +161,7 @@ const pauseBtnClickHandler = () => {
         (p)
       </CButtonIconWithText>
       <CButtonIconWithText
-        v-if="isPaused && !isGameEnd"
+        v-if="isPaused && !isGameEnd && showPauseBtn"
         @click="pauseBtnClickHandler"
         class="game-screen__play-btn"
         icon="play"
@@ -145,11 +179,11 @@ const pauseBtnClickHandler = () => {
     <GameStats />
   </div>
 
-  <div class="app-nav">
-    <button @click="currentComponent = ResultPopup">ResultPopup</button>
-    <button @click="currentComponent = PausePopup">PausePopup</button>
-    <button @click="currentComponent = CrashedPopup">CrashedPopup</button>
-  </div>
+  <!--  <div class="app-nav">-->
+  <!--    <button @click="currentComponent = ResultPopup">ResultPopup</button>-->
+  <!--    <button @click="currentComponent = PausePopup">PausePopup</button>-->
+  <!--    <button @click="currentComponent = CrashedPopup">CrashedPopup</button>-->
+  <!--  </div>-->
 </template>
 
 <style scoped lang="scss">

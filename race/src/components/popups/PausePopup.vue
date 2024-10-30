@@ -13,7 +13,8 @@ const emit = defineEmits(['onResume']);
       </div>
       <div class="pause-popup__text mobile-hide">
         <span class="pause-popup__font pause-popup__font--text">
-          PRESS (P)
+          Burning out? Taking breaks is for losers. Get back to it. Press (P) to
+          continue.
         </span>
       </div>
       <div class="pause-popup__button">
@@ -52,7 +53,6 @@ const emit = defineEmits(['onResume']);
       font-size: 16px;
       line-height: 140%;
       letter-spacing: 0.04em;
-      text-transform: uppercase;
       text-align: center;
       color: $color-primary;
     }
@@ -81,6 +81,7 @@ const emit = defineEmits(['onResume']);
   }
   &__text {
     margin-bottom: 40px;
+    max-width: 360px;
   }
 
   &__subtext {

@@ -138,7 +138,7 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     width: 100%;
     height: 18px;
     background:
-      url('/images/header-decor.png') center / 1280px 100% repeat-x,
+      url('/images/header-decor.png') center / 3000px 100% repeat-x,
       #000000;
   }
 

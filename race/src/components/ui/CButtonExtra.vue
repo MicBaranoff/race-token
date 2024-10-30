@@ -19,10 +19,10 @@ defineProps({
 
 <style scoped lang="scss">
 .c-button {
-  min-width: 290px;
+  min-width: 344px;
   display: block;
   padding: 20px;
-  height: 64px;
+  height: 84px;
   background: url('/images/buttons/stroke-button.png') center / 100% 100%
     no-repeat;
   color: $color-black;
@@ -35,7 +35,7 @@ defineProps({
 
   &__font {
     font-weight: $bold;
-    font-size: 18px;
+    font-size: 24px;
     line-height: 120%;
     letter-spacing: 0.02em;
     text-transform: uppercase;

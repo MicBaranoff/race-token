@@ -71,9 +71,9 @@ onBeforeUnmount(() => {
     width: 360px;
     transform: none;
     left: 0;
-    margin-top: -8px;
     background: url('/images/game-stats-mob.png') center / 100% 100% no-repeat;
     overflow: hidden;
+    margin: -8px auto 0;
   }
 
   &__font {

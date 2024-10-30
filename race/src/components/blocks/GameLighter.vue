@@ -1,5 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+import soundEvents from '@/configs/soundEvents.js';
 
 const emit = defineEmits(['startGame']);
 
@@ -7,22 +8,32 @@ const countsConfig = [
   {
     image: 'light-0',
     text: null,
+    callback: () =>
+      window.dispatchEvent(new CustomEvent(soundEvents.LIGHTER_RED)),
   },
   {
     image: 'light-1',
     text: 3,
+    callback: () =>
+      window.dispatchEvent(new CustomEvent(soundEvents.LIGHTER_RED)),
   },
   {
     image: 'light-2',
     text: 2,
+    callback: () =>
+      window.dispatchEvent(new CustomEvent(soundEvents.LIGHTER_RED)),
   },
   {
     image: 'light-3',
     text: 1,
+    callback: () =>
+      window.dispatchEvent(new CustomEvent(soundEvents.LIGHTER_RED)),
   },
   {
     image: 'light-4',
-    text: 'go!',
+    text: 'lfg',
+    callback: () =>
+      window.dispatchEvent(new CustomEvent(soundEvents.LIGHTER_GREEN)),
   },
 ];
 
@@ -32,7 +43,9 @@ onMounted(() => {
   const interval = setInterval(() => {
     current.value++;
 
-    if (current.value === countsConfig.length - 1) {
+    countsConfig[current.value]?.callback();
+
+    if (current.value === countsConfig.length) {
       clearInterval(interval);
       emit('startGame');
     }
@@ -45,12 +58,14 @@ onMounted(() => {
     <div class="game-lighter__holder">
       <div class="game-lighter__main">
         <img
-          :src="'/images/lighter/' + countsConfig[current].image + '.svg'"
+          :src="'/images/lighter/' + countsConfig[current]?.image + '.svg'"
           alt=""
         />
       </div>
       <div class="game-lighter__text">
-        <span class="game-lighter__font">{{ countsConfig[current].text }}</span>
+        <span class="game-lighter__font">{{
+          countsConfig[current]?.text
+        }}</span>
       </div>
     </div>
   </div>

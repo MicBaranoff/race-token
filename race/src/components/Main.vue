@@ -43,14 +43,14 @@ const onChooseCarHandler = (car) => {
     />
   </div>
 
-  <div class="app-nav">
-    <button @click="currentComponent = Start">Start</button>
-    <button @click="currentComponent = ChooseCar">ChooseCar</button>
-    <button @click="currentComponent = Game">Game</button>
-    <button @click="currentComponent = Guide">Guide</button>
-    <button @click="currentComponent = Leaderboard">Leaderboard</button>
-    <button @click="currentComponent = Validate">Validate</button>
-  </div>
+  <!--  <div class="app-nav">-->
+  <!--    <button @click="currentComponent = Start">Start</button>-->
+  <!--    <button @click="currentComponent = ChooseCar">ChooseCar</button>-->
+  <!--    <button @click="currentComponent = Game">Game</button>-->
+  <!--    <button @click="currentComponent = Guide">Guide</button>-->
+  <!--    <button @click="currentComponent = Leaderboard">Leaderboard</button>-->
+  <!--    <button @click="currentComponent = Validate">Validate</button>-->
+  <!--  </div>-->
 </template>
 
 <style lang="scss" scoped>

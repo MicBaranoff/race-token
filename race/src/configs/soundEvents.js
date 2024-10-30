@@ -1,0 +1,15 @@
+export default {
+  MENU_STOP: 'menu-stop',
+  MENU_PLAY: 'menu-play',
+  PAUSE: 'pause-play',
+  RACE_PLAY: 'race-play',
+  RACE_STOP: 'race-stop',
+  GAS_PLAY: 'gas-play',
+  GAS_STOP: 'gas-stop',
+  CAR_CRASH: 'car-crash',
+  CAR_CRASH_NPC: 'car-crash-npc',
+  COIN: 'coin',
+  WIN: 'win',
+  LIGHTER_RED: 'lighter-red',
+  LIGHTER_GREEN: 'lighter-green',
+};

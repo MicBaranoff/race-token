@@ -62,7 +62,6 @@ const gameDestroy = () => {
 };
 
 const onTouchArrow = (e) => {
-  console.log(e);
   if (e === 'left') {
     onKeyDown({ key: 'ArrowLeft' });
     isLeftArrowActive.value = true;
@@ -73,7 +72,6 @@ const onTouchArrow = (e) => {
 };
 
 const onTouchArrowEnd = (e) => {
-  console.log(e);
   if (e === 'left') {
     onKeyUp({ key: 'ArrowLeft' });
     isLeftArrowActive.value = false;

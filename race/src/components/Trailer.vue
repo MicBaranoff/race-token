@@ -33,7 +33,7 @@ const onButtonClickHandler = () => {
           @click="onButtonClickHandler"
           class="game-trailer__button"
           theme="yellow"
-          >CONTINUE</CButton
+          >PLAY</CButton
         >
         <div class="game-trailer__info">
           <img class="mobile-hide" src="/images/trailer/info.svg" alt="logo" />

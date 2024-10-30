@@ -46,7 +46,7 @@ defineProps({
               @click="emit('stopMenuSound')"
               class="start-screen__button--row"
             >
-              <CButtonIcon @click="pauseMenu" icon="sound-on" />
+              <CButtonIcon icon="sound-on" />
               <span
                 class="start-screen__font start-screen__font--button mobile-hide"
                 >sound on <br />
@@ -63,7 +63,7 @@ defineProps({
               >CONNECT WALLET</CButton
             >
             <div class="start-screen__button start-screen__button--start">
-              <CButton @click="emit('onStartClick')">START GAME</CButton>
+              <CButton @click="emit('onStartClick')">START RACING</CButton>
               <div class="start-screen__timer">
                 <span class="start-screen__font start-screen__font--timer"
                   >0/8 tries resets in</span
@@ -298,7 +298,7 @@ defineProps({
       right: 0;
       width: 100%;
       height: 54px;
-      background: url('/images/bottom-decor.png') center / 1280px 100% repeat-x;
+      background: url('/images/bottom-decor.png') center / 3000px 100% repeat-x;
     }
   }
 }

@@ -18,12 +18,7 @@ defineProps({
 
     <div class="result-popup__holder">
       <div class="result-popup__row">
-        <div class="result-popup__subtext mobile-hide">
-          <span class="result-popup__font result-popup__font--subtext">
-            The top 3 players, along with one randomly selected player from the
-            leaderboard, will win a prize from <b>RocketX</b>.
-          </span>
-        </div>
+        <div class="result-popup__subtext mobile-hide"></div>
 
         <CButtonSimpleText
           @click="emit('goToLeaders')"
@@ -35,7 +30,7 @@ defineProps({
       </div>
 
       <div class="result-popup__title">
-        <h2 class="result-popup__font result-popup__font--title">congrats!</h2>
+        <h2 class="result-popup__font result-popup__font--title">TIMES UP</h2>
       </div>
       <div class="result-popup__subtitle">
         <h2 class="result-popup__font result-popup__font--subtitle">
@@ -47,20 +42,16 @@ defineProps({
       </div>
       <div class="result-popup__text">
         <span class="result-popup__font result-popup__font--text">
-          You’re one step closer to winning!
+          ITS NEVER NOT A TIME TO FLEX
         </span>
       </div>
       <div class="result-popup__button">
-        <CButtonExtra theme="yellow"
-          >Validate your <br class="desktop-hide" />
-          best score</CButtonExtra
-        >
+        <CButtonExtra theme="yellow">FLEX ON THE HATERS</CButtonExtra>
       </div>
 
       <div class="result-popup__info">
         <span class="result-popup__font result-popup__font--info">
-          Click to share your score on X and <i>secure</i> your
-          <i>spot</i> DURING THE COMPETITION!
+          FLEX YOUR SCORE ON X AND WIN REAL PRIZES FOR REAL ONES
         </span>
       </div>
     </div>
@@ -141,7 +132,7 @@ defineProps({
 
     &--info {
       font-weight: $medium;
-      font-size: 12px;
+      font-size: 16px;
       line-height: 150%;
       letter-spacing: 0.04em;
       text-transform: uppercase;

@@ -1,5 +1,6 @@
 import * as PIXI from 'pixi.js';
 import { Assets } from '@pixi/assets';
+import soundEvents from '@/configs/soundEvents.js';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
@@ -38,8 +39,9 @@ const score = 0;
 const elapsedTime = 0;
 
 const speedX = 0;
+const speedY = 0;
 const trackSpeed = 10;
-const moveSpeed = 5;
+const moveSpeed = 7;
 const carNpcSpeed = 8;
 
 const mobileScale = 0.5;
@@ -101,6 +103,7 @@ class Game {
       { name: 'car_1', srcs: './images/game/CAR_1.png' },
       { name: 'car_2', srcs: './images/game/CAR_2.png' },
       { name: 'car_3', srcs: './images/game/CAR_3.png' },
+      { name: 'start-line', srcs: './images/game/start-line.png' },
       { name: 'track', srcs: './images/game/ROAD.png' },
       { name: 'track-mob', srcs: './images/game/ROAD-mob.png' },
       { name: 'side-left', srcs: './images/game/LEFT_SIDE.jpg' },
@@ -153,23 +156,7 @@ class Game {
       );
     });
 
-    console.log(this.assets);
-
     window.dispatchEvent(new CustomEvent('game-loaded'));
-
-    // this.loader.onProgress.add((loader) => {
-    //   window.dispatchEvent(
-    //     new CustomEvent('game-loading', {
-    //       detail: {
-    //         progress: loader.progress,
-    //       },
-    //     })
-    //   );
-    // });
-    //
-    // this.loader.load(() => {
-    //   window.dispatchEvent(new CustomEvent('game-loaded'));
-    // });
   }
 
   setup() {
@@ -190,6 +177,7 @@ class Game {
     this.addControls();
 
     this.speedX = speedX;
+    this.speedY = speedY;
     this.trackSpeed = trackSpeed;
     this.moveSpeed = moveSpeed;
     this.carNpcSpeed = carNpcSpeed;
@@ -258,10 +246,17 @@ class Game {
   createPlayerCar() {
     this.playerCar = new PIXI.Sprite(this.assets[this.currentCar]);
     this.playerCar.x = this.app.view.width / 2 - this.playerCar.width / 2;
-    this.playerCar.y = this.app.view.height - this.playerCar.height - 20;
+    this.playerCar.y = this.app.view.height - this.playerCar.height - 70;
     this.playerCar.zIndex = 10;
     isMobile && this.playerCar.scale.set(mobileScale);
     this.app.stage.addChild(this.playerCar);
+
+    this.startLine = new PIXI.Sprite(this.assets['start-line']);
+    this.startLine.x = this.app.view.width / 2 - this.startLine.width / 2;
+    this.startLine.y = this.app.view.height - 50;
+    this.startLine.zIndex = 10;
+    isMobile && this.startLine.scale.set(mobileScale);
+    this.app.stage.addChild(this.startLine);
   }
 
   generateObstacles() {
@@ -288,6 +283,7 @@ class Game {
 
       obstacle.x = Math.random() * (maxX - minX) + minX;
       obstacle.y = -obstacle.height;
+      isCar && obstacle.scale.set(0.7);
       isMobile && obstacle.scale.set(mobileScale);
       obstacle.type = isCar
         ? obstacleTypes.TYPE_CAR
@@ -317,6 +313,7 @@ class Game {
       const maxX = this.track.x + this.track.width - coin.width;
       coin.x = Math.random() * (maxX - minX) + minX;
       coin.y = -coin.height;
+      coin.scale.set(1.4);
       isMobile && coin.scale.set(mobileScale);
 
       positionValid =
@@ -343,6 +340,11 @@ class Game {
 
         this.startBlinking();
 
+        obstacle.type === obstacleTypes.TYPE_CAR &&
+          window.dispatchEvent(new CustomEvent(soundEvents.CAR_CRASH));
+        obstacle.type === obstacleTypes.TYPE_OBSTACLE &&
+          window.dispatchEvent(new CustomEvent(soundEvents.CAR_CRASH_NPC));
+
         window.dispatchEvent(
           new CustomEvent('update-lives', {
             detail: {
@@ -363,6 +365,15 @@ class Game {
         this.obstacles.splice(i, 1);
       }
     }
+
+    if (!this.startLine) return;
+
+    this.startLine.y += this.trackSpeed * delta;
+
+    if (this.startLine.y > this.app.view.height) {
+      this.app.stage.removeChild(this.startLine);
+      this.startLine = null;
+    }
   }
 
   updateCoins(delta) {
@@ -372,11 +383,13 @@ class Game {
       coin.y += this.carNpcSpeed * delta;
 
       if (this.isColliding(this.playerCar, coin)) {
-        this.score += 10;
+        this.score += 1;
         this.app.stage.removeChild(coin);
         this.coins.splice(i, 1);
 
         this._eventPoints(this.score);
+
+        window.dispatchEvent(new CustomEvent(soundEvents.COIN));
       }
 
       if (coin.y > this.app.view.height) {
@@ -503,18 +516,25 @@ class Game {
   }
 
   onKeyDown(e) {
-    if (e.key === 'ArrowLeft') this.speedX = -this.moveSpeed;
-    if (e.key === 'ArrowRight') this.speedX = this.moveSpeed;
+    console.log(e.keyCode);
+
+    if (e.keyCode === 37) this.speedX = -this.moveSpeed;
+    if (e.keyCode === 39) this.speedX = this.moveSpeed;
+    if (e.keyCode === 38) this.speedY = -this.moveSpeed;
+    if (e.keyCode === 40) this.speedY = this.moveSpeed;
   }
 
   onKeyUp(e) {
-    if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') this.speedX = 0;
+    console.log(e.keyCode);
+    this.speedX = 0;
+    this.speedY = 0;
   }
 
   gameLoop(delta) {
     const deltaSpeed = this.trackSpeed * delta;
 
     this.playerCar.x += this.speedX;
+    this.playerCar.y += this.speedY;
 
     this.track.tilePosition.y += deltaSpeed;
     this.trackSideLeft.tilePosition.y += deltaSpeed;
@@ -522,9 +542,13 @@ class Game {
 
     const minX = this.track.x;
     const maxX = this.track.x + this.track.width - this.playerCar.width;
+    const minY = this.track.y;
+    const maxY = this.track.y + this.track.height - this.playerCar.height;
 
     if (this.playerCar.x < minX) this.playerCar.x = minX;
     if (this.playerCar.x > maxX) this.playerCar.x = maxX;
+    if (this.playerCar.y < minY) this.playerCar.y = minY;
+    if (this.playerCar.y > maxY) this.playerCar.y = maxY;
 
     this.updateObstacles(delta);
 

@@ -6,6 +6,7 @@ import CButton from '@/components/ui/CButton.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 
 import cars from '@/configs/cars.js';
+import soundEvents from '@/configs/soundEvents.js';
 
 const currentCarIndex = ref(0);
 
@@ -32,6 +33,13 @@ const goPrev = () => {
 
   currentCarIndex.value--;
 };
+
+const onCarChooseHandler = () => {
+  emit('onCarChoose', cars[currentCarIndex.value].id);
+
+  window.dispatchEvent(new CustomEvent(soundEvents.RACE_PLAY));
+  window.dispatchEvent(new CustomEvent(soundEvents.MENU_STOP));
+};
 </script>
 
 <template>
@@ -40,8 +48,7 @@ const goPrev = () => {
       <div class="choose-car__container">
         <div class="choose-car__title">
           <h2 class="choose-car__font choose-car__font--title">
-            CHOOSE YOUR <br class="desktop-hide" />
-            RACE CAR
+            SELECT YOUR CAR
           </h2>
         </div>
 
@@ -80,10 +87,8 @@ const goPrev = () => {
         </div>
 
         <div class="choose-car__button choose-car__button--main">
-          <CButton
-            @click="emit('onCarChoose', cars[currentCarIndex].id)"
-            theme="yellow"
-            >START RACE</CButton
+          <CButton @click="onCarChooseHandler" theme="yellow"
+            >SKRT SKRT</CButton
           >
         </div>
       </div>
@@ -207,11 +212,11 @@ const goPrev = () => {
 
   &__picker-picture {
     width: 444px;
-    height: 256px;
+    height: 214px;
 
     @include is-mobile {
       width: 202px;
-      height: 119px;
+      height: 95px;
     }
 
     img {
