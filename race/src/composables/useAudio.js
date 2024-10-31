@@ -68,7 +68,7 @@ export const useAudio = () => {
   };
 
   const stopRace = () => {
-    mainMenuSound.stop();
+    raceSound.stop();
   };
 
   const playGas = () => {
@@ -120,6 +120,12 @@ export const useAudio = () => {
   window.addEventListener(soundEvents.COIN, playCoinSound);
   window.addEventListener(soundEvents.LIGHTER_RED, playLighterRedSound);
   window.addEventListener(soundEvents.LIGHTER_GREEN, playLighterGreenSound);
+
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 's') {
+      isMuted.value ? unmuteSounds() : muteSounds();
+    }
+  });
 
   return {
     isMuted,

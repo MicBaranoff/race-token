@@ -24,7 +24,7 @@ const gameRef = ref(null);
 const isPaused = ref(false);
 const isGameEnd = ref(false);
 const isGameStarted = ref(false);
-const showPauseBtn = ref(true);
+const showPauseBtn = ref(false);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -103,11 +103,19 @@ const pauseBtnClickHandler = () => {
   if (isPaused.value) {
     currentComponent.value = PausePopup;
     pauseTimer();
+    window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
   } else {
     currentComponent.value = null;
     resumeTimer();
+    window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
   }
 };
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'p') {
+    pauseBtnClickHandler();
+  }
+});
 </script>
 
 <template>

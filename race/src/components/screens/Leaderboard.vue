@@ -4,8 +4,16 @@ import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import Close from '@/assets/svg/close.svg';
 import RatingTable from '@/components/blocks/RatingTable.vue';
 import CButtonExtra from '@/components/ui/CButtonExtra.vue';
+import soundEvents from '@/configs/soundEvents.js';
 
 const emit = defineEmits(['onCloseLeaders']);
+
+const closeHandler = () => {
+  emit('onCloseLeaders');
+
+  window.dispatchEvent(new CustomEvent(soundEvents.RACE_STOP));
+  window.dispatchEvent(new CustomEvent(soundEvents.MENU_PLAY));
+};
 </script>
 
 <template>
@@ -34,7 +42,7 @@ const emit = defineEmits(['onCloseLeaders']);
 
           <button class="leaderboard-screen__close">
             <Close
-              @click="emit('onCloseLeaders')"
+              @click="closeHandler"
               class="leaderboard-screen__close-ico"
             />
             <span

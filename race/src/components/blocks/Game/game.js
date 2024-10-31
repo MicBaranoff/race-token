@@ -38,13 +38,14 @@ const lives = 8;
 const score = 0;
 const elapsedTime = 0;
 
-const speedX = 0;
-const speedY = 0;
-const trackSpeed = 10;
 const moveSpeed = 7;
+const speedX = moveSpeed;
+const speedY = moveSpeed;
+const trackSpeed = 10;
 const carNpcSpeed = 8;
-
 const mobileScale = 0.5;
+
+let keysPressed = {};
 
 class Game {
   constructor() {
@@ -516,25 +517,20 @@ class Game {
   }
 
   onKeyDown(e) {
-    console.log(e.keyCode);
-
-    if (e.keyCode === 37) this.speedX = -this.moveSpeed;
-    if (e.keyCode === 39) this.speedX = this.moveSpeed;
-    if (e.keyCode === 38) this.speedY = -this.moveSpeed;
-    if (e.keyCode === 40) this.speedY = this.moveSpeed;
+    keysPressed[e.key || e.which] = true;
   }
 
   onKeyUp(e) {
-    console.log(e.keyCode);
-    this.speedX = 0;
-    this.speedY = 0;
+    keysPressed[e.key] = false;
   }
 
   gameLoop(delta) {
     const deltaSpeed = this.trackSpeed * delta;
 
-    this.playerCar.x += this.speedX;
-    this.playerCar.y += this.speedY;
+    if (keysPressed['ArrowLeft']) this.playerCar.x -= this.speedX;
+    if (keysPressed['ArrowRight']) this.playerCar.x += this.speedX;
+    if (keysPressed['ArrowUp']) this.playerCar.y -= this.speedY;
+    if (keysPressed['ArrowDown']) this.playerCar.y += this.speedY;
 
     this.track.tilePosition.y += deltaSpeed;
     this.trackSideLeft.tilePosition.y += deltaSpeed;
