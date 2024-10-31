@@ -205,10 +205,10 @@ class Game {
       this.generateObstacles.bind(this),
       900
     );
-    this.generateCoinsTicker = setInterval(this.generateCoins.bind(this), 1800);
+    this.generateCoinsTicker = setInterval(this.generateCoins.bind(this), 1700);
     this.increaseDifficultyTicker = setInterval(
       this.increaseDifficulty.bind(this),
-      3000
+      2000
     );
 
     this.app.ticker.add(this.gameLoop.bind(this), PIXI.UPDATE_PRIORITY.LOW);
@@ -246,15 +246,23 @@ class Game {
 
   createPlayerCar() {
     this.playerCar = new PIXI.Sprite(this.assets[this.currentCar]);
-    this.playerCar.x = this.app.view.width / 2 - this.playerCar.width / 2;
-    this.playerCar.y = this.app.view.height - this.playerCar.height - 70;
+    this.playerCar.x = !isMobile
+      ? this.app.view.width / 2 - this.playerCar.width / 2
+      : this.app.view.width / 2 - this.playerCar.width / 4;
+    this.playerCar.y = !isMobile
+      ? this.app.view.height - this.playerCar.height - 70
+      : this.app.view.height - this.playerCar.height - 30;
     this.playerCar.zIndex = 10;
     isMobile && this.playerCar.scale.set(mobileScale);
     this.app.stage.addChild(this.playerCar);
 
     this.startLine = new PIXI.Sprite(this.assets['start-line']);
-    this.startLine.x = this.app.view.width / 2 - this.startLine.width / 2;
-    this.startLine.y = this.app.view.height - 50;
+    this.startLine.x = !isMobile
+      ? this.app.view.width / 2 - this.startLine.width / 2
+      : this.app.view.width / 2 - this.startLine.width / 4;
+    this.startLine.y = !isMobile
+      ? this.app.view.height - 50
+      : this.app.view.height - 70;
     this.startLine.zIndex = 10;
     isMobile && this.startLine.scale.set(mobileScale);
     this.app.stage.addChild(this.startLine);

@@ -114,7 +114,12 @@ defineProps({
 <style scoped lang="scss">
 .start-screen {
   width: 100%;
+  height: calc(100% - 85px);
   background: $color-primary;
+
+  @include is-mobile {
+    height: calc(100dvh - 62px);
+  }
 
   &__font {
     &--button {
@@ -147,6 +152,12 @@ defineProps({
       text-transform: uppercase;
       text-align: center;
     }
+  }
+
+  &__holder {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
 
   &__footer {
@@ -226,6 +237,7 @@ defineProps({
     position: relative;
     height: 345px;
     padding: 40px 40px 100px;
+    flex: 1;
 
     @include is-mobile {
       height: 360px;
@@ -249,6 +261,7 @@ defineProps({
   &__timer {
     position: absolute;
     right: -150px;
+    bottom: 5px;
     text-align: center;
 
     @include is-mobile {

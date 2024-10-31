@@ -119,6 +119,14 @@ const onCarChooseHandler = () => {
 <style scoped lang="scss">
 .choose-car {
   width: 100%;
+  height: calc(100% - 85px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include is-mobile {
+    height: calc(100dvh - 62px);
+  }
 
   &__font {
     &--title {

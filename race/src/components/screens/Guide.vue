@@ -56,6 +56,15 @@ defineProps({
   width: 100%;
   overflow: hidden;
 
+  height: calc(100% - 85px);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @include is-mobile {
+    height: calc(100dvh - 62px);
+  }
+
   &__holder {
     display: flex;
     align-items: center;

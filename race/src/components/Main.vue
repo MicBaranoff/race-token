@@ -56,6 +56,7 @@ const onChooseCarHandler = (car) => {
 <style lang="scss" scoped>
 .main-container {
   background: $color-black;
+  height: 100%;
 }
 
 .app-nav {

@@ -7,13 +7,17 @@ body {
   font-weight: $regular;
   font-family: $font-family-regular;
   line-height: $base-line-height;
-  min-height: 800px;
+  height: 100dvh;
   overflow-x: hidden;
   user-select: none;
 
   @include is-mobile {
     min-height: 100%;
   }
+}
+
+#app {
+  height: 100%;
 }
 
 #__nuxt, #__layout {
