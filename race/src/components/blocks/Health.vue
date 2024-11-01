@@ -2,19 +2,13 @@
 import Heart from '@/assets/svg/heart.svg';
 import HeartEmpty from '@/assets/svg/heart-empty.svg';
 import TimerWhite from '@/components/blocks/Timer.vue';
-import { onMounted, ref } from 'vue';
 
 const livesInitial = 8;
-const lives = ref(livesInitial);
 
-onMounted(() => {
-  window.addEventListener('update-lives', (event) => {
-    lives.value = event.detail.lives;
-  });
-
-  window.addEventListener('game-init', () => {
-    lives.value = livesInitial;
-  });
+defineProps({
+  lives: {
+    type: Number,
+  },
 });
 </script>
 

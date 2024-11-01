@@ -25,7 +25,7 @@ defineProps({
 
 onMounted(() => {
   currentTitle.value =
-    randomTitle[Math.floor(Math.random() * randomTitle.length + 1)];
+    randomTitle[Math.floor(Math.random() * randomTitle.length)];
 });
 
 const emit = defineEmits(['onRestart', 'goToLeaders']);

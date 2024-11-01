@@ -34,7 +34,6 @@ const coins = [
   './images/game/coins/COIN_9.png',
 ];
 
-const lives = 8;
 const score = 0;
 const elapsedTime = 0;
 
@@ -78,7 +77,7 @@ class Game {
     PIXI.settings.SCALE_MODE = PIXI.SCALE_MODES.NEAREST;
   }
 
-  init(container, currentCar) {
+  init(container, currentCar, lives) {
     this.container = container;
     this.currentCar = currentCar;
 
@@ -91,6 +90,8 @@ class Game {
       antialias: false,
       resolution: 1,
     });
+
+    this.lives = lives;
 
     this.container.appendChild(this.app.view);
 
@@ -183,7 +184,6 @@ class Game {
     this.moveSpeed = moveSpeed;
     this.carNpcSpeed = carNpcSpeed;
 
-    this.lives = lives;
     this.score = score;
     this.elapsedTime = elapsedTime;
 
@@ -358,6 +358,7 @@ class Game {
           new CustomEvent('update-lives', {
             detail: {
               lives: this.lives,
+              score: this.score,
             },
           })
         );

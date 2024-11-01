@@ -8,8 +8,8 @@ export function useGame() {
     gameInstance.value = new Game();
   };
 
-  const initGame = (container, gameEndCallback, currentCar) => {
-    gameInstance.value.init(container, currentCar);
+  const initGame = (container, gameEndCallback, currentCar, lives) => {
+    gameInstance.value.init(container, currentCar, lives);
 
     window.addEventListener('game-end', gameEndCallback);
   };

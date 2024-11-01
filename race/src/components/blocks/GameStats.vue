@@ -8,6 +8,12 @@ const { formattedTime, startTimer, stopTimer, resetTimer } = useTimer();
 
 const score = ref(0);
 
+defineProps({
+  lives: {
+    type: Number,
+  },
+});
+
 onMounted(() => {
   window.addEventListener('update-points', (event) => {
     score.value = event.detail.points;
@@ -77,7 +83,7 @@ onBeforeUnmount(() => {
       class="game-stats__decor game-stats__decor--line mobile-hide"
       src="/images/game-stats/line-2.png"
     />
-    <Health class="game-stats__health desktop-hide" />
+    <Health :lives="lives" class="game-stats__health desktop-hide" />
   </div>
 </template>
 

@@ -15,7 +15,7 @@ import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
 import { useTimer } from '@/composables/useTimer.js';
 
-const { pauseTimer, resumeTimer } = useTimer();
+const { pauseTimer, resumeTimer, resetTimer } = useTimer();
 
 const currentComponent = ref(null);
 const gameScores = ref(null);
@@ -25,6 +25,7 @@ const isPaused = ref(false);
 const isGameEnd = ref(false);
 const isGameStarted = ref(false);
 const showPauseBtn = ref(false);
+const lives = ref(8);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -45,12 +46,19 @@ onBeforeUnmount(() => {
   window.removeEventListener('update-lives', showCrashed);
 });
 
-const showCrashed = () => {
+const showCrashed = (data) => {
+  lives.value--;
+
+  if (lives.value === 0) {
+    onGameEnd();
+    return;
+  }
+
   currentComponent.value = CrashedPopup;
 
-  // window.dispatchEvent(new CustomEvent(soundEvents.PAUSE));
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
 
+  gameScores.value = data.detail.score;
   isPaused.value = !isPaused.value;
   showPauseBtn.value = false;
   gameRef.value.gameTogglePause(isPaused.value);
@@ -68,14 +76,13 @@ const onGameEnd = (data) => {
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
   window.dispatchEvent(new CustomEvent(soundEvents.WIN));
 };
-//
-// const onRestart = () => {
-//   currentComponent.value = null;
-//   resetTimer();
-//   isGameEnd.value = false;
-//
-//   gameRerender.value++;
-// };
+const onRestart = () => {
+  currentComponent.value = null;
+  resetTimer();
+  isGameEnd.value = false;
+
+  gameRerender.value++;
+};
 
 const onGameStart = () => {
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
@@ -126,13 +133,14 @@ window.addEventListener('keydown', (e) => {
           ref="gameRef"
           :key="gameRerender"
           :currentCar="currentCar"
+          :lives="lives"
           @onGameEnd="onGameEnd"
           @onGameStart="onGameStart"
           class="game-screen__main"
         />
         <component
           :score="gameScores"
-          @on-restart="onResume"
+          @on-restart="onRestart"
           @on-resume="onResume"
           @goToLeaders="emit('goToLeaders')"
           class="game-screen__popup"
@@ -182,9 +190,9 @@ window.addEventListener('keydown', (e) => {
         <ControlsPic v-if="!isGameStarted" class="game-screen__controls-info" />
       </transition>
 
-      <Health class="game-screen__health mobile-hide" />
+      <Health :lives="lives" class="game-screen__health mobile-hide" />
     </div>
-    <GameStats />
+    <GameStats :lives="lives" />
   </div>
 
   <!--  <div class="app-nav">-->

@@ -23,6 +23,9 @@ const props = defineProps({
   currentCar: {
     default: false,
   },
+  lives: {
+    type: Number,
+  },
 });
 
 const gameStarted = ref(false);
@@ -48,7 +51,7 @@ const gameTogglePause = () => {
 };
 
 const gameInit = () => {
-  initGame(gameContainer.value, gameEndHandler, props.currentCar);
+  initGame(gameContainer.value, gameEndHandler, props.currentCar, props.lives);
 };
 
 const gameStart = () => {
