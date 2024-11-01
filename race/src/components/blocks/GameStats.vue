@@ -102,7 +102,8 @@ onBeforeUnmount(() => {
     width: 100%;
     transform: none;
     left: 0;
-    background: url('/images/game-stats-mob.png') center / 100% 100% no-repeat;
+    background: url('/images/game-stats/bg-mob.png') center / 100% 100%
+      no-repeat;
     overflow: hidden;
     margin: -8px auto 0;
   }
@@ -236,8 +237,8 @@ onBeforeUnmount(() => {
     text-align: center;
 
     @include is-mobile {
-      width: 100px;
-      height: 40px;
+      width: 96px;
+      height: 26px;
     }
 
     &--left {
@@ -250,9 +251,8 @@ onBeforeUnmount(() => {
       @include is-mobile {
         left: 50%;
         top: auto;
-        bottom: 20px;
+        bottom: 25px;
         transform: translateX(-120px);
-        background: none;
       }
     }
 
@@ -266,9 +266,8 @@ onBeforeUnmount(() => {
       @include is-mobile {
         right: 50%;
         top: auto;
-        bottom: 20px;
+        bottom: 25px;
         transform: translateX(122px);
-        background: none;
       }
     }
   }
