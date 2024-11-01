@@ -78,7 +78,7 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     margin: 0 auto;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 40px;
+    padding: 11px 40px;
 
     @include is-mobile {
       padding: 11px 14px 0;
@@ -144,10 +144,12 @@ import CQuestion from '@/components/ui/CQuestion.vue';
 
   &__timer {
     text-align: center;
+    position: relative;
+    left: -100px;
 
     @include is-mobile {
-      position: relative;
       right: -10px;
+      left: auto;
     }
     &-value {
       display: flex;

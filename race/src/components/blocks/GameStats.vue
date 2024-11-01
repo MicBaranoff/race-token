@@ -31,21 +31,52 @@ onBeforeUnmount(() => {
 
 <template>
   <div class="game-stats">
-    <div class="game-stats__title game-stats__title--left">
-      <span class="game-stats__font game-stats__font--title">tokens</span>
+    <img
+      class="game-stats__decor game-stats__decor--line mobile-hide"
+      src="/images/game-stats/line-2.png"
+    />
+    <img
+      class="game-stats__decor game-stats__decor--left-1 mobile-hide"
+      src="/images/game-stats/left-2.png"
+    />
+    <img
+      class="game-stats__decor game-stats__decor--left mobile-hide"
+      src="/images/game-stats/left.png"
+    />
+    <div class="game-stats__center">
+      <div class="game-stats__title game-stats__title--left">
+        <span class="game-stats__font game-stats__font--title">tokens</span>
+      </div>
+      <div class="game-stats__value game-stats__value--left">
+        <span class="game-stats__font game-stats__font--value">{{
+          score
+        }}</span>
+      </div>
+      <img
+        class="game-stats__decor game-stats__decor--x mobile-hide"
+        src="/images/game-stats/block-x.png"
+      />
+      <div class="game-stats__value game-stats__value--right">
+        <span class="game-stats__font game-stats__font--value">{{
+          formattedTime
+        }}</span>
+      </div>
+      <div class="game-stats__title game-stats__title--right">
+        <span class="game-stats__font game-stats__font--title">time</span>
+      </div>
     </div>
-    <div class="game-stats__value game-stats__value--left">
-      <span class="game-stats__font game-stats__font--value">{{ score }}</span>
-    </div>
-    <div class="game-stats__value game-stats__value--right">
-      <span class="game-stats__font game-stats__font--value">{{
-        formattedTime
-      }}</span>
-    </div>
-    <div class="game-stats__title game-stats__title--right">
-      <span class="game-stats__font game-stats__font--title">time</span>
-    </div>
-
+    <img
+      class="game-stats__decor game-stats__decor--right mobile-hide"
+      src="/images/game-stats/right.png"
+    />
+    <img
+      class="game-stats__decor game-stats__decor--right-2 mobile-hide"
+      src="/images/game-stats/right-2.png"
+    />
+    <img
+      class="game-stats__decor game-stats__decor--line mobile-hide"
+      src="/images/game-stats/line-2.png"
+    />
     <Health class="game-stats__health desktop-hide" />
   </div>
 </template>
@@ -53,22 +84,22 @@ onBeforeUnmount(() => {
 <style scoped lang="scss">
 .game-stats {
   width: 100%;
-  width: 1280px;
   height: 120px;
-  background: url('/images/game-stats.png') center / 100% 100% no-repeat;
+  //background: url('/images/game-stats.png') center / 100% 100% no-repeat;
   margin-top: -20px;
   position: absolute;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
+  display: flex;
+  justify-content: center;
 
   @include is-mobile {
     position: relative;
     z-index: 3;
     height: 110px;
     width: 100%;
-    width: 360px;
     transform: none;
     left: 0;
     background: url('/images/game-stats-mob.png') center / 100% 100% no-repeat;
@@ -109,6 +140,52 @@ onBeforeUnmount(() => {
     }
   }
 
+  &__center {
+    min-width: 885px;
+    height: 100%;
+    background: url('/images/game-stats/middle.jpg') center / 100% 100%
+      no-repeat;
+
+    @include is-mobile {
+      background: none;
+    }
+  }
+
+  &__decor {
+    &--x {
+      width: 80px;
+      position: absolute;
+      left: 51%;
+      top: 43px;
+      transform: translateX(-50%);
+    }
+
+    &--left {
+      height: 100%;
+      min-width: 120px;
+    }
+    &--right {
+      height: 100%;
+      min-width: 120px;
+    }
+
+    &--left-1 {
+      height: 100%;
+      min-width: 120px;
+    }
+    &--right-1 {
+      height: 100%;
+      width: 120px;
+      min-width: 120px;
+    }
+
+    &--line {
+      width: auto;
+      flex: 1;
+      height: 100%;
+    }
+  }
+
   &__title {
     position: absolute;
     width: 200px;
@@ -125,7 +202,7 @@ onBeforeUnmount(() => {
     &--left {
       left: 50%;
       top: 35px;
-      transform: translateX(-480px);
+      transform: translateX(-470px);
 
       @include is-mobile {
         left: 50%;
@@ -138,7 +215,7 @@ onBeforeUnmount(() => {
     &--right {
       right: 50%;
       top: 35px;
-      transform: translateX(480px);
+      transform: translateX(470px);
 
       @include is-mobile {
         right: 50%;
@@ -151,11 +228,12 @@ onBeforeUnmount(() => {
 
   &__value {
     position: absolute;
-    width: 200px;
-    height: 80px;
+    width: 242px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 
     @include is-mobile {
       width: 100px;
@@ -164,28 +242,33 @@ onBeforeUnmount(() => {
 
     &--left {
       left: 50%;
-      top: 35px;
-      transform: translateX(-260px);
+      top: 46px;
+      transform: translateX(-283px);
+      background: url('/images/game-stats/block-l.png') center / 100% 100%
+        no-repeat;
 
       @include is-mobile {
         left: 50%;
         top: auto;
         bottom: 20px;
         transform: translateX(-120px);
+        background: none;
       }
     }
 
     &--right {
-      justify-content: flex-start;
       right: calc(50% - 10px);
-      top: 35px;
-      transform: translateX(290px);
+      top: 46px;
+      transform: translateX(303px);
+      background: url('/images/game-stats/block-r.png') center / 100% 100%
+        no-repeat;
 
       @include is-mobile {
         right: 50%;
         top: auto;
         bottom: 20px;
-        transform: translateX(130px);
+        transform: translateX(122px);
+        background: none;
       }
     }
   }
