@@ -5,7 +5,12 @@ import CQuestion from '@/components/ui/CQuestion.vue';
 import Timer from '@/components/blocks/Timer.vue';
 import { defineEmits } from 'vue';
 
-const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'onStartClick']);
+const emit = defineEmits([
+  'playMenuSound',
+  'stopMenuSound',
+  'onStartClick',
+  'goToLeaders',
+]);
 
 defineProps({
   isPlayingMenu: {
@@ -76,6 +81,7 @@ defineProps({
 
           <div class="start-screen__col">
             <div
+              @click="emit('goToLeaders')"
               class="start-screen__button--row start-screen__button--row--reverse"
             >
               <span

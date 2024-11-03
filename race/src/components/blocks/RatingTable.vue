@@ -1,4 +1,10 @@
-<script setup></script>
+<script setup>
+import leaders from '@/configs/leaders.js';
+
+defineProps({
+  data: { type: Object, required: true },
+});
+</script>
 
 <template>
   <div class="rating-table">
@@ -10,178 +16,38 @@
         <span>TIME</span>
       </div>
 
-      <div class="rating-table__row rating-table__row-first">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row rating-table__row-first">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row rating-table__row-first">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
+      <div
+        v-for="(item, index) in leaders.top"
+        :key="item.id"
+        class="rating-table__row rating-table__row-first"
+      >
+        <span>{{ index + 1 }}</span>
+        <span>{{ item.id }}</span>
+        <span>{{ item.score }}</span>
+        <span>{{ item.time }}</span>
       </div>
 
       <img class="rating-table__line" src="/images/line.png" alt="" />
 
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
       <div
-        :class="['rating-table__row', { 'rating-table__row--active': true }]"
+        v-for="(item, index) in leaders.regular"
+        :key="item.id"
+        :class="[
+          'rating-table__row',
+          { 'rating-table__row--active': item.needsValidation },
+        ]"
       >
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
+        <span>{{ index + 1 }}</span>
+        <span>{{ item.id }}</span>
         <span
           ><span
+            v-if="item.needsValidation"
             style="margin-right: 13px"
             class="rating-table__font rating-table__font--accent mobile-hide"
             >NEEDS VALIDATION </span
-          >02:28:08</span
+          >{{ item.score }}</span
         >
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
-      </div>
-      <div class="rating-table__row">
-        <span>01</span>
-        <span>0x4A6Bf9c7E1d2</span>
-        <span>02:28:08</span>
-        <span>862</span>
+        <span>{{ item.time }}</span>
       </div>
     </div>
   </div>
@@ -271,7 +137,7 @@
       text-align: left;
     }
     span:nth-child(3) {
-      width: 45%;
+      width: 40%;
       text-align: right;
 
       @include is-mobile {
@@ -279,7 +145,7 @@
       }
     }
     span:nth-child(4) {
-      width: 10%;
+      width: 15%;
       text-align: right;
     }
 

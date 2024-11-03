@@ -2,6 +2,8 @@
 import { ref, computed, onMounted, defineEmits, watch } from 'vue';
 import { usePreloadVideo } from '@/composables/preloadVideo.js';
 
+const videos = ['/videos/trailer.mp4', '/videos/trailer-2.mp4'];
+
 const { preloadVideos } = usePreloadVideo();
 
 const emit = defineEmits(['onLoad']);
@@ -23,13 +25,9 @@ const allLoaded = computed(() => {
 onMounted(() => {
   startLoading();
 
-  preloadVideos(['/videos/trailer.mp4', '/videos/trailer-2.mp4']).then(
-    (res) => {
-      console.log(res);
-      console.log('videoLoaded');
-      videoLoaded.value = true;
-    }
-  );
+  preloadVideos(videos).then(() => {
+    videoLoaded.value = true;
+  });
 });
 
 watch(allLoaded, () => {

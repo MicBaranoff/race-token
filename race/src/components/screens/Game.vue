@@ -1,5 +1,6 @@
 <script setup>
 import { defineEmits, onBeforeUnmount, onMounted, ref } from 'vue';
+import { useTimer } from '@/composables/useTimer.js';
 
 import soundEvents from '@/configs/soundEvents.js';
 
@@ -13,19 +14,21 @@ import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
-import { useTimer } from '@/composables/useTimer.js';
-
 const { pauseTimer, resumeTimer, resetTimer } = useTimer();
 
 const currentComponent = ref(null);
-const gameScores = ref(null);
-const gameRerender = ref(0);
 const gameRef = ref(null);
+
+const gameScores = ref(null);
+const lives = ref(8);
+
+const gameRerender = ref(0);
+
 const isPaused = ref(false);
 const isGameEnd = ref(false);
 const isGameStarted = ref(false);
+
 const showPauseBtn = ref(false);
-const lives = ref(8);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -51,6 +54,7 @@ const showCrashed = (data) => {
 
   if (lives.value === 0) {
     onGameEnd();
+
     return;
   }
 
@@ -68,6 +72,7 @@ const showCrashed = (data) => {
 
 const onGameEnd = (data) => {
   currentComponent.value = ResultPopup;
+
   gameScores.value = data.score;
   isGameEnd.value = true;
   isGameStarted.value = false;
@@ -78,7 +83,9 @@ const onGameEnd = (data) => {
 };
 const onRestart = () => {
   currentComponent.value = null;
+
   resetTimer();
+
   isGameEnd.value = false;
 
   gameRerender.value++;
@@ -86,6 +93,7 @@ const onRestart = () => {
 
 const onGameStart = () => {
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
+
   showPauseBtn.value = true;
   isGameStarted.value = true;
 };
@@ -95,9 +103,12 @@ const onResume = () => {
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
 
   currentComponent.value = null;
-  gameRef.value.gameTogglePause();
+
   isPaused.value = false;
   showPauseBtn.value = true;
+
+  gameRef.value.gameTogglePause();
+
   resumeTimer();
 };
 
@@ -105,21 +116,26 @@ const pauseBtnClickHandler = () => {
   window.dispatchEvent(new CustomEvent(soundEvents.PAUSE));
 
   isPaused.value = !isPaused.value;
-  gameRef.value.gameTogglePause(isPaused.value);
 
   if (isPaused.value) {
     currentComponent.value = PausePopup;
     pauseTimer();
+
     window.dispatchEvent(new CustomEvent(soundEvents.GAS_STOP));
   } else {
     currentComponent.value = null;
     resumeTimer();
+
     window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
   }
+
+  gameRef.value.gameTogglePause(isPaused.value);
 };
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'p') {
+    if (!showPauseBtn.value) return;
+
     pauseBtnClickHandler();
   }
 });
@@ -194,12 +210,6 @@ window.addEventListener('keydown', (e) => {
     </div>
     <GameStats :lives="lives" />
   </div>
-
-  <!--  <div class="app-nav">-->
-  <!--    <button @click="currentComponent = ResultPopup">ResultPopup</button>-->
-  <!--    <button @click="currentComponent = PausePopup">PausePopup</button>-->
-  <!--    <button @click="currentComponent = CrashedPopup">CrashedPopup</button>-->
-  <!--  </div>-->
 </template>
 
 <style scoped lang="scss">
@@ -207,15 +217,11 @@ window.addEventListener('keydown', (e) => {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  //padding-bottom: 90px;
   overflow: hidden;
 
   @include is-mobile {
     height: calc(100dvh - 62px);
     padding-bottom: 0;
-  }
-
-  &__font {
   }
 
   &__popup {

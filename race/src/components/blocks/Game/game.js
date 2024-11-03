@@ -99,8 +99,6 @@ class Game {
   }
 
   async loadResources() {
-    // this.loader = Assets;
-
     let assets = [
       { name: 'car_1', srcs: './images/game/CAR_1.png' },
       { name: 'car_2', srcs: './images/game/CAR_2.png' },
@@ -113,17 +111,6 @@ class Game {
       { name: 'side-right', srcs: './images/game/RIGHT_SIDE.jpg' },
       { name: 'side-right-mob', srcs: './images/game/RIGHT_SIDE-mob.jpg' },
     ];
-
-    // this.loader
-    //   .add('car_1', './images/game/CAR_1.png')
-    //   .add('car_2', './images/game/CAR_2.png')
-    //   .add('car_3', './images/game/CAR_3.png')
-    //   .add('track', './images/game/ROAD.png')
-    //   .add('track-mob', './images/game/ROAD-mob.png')
-    //   .add('side-left', './images/game/LEFT_SIDE.jpg')
-    //   .add('side-left-mob', './images/game/LEFT_SIDE-mob.jpg')
-    //   .add('side-right', './images/game/RIGHT_SIDE.jpg')
-    //   .add('side-right-mob', './images/game/RIGHT_SIDE-mob.jpg');
 
     obstacles.forEach((url, index) => {
       assets.push({ name: 'obstacle' + (index + 1), srcs: url });
@@ -186,14 +173,6 @@ class Game {
 
     this.score = score;
     this.elapsedTime = elapsedTime;
-
-    // document.addEventListener('visibilitychange', () => {
-    //   if (document.hidden) {
-    //     this.app.ticker.stop();
-    //   } else {
-    //     this.app.ticker.start();
-    //   }
-    // });
 
     window.dispatchEvent(new CustomEvent('game-init'));
   }

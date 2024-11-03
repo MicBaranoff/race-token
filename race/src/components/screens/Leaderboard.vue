@@ -1,10 +1,13 @@
 <script setup>
 import Footer from '@/components/common/Footer.vue';
 import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
-import Close from '@/assets/svg/close.svg';
 import RatingTable from '@/components/blocks/RatingTable.vue';
 import CButtonExtra from '@/components/ui/CButtonExtra.vue';
+
+import Close from '@/assets/svg/close.svg';
+
 import soundEvents from '@/configs/soundEvents.js';
+import leaders from '@/configs/leaders.js';
 
 const emit = defineEmits(['onCloseLeaders']);
 
@@ -53,9 +56,9 @@ const closeHandler = () => {
         </div>
 
         <div class="leaderboard-screen__table">
-          <RatingTable />
+          <RatingTable :data="leaders" />
           <CButtonExtra class="leaderboard-screen__button"
-            >Validate your best score</CButtonExtra
+            >FLEX ON THE HATERS</CButtonExtra
           >
         </div>
       </div>

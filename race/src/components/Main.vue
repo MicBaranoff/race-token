@@ -7,7 +7,6 @@ import ChooseCar from '@/components/screens/ChooseCar.vue';
 import Game from '@/components/screens/Game.vue';
 import Guide from '@/components/screens/Guide.vue';
 import Leaderboard from '@/components/screens/Leaderboard.vue';
-import Validate from '@/components/screens/Validate.vue';
 
 const currentComponent = ref(Start);
 const currentCar = ref(null);
@@ -42,15 +41,6 @@ const onChooseCarHandler = (car) => {
       :is="currentComponent"
     />
   </div>
-
-  <!--  <div class="app-nav">-->
-  <!--    <button @click="currentComponent = Start">Start</button>-->
-  <!--    <button @click="currentComponent = ChooseCar">ChooseCar</button>-->
-  <!--    <button @click="currentComponent = Game">Game</button>-->
-  <!--    <button @click="currentComponent = Guide">Guide</button>-->
-  <!--    <button @click="currentComponent = Leaderboard">Leaderboard</button>-->
-  <!--    <button @click="currentComponent = Validate">Validate</button>-->
-  <!--  </div>-->
 </template>
 
 <style lang="scss" scoped>
