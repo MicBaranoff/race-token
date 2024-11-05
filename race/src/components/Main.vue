@@ -47,19 +47,7 @@ const onChooseCarHandler = (car) => {
 .main-container {
   background: $color-black;
   height: 100%;
-}
-
-.app-nav {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  padding: 5px;
-  background: rgba(#fff, 0.4);
-
-  button {
-    padding: 5px;
-    border: 1px solid black;
-    margin: 2px;
-  }
+  display: flex;
+  flex-direction: column;
 }
 </style>

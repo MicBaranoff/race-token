@@ -1,5 +1,6 @@
 <script setup>
 import CButtonIcon from '@/components/ui/CButtonIcon.vue';
+import soundEvents from '@/configs/soundEvents.js';
 
 defineProps({
   theme: {
@@ -12,10 +13,14 @@ defineProps({
     type: String,
   },
 });
+
+const onClickHandler = () => {
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
+};
 </script>
 
 <template>
-  <div class="button-icon-text">
+  <div @click="onClickHandler" class="button-icon-text">
     <CButtonIcon class="button-icon-text__btn" :theme="theme" :icon="icon" />
 
     <span class="button-icon-text__font mobile-hide">

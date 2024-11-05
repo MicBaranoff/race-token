@@ -141,12 +141,16 @@ defineProps({
       text-align: right;
 
       @include is-mobile {
-        width: 45%;
+        width: 35%;
       }
     }
     span:nth-child(4) {
       width: 15%;
       text-align: right;
+
+      @include is-mobile {
+        width: 25%;
+      }
     }
 
     &--main {

@@ -165,6 +165,10 @@ defineProps({
     align-items: center;
     margin-bottom: 24px;
 
+    @include is-desktop-max-height {
+      margin-bottom: 10px;
+    }
+
     @include is-mobile {
       justify-content: center;
     }
@@ -173,12 +177,20 @@ defineProps({
   &__title {
     margin-bottom: 24px;
 
+    @include is-desktop-max-height {
+      margin-bottom: 3px;
+    }
+
     @include is-mobile {
       margin-bottom: 8px;
     }
   }
   &__subtitle {
     margin-bottom: 35px;
+
+    @include is-desktop-max-height {
+      margin-bottom: 20px;
+    }
 
     @include is-mobile {
       margin-bottom: 16px;

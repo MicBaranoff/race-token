@@ -4,6 +4,7 @@ import { useSound } from '@vueuse/sound';
 import soundEvents from '@/configs/soundEvents.js';
 
 import MenuSound from '@/assets/audio/MENU.mp3';
+import MenuBtn from '@/assets/audio/MENU_NEXT.mp3';
 import PauseSound from '@/assets/audio/PAUSE.mp3';
 import RaceSound from '@/assets/audio/RACE_SOUND.mp3';
 import CarSound from '@/assets/audio/ENGINE.mp3';
@@ -19,6 +20,7 @@ const isMuted = ref(false);
 export const useAudio = () => {
   const mainMenuSound = useSound(MenuSound, { volume: 0.7, loop: true });
   const pauseSound = useSound(PauseSound, { volume: 1 });
+  const menuBtnSound = useSound(MenuBtn, { volume: 1 });
   const raceSound = useSound(RaceSound, { volume: 0.6, loop: true });
   const carSound = useSound(CarSound, { volume: 0.7, loop: true });
   const carCrash = useSound(CrashCar, { volume: 1 });
@@ -32,6 +34,7 @@ export const useAudio = () => {
     isMuted.value = true;
     mainMenuSound.sound.value.mute(true);
     pauseSound.sound.value.mute(true);
+    menuBtnSound.sound.value.mute(true);
     raceSound.sound.value.mute(true);
     carSound.sound.value.mute(true);
     carCrash.sound.value.mute(true);
@@ -45,6 +48,7 @@ export const useAudio = () => {
     isMuted.value = false;
     mainMenuSound.sound.value.mute(false);
     pauseSound.sound.value.mute(false);
+    menuBtnSound.sound.value.mute(false);
     raceSound.sound.value.mute(false);
     carSound.sound.value.mute(false);
     carCrash.sound.value.mute(false);
@@ -53,6 +57,8 @@ export const useAudio = () => {
     coinSound.sound.value.mute(false);
     lighterRedSound.sound.value.mute(false);
     lighterGreenSound.sound.value.mute(false);
+
+    playMenuBtnSound();
   };
 
   const playMenu = () => {
@@ -83,6 +89,10 @@ export const useAudio = () => {
     pauseSound.play();
   };
 
+  const playMenuBtnSound = () => {
+    menuBtnSound.play();
+  };
+
   const playCarCrash = () => {
     carCrash.play();
   };
@@ -108,6 +118,7 @@ export const useAudio = () => {
   };
 
   window.addEventListener(soundEvents.PAUSE, playPause);
+  window.addEventListener(soundEvents.BUTTON, playMenuBtnSound);
   window.addEventListener(soundEvents.RACE_PLAY, playRace);
   window.addEventListener(soundEvents.RACE_STOP, stopRace);
   window.addEventListener(soundEvents.MENU_STOP, stopMenu);

@@ -11,6 +11,12 @@
   }
 }
 
+@mixin is-desktop-max-height {
+  @media screen and (min-width: 1024px) and (max-height: 875px) {
+    @content;
+  }
+}
+
 @mixin placeholder {
   &::-webkit-input-placeholder {
     /* WebKit, Blink, Edge */

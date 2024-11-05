@@ -93,10 +93,7 @@ onBeforeUnmount(() => {
   height: 120px;
   //background: url('/images/game-stats.png') center / 100% 100% no-repeat;
   margin-top: -20px;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   z-index: 2;
   display: flex;
   justify-content: center;

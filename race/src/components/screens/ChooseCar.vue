@@ -26,12 +26,16 @@ const goNext = () => {
   if (currentCarIndex.value === cars.length - 1) return;
 
   currentCarIndex.value++;
+
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
 };
 
 const goPrev = () => {
   if (currentCarIndex.value === 0) return;
 
   currentCarIndex.value--;
+
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
 };
 
 const onCarChooseHandler = () => {
@@ -39,78 +43,81 @@ const onCarChooseHandler = () => {
 
   window.dispatchEvent(new CustomEvent(soundEvents.RACE_PLAY));
   window.dispatchEvent(new CustomEvent(soundEvents.MENU_STOP));
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
 };
 </script>
 
 <template>
   <div class="choose-car">
     <div class="choose-car__holder">
-      <div class="choose-car__container">
-        <div class="choose-car__title">
-          <h2 class="choose-car__font choose-car__font--title">
-            SELECT YOUR CAR
-          </h2>
-        </div>
+      <div class="choose-car__wrapper">
+        <div class="choose-car__container">
+          <div class="choose-car__title">
+            <h2 class="choose-car__font choose-car__font--title">
+              SELECT YOUR CAR
+            </h2>
+          </div>
 
-        <div>
-          <div class="choose-car__picker">
-            <button
-              @click="goPrev"
-              class="choose-car__arrow choose-car__arrow--prev"
-            >
-              <img src="/images/nav/prev.svg" alt="" />
-              <img src="/images/nav/prev-active.svg" alt="" />
-            </button>
-            <div class="choose-car__picker-picture">
-              <img :src="currentCarImage" alt="" />
+          <div>
+            <div class="choose-car__picker">
+              <button
+                @click="goPrev"
+                class="choose-car__arrow choose-car__arrow--prev"
+              >
+                <img src="/images/nav/prev.svg" alt="" />
+                <img src="/images/nav/prev-active.svg" alt="" />
+              </button>
+              <div class="choose-car__picker-picture">
+                <img :src="currentCarImage" alt="" />
+              </div>
+              <button
+                @click="goNext"
+                class="choose-car__arrow choose-car__arrow--next"
+              >
+                <img src="/images/nav/next.svg" alt="" />
+                <img src="/images/nav/next-active.svg" alt="" />
+              </button>
             </div>
-            <button
-              @click="goNext"
-              class="choose-car__arrow choose-car__arrow--next"
+
+            <div class="choose-car__dots">
+              <button
+                v-for="(item, index) in cars"
+                :key="item.id + 'dot'"
+                :class="[
+                  'choose-car__dot',
+                  { 'choose-car__dot--active': index === currentCarIndex },
+                ]"
+                @click="currentCarIndex = index"
+              ></button>
+            </div>
+          </div>
+
+          <div class="choose-car__button choose-car__button--main">
+            <CButton @click="onCarChooseHandler" theme="yellow"
+              >SKRT SKRT</CButton
             >
-              <img src="/images/nav/next.svg" alt="" />
-              <img src="/images/nav/next-active.svg" alt="" />
-            </button>
-          </div>
-
-          <div class="choose-car__dots">
-            <button
-              v-for="(item, index) in cars"
-              :key="item.id + 'dot'"
-              :class="[
-                'choose-car__dot',
-                { 'choose-car__dot--active': index === currentCarIndex },
-              ]"
-              @click="currentCarIndex = index"
-            ></button>
           </div>
         </div>
 
-        <div class="choose-car__button choose-car__button--main">
-          <CButton @click="onCarChooseHandler" theme="yellow"
-            >SKRT SKRT</CButton
-          >
-        </div>
+        <CButtonIconWithText
+          v-if="isPlayingMenu"
+          @click="emit('playMenuSound')"
+          class="choose-car__sound-btn"
+          icon="sound-off"
+        >
+          sound off <br />
+          (S)
+        </CButtonIconWithText>
+        <CButtonIconWithText
+          v-else
+          @click="emit('stopMenuSound')"
+          class="choose-car__sound-btn"
+          icon="sound-on"
+        >
+          sound on <br />
+          (S)
+        </CButtonIconWithText>
       </div>
-
-      <CButtonIconWithText
-        v-if="isPlayingMenu"
-        @click="emit('playMenuSound')"
-        class="choose-car__sound-btn"
-        icon="sound-off"
-      >
-        sound off <br />
-        (S)
-      </CButtonIconWithText>
-      <CButtonIconWithText
-        v-else
-        @click="emit('stopMenuSound')"
-        class="choose-car__sound-btn"
-        icon="sound-on"
-      >
-        sound on <br />
-        (S)
-      </CButtonIconWithText>
     </div>
     <Footer />
   </div>
@@ -188,10 +195,23 @@ const onCarChooseHandler = () => {
 
   &__title {
     text-align: center;
-    margin-bottom: 158px;
+    margin-bottom: 78px;
 
     @include is-mobile {
       margin: 0;
+    }
+  }
+
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include is-mobile {
+      height: 100%;
     }
   }
 
@@ -199,8 +219,9 @@ const onCarChooseHandler = () => {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1;
+
     width: 100%;
-    height: 756px;
     max-width: 1280px;
     margin: 0 auto;
     background: $color-black;
@@ -219,12 +240,17 @@ const onCarChooseHandler = () => {
   }
 
   &__picker-picture {
-    width: 444px;
-    height: 214px;
+    width: 594px;
+    height: 284px;
+
+    @include is-desktop-max-height {
+      width: 344px;
+      height: 154px;
+    }
 
     @include is-mobile {
-      width: 202px;
-      height: 95px;
+      width: 100%;
+      height: 23vh;
     }
 
     img {
@@ -246,6 +272,11 @@ const onCarChooseHandler = () => {
   &__arrow {
     width: 48px;
     height: 256px;
+
+    @include is-desktop-max-height {
+      width: 28px;
+      height: 156px;
+    }
 
     @include is-mobile {
       width: 24px;
@@ -281,6 +312,11 @@ const onCarChooseHandler = () => {
     background: $color-grey;
     padding: 32px 79px;
 
+    @include is-desktop-max-height {
+      width: 822px;
+      height: 592px;
+    }
+
     @include is-mobile {
       width: 100%;
       height: 100%;
@@ -289,7 +325,7 @@ const onCarChooseHandler = () => {
       flex-direction: column;
       justify-content: space-between;
 
-      padding: 8px 0 40px 0;
+      padding: 64px 0 40px 0;
     }
   }
 }

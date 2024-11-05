@@ -37,11 +37,11 @@ const coins = [
 const score = 0;
 const elapsedTime = 0;
 
-const moveSpeed = 7;
+const moveSpeed = isMobile ? 5 : 7;
 const speedX = moveSpeed;
 const speedY = moveSpeed;
-const trackSpeed = 10;
-const carNpcSpeed = 8;
+const trackSpeed = isMobile ? 6 : 10;
+const carNpcSpeed = isMobile ? 5 : 8;
 const mobileScale = 0.5;
 
 let keysPressed = {};
@@ -153,11 +153,11 @@ class Game {
       return this.assets['obstacle' + (index + 1)];
     });
 
-    this.carTextures = obstacles.map((_url, index) => {
+    this.carTextures = cars.map((_url, index) => {
       return this.assets['car' + (index + 1)];
     });
 
-    this.coinTextures = obstacles.map((_url, index) => {
+    this.coinTextures = coins.map((_url, index) => {
       return this.assets['coin' + (index + 1)];
     });
 
@@ -196,7 +196,7 @@ class Game {
   createTrack() {
     this.track = new PIXI.TilingSprite(
       this.assets[!isMobile ? 'track' : 'track-mob'],
-      isMobile ? 145 : 352,
+      isMobile ? 230 : 352,
       this.app.view.height
     );
     this.track.x = this.app.view.width / 2 - this.track.width / 2;
@@ -293,6 +293,7 @@ class Game {
     let positionValid = false;
 
     while (!positionValid) {
+      console.log(this.coinTextures.length);
       coin = new PIXI.Sprite(
         this.coinTextures[Math.floor(Math.random() * this.coinTextures.length)]
       );

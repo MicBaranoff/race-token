@@ -15,61 +15,64 @@ const closeHandler = () => {
   emit('onCloseLeaders');
 
   window.dispatchEvent(new CustomEvent(soundEvents.RACE_STOP));
-  window.dispatchEvent(new CustomEvent(soundEvents.MENU_PLAY));
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
+  // window.dispatchEvent(new CustomEvent(soundEvents.MENU_PLAY));
 };
 </script>
 
 <template>
   <div class="leaderboard-screen">
     <div class="leaderboard-screen__holder">
-      <div class="leaderboard-screen__container">
-        <video playsinline autoplay loop muted>
-          <source src="/videos/trailer.mp4" type="video/mp4" />
-          Your browser does not support HTML5 video.
-        </video>
-        <div class="leaderboard-screen__head">
-          <div class="leaderboard-screen__title">
-            <span
-              class="leaderboard-screen__font leaderboard-screen__font--title"
-              >leaderboard</span
-            >
-          </div>
-          <div class="leaderboard-screen__info">
-            <span
-              class="leaderboard-screen__font leaderboard-screen__font--info"
-            >
-              The top 3 players, along with one randomly selected player from
-              the leaderboard, will win a prize from <b>RocketX</b>.
-            </span>
+      <div class="leaderboard-screen__wrapper">
+        <div class="leaderboard-screen__container">
+          <video playsinline autoplay loop muted>
+            <source src="/videos/trailer.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+          <div class="leaderboard-screen__head">
+            <div class="leaderboard-screen__title">
+              <span
+                class="leaderboard-screen__font leaderboard-screen__font--title"
+                >leaderboard</span
+              >
+            </div>
+            <div class="leaderboard-screen__info">
+              <span
+                class="leaderboard-screen__font leaderboard-screen__font--info"
+              >
+                The top 3 players, along with one randomly selected player from
+                the leaderboard, will win a prize from <b>RocketX</b>.
+              </span>
+            </div>
+
+            <button class="leaderboard-screen__close">
+              <Close
+                @click="closeHandler"
+                class="leaderboard-screen__close-ico"
+              />
+              <span
+                class="leaderboard-screen__font leaderboard-screen__font--close mobile-hide"
+                >Close</span
+              >
+            </button>
           </div>
 
-          <button class="leaderboard-screen__close">
-            <Close
-              @click="closeHandler"
-              class="leaderboard-screen__close-ico"
-            />
-            <span
-              class="leaderboard-screen__font leaderboard-screen__font--close mobile-hide"
-              >Close</span
+          <div class="leaderboard-screen__table">
+            <RatingTable :data="leaders" />
+            <CButtonExtra class="leaderboard-screen__button"
+              >FLEX ON THE HATERS</CButtonExtra
             >
-          </button>
+          </div>
         </div>
 
-        <div class="leaderboard-screen__table">
-          <RatingTable :data="leaders" />
-          <CButtonExtra class="leaderboard-screen__button"
-            >FLEX ON THE HATERS</CButtonExtra
-          >
-        </div>
+        <CButtonIconWithText
+          class="leaderboard-screen__sound-btn"
+          icon="sound-on"
+        >
+          sound on <br />
+          (S)
+        </CButtonIconWithText>
       </div>
-
-      <CButtonIconWithText
-        class="leaderboard-screen__sound-btn"
-        icon="sound-on"
-      >
-        sound on <br />
-        (S)
-      </CButtonIconWithText>
     </div>
     <Footer />
   </div>
@@ -99,6 +102,10 @@ const closeHandler = () => {
       text-align: center;
       font-family: $font-family-accent;
       color: $color-primary;
+
+      @include is-desktop-max-height {
+        font-size: 40px;
+      }
 
       @include is-mobile {
         font-size: 36px;
@@ -140,12 +147,26 @@ const closeHandler = () => {
     transform: translateX(-50%);
   }
 
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include is-mobile {
+      height: 100%;
+    }
+  }
+
   &__holder {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1;
+
     width: 100%;
-    height: 756px;
     max-width: 1280px;
     margin: 0 auto;
     background: $color-black;
@@ -153,6 +174,7 @@ const closeHandler = () => {
 
     @include is-mobile {
       height: calc(100dvh - 62px - 50px);
+      padding: 0;
     }
   }
 
@@ -163,6 +185,11 @@ const closeHandler = () => {
     background:
       linear-gradient(180deg, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.8) 100%),
       url('/images/game.jpg') center / cover no-repeat;
+
+    @include is-desktop-max-height {
+      width: 822px;
+      height: 592px;
+    }
 
     @include is-mobile {
       width: 100%;
@@ -256,9 +283,14 @@ const closeHandler = () => {
     margin: 0 auto;
     position: relative;
 
+    @include is-desktop-max-height {
+      width: 540px;
+      height: 429px;
+    }
+
     @include is-mobile {
       width: 332px;
-      height: 360px;
+      height: 60%;
       margin-top: 24px;
     }
   }

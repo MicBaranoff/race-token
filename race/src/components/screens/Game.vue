@@ -87,6 +87,7 @@ const onRestart = () => {
   resetTimer();
 
   isGameEnd.value = false;
+  isPaused.value = false;
 
   gameRerender.value++;
 };
@@ -95,6 +96,7 @@ const onGameStart = () => {
   window.dispatchEvent(new CustomEvent(soundEvents.GAS_PLAY));
 
   showPauseBtn.value = true;
+  isPaused.value = false;
   isGameStarted.value = true;
 };
 
@@ -208,8 +210,8 @@ window.addEventListener('keydown', (e) => {
 
       <Health :lives="lives" class="game-screen__health mobile-hide" />
     </div>
-    <GameStats :lives="lives" />
   </div>
+  <GameStats :lives="lives" />
 </template>
 
 <style scoped lang="scss">
@@ -218,6 +220,11 @@ window.addEventListener('keydown', (e) => {
   max-width: 1280px;
   margin: 0 auto;
   overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   @include is-mobile {
     height: calc(100dvh - 62px);
@@ -248,7 +255,7 @@ window.addEventListener('keydown', (e) => {
     position: relative;
 
     @include is-mobile {
-      height: calc(100% - 102px);
+      height: 100%;
       overflow: hidden;
     }
   }
@@ -260,6 +267,11 @@ window.addEventListener('keydown', (e) => {
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
     position: relative;
+
+    @include is-desktop-max-height {
+      width: 822px;
+      height: 592px;
+    }
 
     @include is-mobile {
       height: 100%;

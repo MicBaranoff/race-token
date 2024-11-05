@@ -1,4 +1,6 @@
 <script setup>
+import soundEvents from '@/configs/soundEvents.js';
+
 defineProps({
   theme: {
     default: 'yellow',
@@ -7,10 +9,18 @@ defineProps({
     },
   },
 });
+
+const onClickHandler = () => {
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
+};
 </script>
 
 <template>
-  <button type="button" :class="['c-button', `c-button--theme-${theme}`]">
+  <button
+    @click="onClickHandler"
+    type="button"
+    :class="['c-button', `c-button--theme-${theme}`]"
+  >
     <span class="c-button__text c-button__font">
       <slot />
     </span>

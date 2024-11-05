@@ -2,6 +2,7 @@ export default {
   MENU_STOP: 'menu-stop',
   MENU_PLAY: 'menu-play',
   PAUSE: 'pause-play',
+  BUTTON: 'button-play',
   RACE_PLAY: 'race-play',
   RACE_STOP: 'race-stop',
   GAS_PLAY: 'gas-play',

@@ -10,10 +10,6 @@ const showInfo = ref(false);
 setTimeout(() => {
   showInfo.value = true;
 }, 1000);
-
-const onButtonClickHandler = () => {
-  emit('trailerFinished');
-};
 </script>
 
 <template>
@@ -30,7 +26,7 @@ const onButtonClickHandler = () => {
           <img src="/images/start-logo.svg" alt="logo" />
         </div>
         <CButton
-          @click="onButtonClickHandler"
+          @click="emit('trailerFinished')"
           class="game-trailer__button"
           theme="yellow"
           >PLAY</CButton
@@ -113,6 +109,10 @@ const onButtonClickHandler = () => {
     width: 100%;
     max-width: 556px;
     margin: 0 auto;
+
+    @include is-desktop-max-height {
+      top: 30%;
+    }
 
     @include is-mobile {
       position: static;

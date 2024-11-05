@@ -17,35 +17,37 @@ defineProps({
 <template>
   <div class="guide-screen">
     <div class="guide-screen__holder">
-      <div class="guide-screen__container">
-        <video playsinline autoplay loop muted>
-          <source src="/videos/trailer.mp4" type="video/mp4" />
-          Your browser does not support HTML5 video.
-        </video>
-        <GuidePopup
-          @skipTutorial="emit('skipTutorial')"
-          class="guide-screen__popup"
-        />
-      </div>
+      <div class="guide-screen__wrapper">
+        <div class="guide-screen__container">
+          <video playsinline autoplay loop muted>
+            <source src="/videos/trailer.mp4" type="video/mp4" />
+            Your browser does not support HTML5 video.
+          </video>
+          <GuidePopup
+            @skipTutorial="emit('skipTutorial')"
+            class="guide-screen__popup"
+          />
+        </div>
 
-      <CButtonIconWithText
-        v-if="isPlayingMenu"
-        @click="emit('playMenuSound')"
-        class="guide-screen__sound-btn"
-        icon="sound-off"
-      >
-        sound off <br />
-        (S)
-      </CButtonIconWithText>
-      <CButtonIconWithText
-        v-else
-        @click="emit('stopMenuSound')"
-        class="guide-screen__sound-btn"
-        icon="sound-on"
-      >
-        sound on <br />
-        (S)
-      </CButtonIconWithText>
+        <CButtonIconWithText
+          v-if="isPlayingMenu"
+          @click="emit('playMenuSound')"
+          class="guide-screen__sound-btn"
+          icon="sound-off"
+        >
+          sound off <br />
+          (S)
+        </CButtonIconWithText>
+        <CButtonIconWithText
+          v-else
+          @click="emit('stopMenuSound')"
+          class="guide-screen__sound-btn"
+          icon="sound-on"
+        >
+          sound on <br />
+          (S)
+        </CButtonIconWithText>
+      </div>
     </div>
     <Footer />
   </div>
@@ -65,12 +67,26 @@ defineProps({
     height: calc(100dvh - 62px);
   }
 
+  &__wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 1280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    @include is-mobile {
+      height: 100%;
+    }
+  }
+
   &__holder {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex: 1;
+
     width: 100%;
-    height: 756px;
     max-width: 1280px;
     margin: 0 auto;
     background: $color-black;
@@ -78,6 +94,7 @@ defineProps({
 
     @include is-mobile {
       height: calc(100dvh - 62px - 50px);
+      padding: 16px 14px;
     }
   }
 
@@ -88,6 +105,11 @@ defineProps({
     background:
       url('/images/game.jpg') center / cover no-repeat,
       $color-grey;
+
+    @include is-desktop-max-height {
+      width: 822px;
+      height: 592px;
+    }
 
     @include is-mobile {
       height: 100%;

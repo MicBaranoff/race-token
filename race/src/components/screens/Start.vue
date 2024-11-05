@@ -215,6 +215,10 @@ defineProps({
     background: url('/images/video.jpg') center / cover no-repeat;
     position: relative;
 
+    @include is-desktop-max-height {
+      height: 40vh;
+    }
+
     @include is-mobile {
       height: calc(100dvh - 360px - 62px);
     }
@@ -233,6 +237,10 @@ defineProps({
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+
+    @include is-desktop-max-height {
+      width: 55vh;
+    }
 
     @include is-mobile {
       width: 255px;

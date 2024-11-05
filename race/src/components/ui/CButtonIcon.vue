@@ -1,5 +1,6 @@
 <script setup>
 import icons from '@/configs/icons.js';
+import soundEvents from '@/configs/soundEvents.js';
 
 defineProps({
   theme: {
@@ -12,10 +13,15 @@ defineProps({
     type: String,
   },
 });
+
+const onClickHandler = () => {
+  window.dispatchEvent(new CustomEvent(soundEvents.BUTTON));
+};
 </script>
 
 <template>
   <button
+    @click="onClickHandler"
     type="button"
     :class="['c-button-icon', `c-button-icon--theme-${theme}`]"
   >
