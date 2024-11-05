@@ -187,20 +187,24 @@ class Game {
     this.generateCoinsTicker = setInterval(this.generateCoins.bind(this), 1700);
     this.increaseDifficultyTicker = setInterval(
       this.increaseDifficulty.bind(this),
-      2000
+      1800
     );
 
     this.app.ticker.add(this.gameLoop.bind(this), PIXI.UPDATE_PRIORITY.LOW);
   }
 
   createTrack() {
+    const trackTexture = this.assets[!isMobile ? 'track' : 'track-mob'];
     this.track = new PIXI.TilingSprite(
-      this.assets[!isMobile ? 'track' : 'track-mob'],
-      isMobile ? 230 : 352,
+      trackTexture,
+      isMobile ? this.app.view.width - 146 : 352,
       this.app.view.height
     );
     this.track.x = this.app.view.width / 2 - this.track.width / 2;
     this.track.y = 0;
+
+    this.track.tileScale.x = this.track.width / trackTexture.width;
+    this.track.tileScale.y = this.track.height / trackTexture.height;
     this.app.stage.addChild(this.track);
 
     this.trackSideLeft = new PIXI.TilingSprite(

@@ -240,17 +240,15 @@ const onCarChooseHandler = () => {
   }
 
   &__picker-picture {
-    width: 594px;
-    height: 284px;
+    width: 100%;
+    max-width: 444px;
 
     @include is-desktop-max-height {
-      width: 344px;
-      height: 154px;
+      max-width: 444px;
     }
 
     @include is-mobile {
-      width: 100%;
-      height: 23vh;
+      max-width: 202px;
     }
 
     img {
