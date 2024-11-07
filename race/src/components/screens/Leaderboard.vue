@@ -107,6 +107,10 @@ const closeHandler = () => {
         font-size: 40px;
       }
 
+      @include is-tablet {
+        font-size: 40px;
+      }
+
       @include is-mobile {
         font-size: 36px;
         letter-spacing: -0.13em;
