@@ -14,6 +14,8 @@ import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
+import isMobile from 'ismobilejs';
+
 const { pauseTimer, resumeTimer, resetTimer } = useTimer();
 
 const currentComponent = ref(null);
@@ -29,6 +31,12 @@ const isGameEnd = ref(false);
 const isGameStarted = ref(false);
 
 const showPauseBtn = ref(false);
+
+const isMobileDevice = ref(
+  isMobile(window.navigator).any ||
+    isMobile(window.navigator).tablet ||
+    isMobile(window.navigator).apple.tablet
+);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -205,7 +213,10 @@ window.addEventListener('keydown', (e) => {
       </CButtonIconWithText>
 
       <transition name="fade">
-        <ControlsPic v-if="!isGameStarted" class="game-screen__controls-info" />
+        <ControlsPic
+          v-if="!isGameStarted && isMobileDevice"
+          class="game-screen__controls-info"
+        />
       </transition>
 
       <Health :lives="lives" class="game-screen__health mobile-hide" />
@@ -335,6 +346,12 @@ window.addEventListener('keydown', (e) => {
     position: absolute;
     bottom: 64px;
     left: 16px;
+
+    @include is-tablet {
+      position: absolute;
+      bottom: 164px;
+      left: 16px;
+    }
 
     @include is-mobile {
       position: absolute;
