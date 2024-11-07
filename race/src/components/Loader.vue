@@ -131,6 +131,10 @@ const startLoading = () => {
     right: 42px;
     bottom: 42px;
 
+    @include is-tablet {
+      bottom: 242px;
+    }
+
     @include is-mobile {
       width: 52px;
       right: 26px;

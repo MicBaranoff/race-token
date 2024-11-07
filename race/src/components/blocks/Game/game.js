@@ -1,8 +1,9 @@
 import * as PIXI from 'pixi.js';
 import { Assets } from '@pixi/assets';
 import soundEvents from '@/configs/soundEvents.js';
+import isMobile from 'ismobilejs';
 
-const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+const isDeviceMobile = isMobile(window.navigator).phone;
 
 const obstacleTypes = {
   TYPE_CAR: 'typeCar',
@@ -37,11 +38,11 @@ const coins = [
 const score = 0;
 const elapsedTime = 0;
 
-const moveSpeed = isMobile ? 5 : 7;
+const moveSpeed = isDeviceMobile ? 5 : 7;
 const speedX = moveSpeed;
 const speedY = moveSpeed;
-const trackSpeed = isMobile ? 6 : 10;
-const carNpcSpeed = isMobile ? 5 : 8;
+const trackSpeed = isDeviceMobile ? 6 : 10;
+const carNpcSpeed = isDeviceMobile ? 5 : 8;
 const mobileScale = 0.5;
 
 let keysPressed = {};
@@ -194,60 +195,69 @@ class Game {
   }
 
   createTrack() {
-    const trackTexture = this.assets[!isMobile ? 'track' : 'track-mob'];
+    const trackTexture = this.assets[!isDeviceMobile ? 'track' : 'track-mob'];
     this.track = new PIXI.TilingSprite(
       trackTexture,
-      isMobile ? this.app.view.width - 146 : 352,
+      isDeviceMobile ? this.app.view.width - 146 : 352,
       this.app.view.height
     );
     this.track.x = this.app.view.width / 2 - this.track.width / 2;
     this.track.y = 0;
 
     this.track.tileScale.x = this.track.width / trackTexture.width;
-    this.track.tileScale.y = this.track.height / trackTexture.height;
     this.app.stage.addChild(this.track);
 
+    const trackSideLeftTexture =
+      this.assets[!isDeviceMobile ? 'side-left' : 'side-left-mob'];
     this.trackSideLeft = new PIXI.TilingSprite(
-      this.assets[!isMobile ? 'side-left' : 'side-left-mob'],
-      isMobile ? 73 : 230,
+      trackSideLeftTexture,
+      isDeviceMobile ? 73 : this.app.view.width / 4,
       this.app.view.height,
       1
     );
     this.trackSideLeft.x = 0;
     this.trackSideLeft.y = 0;
+    this.trackSideLeft.tileScale.x =
+      this.trackSideLeft.width / trackSideLeftTexture.width;
     this.app.stage.addChild(this.trackSideLeft);
 
+    console.log(this.app.view.width / 2);
+
+    const trackSideRightTexture =
+      this.assets[!isDeviceMobile ? 'side-right' : 'side-right-mob'];
     this.trackSideRight = new PIXI.TilingSprite(
-      this.assets[!isMobile ? 'side-right' : 'side-right-mob'],
-      isMobile ? 73 : 230,
+      trackSideRightTexture,
+      isDeviceMobile ? 73 : this.app.view.width / 4,
       this.app.view.height
     );
     this.trackSideRight.x = this.app.view.width - this.trackSideRight.width;
     this.trackSideRight.y = 0;
+    this.trackSideRight.tileScale.x =
+      this.trackSideRight.width / trackSideRightTexture.width;
     this.app.stage.addChild(this.trackSideRight);
   }
 
   createPlayerCar() {
     this.playerCar = new PIXI.Sprite(this.assets[this.currentCar]);
-    this.playerCar.x = !isMobile
+    this.playerCar.x = !isDeviceMobile
       ? this.app.view.width / 2 - this.playerCar.width / 2
       : this.app.view.width / 2 - this.playerCar.width / 4;
-    this.playerCar.y = !isMobile
+    this.playerCar.y = !isDeviceMobile
       ? this.app.view.height - this.playerCar.height - 70
       : this.app.view.height - this.playerCar.height - 30;
     this.playerCar.zIndex = 10;
-    isMobile && this.playerCar.scale.set(mobileScale);
+    isDeviceMobile && this.playerCar.scale.set(mobileScale);
     this.app.stage.addChild(this.playerCar);
 
     this.startLine = new PIXI.Sprite(this.assets['start-line']);
-    this.startLine.x = !isMobile
+    this.startLine.x = !isDeviceMobile
       ? this.app.view.width / 2 - this.startLine.width / 2
       : this.app.view.width / 2 - this.startLine.width / 4;
-    this.startLine.y = !isMobile
+    this.startLine.y = !isDeviceMobile
       ? this.app.view.height - 50
       : this.app.view.height - 70;
     this.startLine.zIndex = 10;
-    isMobile && this.startLine.scale.set(mobileScale);
+    isDeviceMobile && this.startLine.scale.set(mobileScale);
     this.app.stage.addChild(this.startLine);
   }
 
@@ -276,7 +286,7 @@ class Game {
       obstacle.x = Math.random() * (maxX - minX) + minX;
       obstacle.y = -obstacle.height;
       isCar && obstacle.scale.set(0.7);
-      isMobile && obstacle.scale.set(mobileScale);
+      isDeviceMobile && obstacle.scale.set(mobileScale);
       obstacle.type = isCar
         ? obstacleTypes.TYPE_CAR
         : obstacleTypes.TYPE_OBSTACLE;
@@ -307,7 +317,7 @@ class Game {
       coin.x = Math.random() * (maxX - minX) + minX;
       coin.y = -coin.height;
       coin.scale.set(1.4);
-      isMobile && coin.scale.set(mobileScale);
+      isDeviceMobile && coin.scale.set(mobileScale);
 
       positionValid =
         this.checkNoOverlap(coin, this.obstacles) &&

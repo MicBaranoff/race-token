@@ -91,6 +91,10 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     max-width: 345px;
     display: block;
 
+    @include is-tablet {
+      max-width: 200px;
+    }
+
     &--mobile {
       display: none;
       @include is-mobile {
@@ -146,6 +150,10 @@ import CQuestion from '@/components/ui/CQuestion.vue';
     text-align: center;
     position: relative;
     left: -100px;
+
+    @include is-tablet {
+      position: static;
+    }
 
     @include is-mobile {
       right: -10px;

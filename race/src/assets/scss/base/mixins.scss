@@ -1,18 +1,32 @@
+$mobileWidth: 640px;
+$lowHeight: 875px;
+$tabletWidth: 1024px;
+
 
 // Mixins for Resize
 @mixin is-mobile {
-  @media screen and (max-width: 1024px) {
+  @media screen and (max-width: $mobileWidth) {
+    @content;
+  }
+}
+@mixin is-tablet {
+  @media screen and (min-width: $mobileWidth) and (max-width: $tabletWidth) {
+    @content;
+  }
+}
+@mixin is-mobile-and-tablet {
+  @media screen and (max-width: $tabletWidth) {
     @content;
   }
 }
 @mixin is-desktop {
-  @media screen and (min-width: 1024px) {
+  @media screen and (min-width: $mobileWidth) {
     @content;
   }
 }
 
 @mixin is-desktop-max-height {
-  @media screen and (min-width: 1024px) and (max-height: 875px) {
+  @media screen and (min-width: $mobileWidth) and (max-height: $lowHeight) {
     @content;
   }
 }

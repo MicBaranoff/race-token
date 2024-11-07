@@ -188,6 +188,10 @@ defineProps({
   }
 
   &__center {
+    @include is-tablet {
+      height: 100%;
+      padding-top: 80px;
+    }
     @include is-mobile {
       height: 100%;
       padding-top: 70px;

@@ -40,6 +40,10 @@ defineProps({
 .health-block {
   text-align: center;
 
+  @include is-tablet {
+    background: rgba(#000, 0.1);
+  }
+
   &__font {
     &--text {
       font-weight: $medium;

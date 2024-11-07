@@ -3,10 +3,16 @@ import { onMounted, ref, onBeforeUnmount } from 'vue';
 
 import { useTimer } from '@/composables/useTimer.js';
 import Health from '@/components/blocks/Health.vue';
+import isMobile from 'ismobilejs';
 
 const { formattedTime, startTimer, stopTimer, resetTimer } = useTimer();
 
 const score = ref(0);
+const isMobileDevice = ref(
+  isMobile(window.navigator).any ||
+    isMobile(window.navigator).tablet ||
+    isMobile(window.navigator).apple.tablet
+);
 
 defineProps({
   lives: {
@@ -83,7 +89,11 @@ onBeforeUnmount(() => {
       class="game-stats__decor game-stats__decor--line mobile-hide"
       src="/images/game-stats/line-2.png"
     />
-    <Health :lives="lives" class="game-stats__health desktop-hide" />
+    <Health
+      v-if="isMobileDevice"
+      :lives="lives"
+      class="game-stats__health desktop-hide"
+    />
   </div>
 </template>
 
@@ -208,6 +218,11 @@ onBeforeUnmount(() => {
       top: 35px;
       transform: translateX(-470px);
 
+      @include is-tablet {
+        transform: translateX(-270px);
+        top: -15px;
+      }
+
       @include is-mobile {
         left: 50%;
         top: auto;
@@ -220,6 +235,11 @@ onBeforeUnmount(() => {
       right: 50%;
       top: 35px;
       transform: translateX(470px);
+
+      @include is-tablet {
+        transform: translateX(270px);
+        top: -15px;
+      }
 
       @include is-mobile {
         right: 50%;

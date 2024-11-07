@@ -184,6 +184,10 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
       margin-bottom: 10px;
     }
 
+    @include is-tablet {
+      justify-content: flex-end;
+    }
+
     @include is-mobile {
       justify-content: center;
     }

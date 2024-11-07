@@ -83,6 +83,10 @@ setTimeout(() => {
     );
     padding-bottom: 75px;
 
+    @include is-tablet {
+      padding: 38px 32px 75px;
+    }
+
     @include is-mobile {
       padding: 38px 32px;
       justify-content: space-between;

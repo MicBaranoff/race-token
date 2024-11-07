@@ -23,7 +23,7 @@ const onClickHandler = () => {
   <div @click="onClickHandler" class="button-icon-text">
     <CButtonIcon class="button-icon-text__btn" :theme="theme" :icon="icon" />
 
-    <span class="button-icon-text__font mobile-hide">
+    <span class="button-icon-text__font">
       <slot></slot>
     </span>
   </div>
@@ -48,6 +48,10 @@ const onClickHandler = () => {
     letter-spacing: 0.02em;
     text-transform: uppercase;
     color: $color-primary;
+
+    @include is-mobile-and-tablet {
+      display: none;
+    }
   }
 
   &__btn {

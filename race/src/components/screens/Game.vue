@@ -273,6 +273,10 @@ window.addEventListener('keydown', (e) => {
       height: 592px;
     }
 
+    @include is-tablet {
+      width: 100%;
+    }
+
     @include is-mobile {
       height: 100%;
     }
@@ -284,6 +288,11 @@ window.addEventListener('keydown', (e) => {
     z-index: 11;
     top: 32px;
     left: 42px;
+
+    @include is-tablet {
+      top: -62px;
+      left: 34px;
+    }
 
     @include is-mobile {
       width: auto;
@@ -298,6 +307,11 @@ window.addEventListener('keydown', (e) => {
     top: 32px;
     right: 64px;
     z-index: 11;
+
+    @include is-tablet {
+      top: -62px;
+      right: 34px;
+    }
 
     @include is-mobile {
       width: auto;
