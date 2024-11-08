@@ -223,8 +223,6 @@ class Game {
       this.trackSideLeft.width / trackSideLeftTexture.width;
     this.app.stage.addChild(this.trackSideLeft);
 
-    console.log(this.app.view.width / 2);
-
     const trackSideRightTexture =
       this.assets[!isDeviceMobile ? 'side-right' : 'side-right-mob'];
     this.trackSideRight = new PIXI.TilingSprite(
@@ -309,7 +307,6 @@ class Game {
     let positionValid = false;
 
     while (!positionValid) {
-      console.log(this.coinTextures.length);
       coin = new PIXI.Sprite(
         this.coinTextures[Math.floor(Math.random() * this.coinTextures.length)]
       );
