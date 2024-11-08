@@ -107,8 +107,8 @@ defineProps({
       $color-grey;
 
     @include is-desktop-max-height {
-      width: 822px;
-      height: 592px;
+      width: 722px;
+      height: 492px;
     }
 
     @include is-tablet {

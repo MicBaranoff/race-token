@@ -244,7 +244,7 @@ const onCarChooseHandler = () => {
     max-width: 444px;
 
     @include is-desktop-max-height {
-      max-width: 444px;
+      max-width: 244px;
     }
 
     @include is-mobile {
@@ -311,8 +311,8 @@ const onCarChooseHandler = () => {
     padding: 32px 79px;
 
     @include is-desktop-max-height {
-      width: 822px;
-      height: 592px;
+      width: 722px;
+      height: 492px;
     }
 
     @include is-tablet {
