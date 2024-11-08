@@ -26,23 +26,19 @@ defineProps({
         />
       </div>
     </div>
-    <div class="health-block__text mobile-hide">
+    <div class="health-block__text">
       <span class="health-block__font health-block__font--text">
         {{ lives }}/{{ livesInitial }} <br />
         tries reset in
       </span>
     </div>
-    <TimerWhite class="mobile-hide" />
+    <TimerWhite class="health-block__timer" />
   </div>
 </template>
 
 <style scoped lang="scss">
 .health-block {
   text-align: center;
-
-  @include is-tablet {
-    background: rgba(#000, 0.1);
-  }
 
   &__font {
     &--text {
@@ -58,12 +54,30 @@ defineProps({
 
   &__text {
     margin-bottom: 8px;
+
+    @include is-tablet {
+      display: none;
+    }
+
+    @include is-mobile {
+      display: none;
+    }
+  }
+
+  &__timer {
+    @include is-tablet {
+      display: none;
+    }
+
+    @include is-mobile {
+      display: none;
+    }
   }
 
   &__item {
     width: 32px;
 
-    @include is-mobile {
+    @include is-tablet {
       width: 19px;
     }
   }
@@ -79,7 +93,7 @@ defineProps({
     width: 88px;
     margin: 0 auto 24px;
 
-    @include is-mobile {
+    @include is-tablet {
       display: flex;
       gap: 8px;
       width: auto;

@@ -1,9 +1,11 @@
 import * as PIXI from 'pixi.js';
 import { Assets } from '@pixi/assets';
-import soundEvents from '@/configs/soundEvents.js';
-import isMobile from 'ismobilejs';
 
-const isDeviceMobile = isMobile(window.navigator).phone;
+import soundEvents from '@/configs/soundEvents.js';
+
+import { useDevice } from '@/composables/useDevice.js';
+
+const isDeviceMobile = useDevice().device.phone;
 
 const obstacleTypes = {
   TYPE_CAR: 'typeCar',

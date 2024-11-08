@@ -1,6 +1,7 @@
 <script setup>
 import { defineEmits, onBeforeUnmount, onMounted, ref } from 'vue';
 import { useTimer } from '@/composables/useTimer.js';
+import { useDevice } from '@/composables/useDevice.js';
 
 import soundEvents from '@/configs/soundEvents.js';
 
@@ -14,9 +15,8 @@ import ResultPopup from '@/components/popups/ResultPopup.vue';
 import PausePopup from '@/components/popups/PausePopup.vue';
 import CrashedPopup from '@/components/popups/CrashedPopup.vue';
 
-import isMobile from 'ismobilejs';
-
 const { pauseTimer, resumeTimer, resetTimer } = useTimer();
+const { isTouchDevice } = useDevice();
 
 const currentComponent = ref(null);
 const gameRef = ref(null);
@@ -31,12 +31,6 @@ const isGameEnd = ref(false);
 const isGameStarted = ref(false);
 
 const showPauseBtn = ref(false);
-
-const isMobileDevice = ref(
-  isMobile(window.navigator).any ||
-    isMobile(window.navigator).tablet ||
-    isMobile(window.navigator).apple.tablet
-);
 
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'goToLeaders']);
 
@@ -213,13 +207,14 @@ window.addEventListener('keydown', (e) => {
       </CButtonIconWithText>
 
       <transition name="fade">
-        <ControlsPic
-          v-if="!isGameStarted && isMobileDevice"
-          class="game-screen__controls-info"
-        />
+        <ControlsPic v-if="!isGameStarted" class="game-screen__controls-info" />
       </transition>
 
-      <Health :lives="lives" class="game-screen__health mobile-hide" />
+      <Health
+        v-if="!isTouchDevice"
+        :lives="lives"
+        class="game-screen__health"
+      />
     </div>
   </div>
   <GameStats :lives="lives" />
@@ -265,6 +260,10 @@ window.addEventListener('keydown', (e) => {
     background: $color-black;
     position: relative;
 
+    @include is-tablet {
+      height: 100%;
+    }
+
     @include is-mobile {
       height: 100%;
       overflow: hidden;
@@ -285,7 +284,8 @@ window.addEventListener('keydown', (e) => {
     }
 
     @include is-tablet {
-      width: 100%;
+      width: 692px;
+      height: 592px;
     }
 
     @include is-mobile {
@@ -301,7 +301,7 @@ window.addEventListener('keydown', (e) => {
     left: 42px;
 
     @include is-tablet {
-      top: -62px;
+      top: 32px;
       left: 34px;
     }
 
@@ -320,7 +320,7 @@ window.addEventListener('keydown', (e) => {
     z-index: 11;
 
     @include is-tablet {
-      top: -62px;
+      top: 32px;
       right: 34px;
     }
 
@@ -335,6 +335,11 @@ window.addEventListener('keydown', (e) => {
     position: absolute;
     bottom: 64px;
     right: 46px;
+
+    @include is-tablet {
+      bottom: 30px;
+      left: 0;
+    }
 
     @include is-mobile {
       bottom: 0;

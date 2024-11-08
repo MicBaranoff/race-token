@@ -1,18 +1,15 @@
 <script setup>
 import { onMounted, ref, onBeforeUnmount } from 'vue';
 
-import { useTimer } from '@/composables/useTimer.js';
 import Health from '@/components/blocks/Health.vue';
-import isMobile from 'ismobilejs';
+
+import { useTimer } from '@/composables/useTimer.js';
+import { useDevice } from '@/composables/useDevice.js';
 
 const { formattedTime, startTimer, stopTimer, resetTimer } = useTimer();
+const { isTouchDevice } = useDevice();
 
 const score = ref(0);
-const isMobileDevice = ref(
-  isMobile(window.navigator).any ||
-    isMobile(window.navigator).tablet ||
-    isMobile(window.navigator).apple.tablet
-);
 
 defineProps({
   lives: {
@@ -89,11 +86,7 @@ onBeforeUnmount(() => {
       class="game-stats__decor game-stats__decor--line mobile-hide"
       src="/images/game-stats/line-2.png"
     />
-    <Health
-      v-if="isMobileDevice"
-      :lives="lives"
-      class="game-stats__health desktop-hide"
-    />
+    <Health v-if="isTouchDevice" :lives="lives" class="game-stats__health" />
   </div>
 </template>
 
@@ -107,6 +100,10 @@ onBeforeUnmount(() => {
   z-index: 2;
   display: flex;
   justify-content: center;
+
+  @include is-tablet {
+    height: 130px;
+  }
 
   @include is-mobile {
     position: relative;
@@ -131,6 +128,12 @@ onBeforeUnmount(() => {
       color: $color-primary;
       font-family: $font-family-accent;
 
+      @include is-tablet {
+        font-size: 24px;
+        line-height: 140%;
+        letter-spacing: -0.13em;
+      }
+
       @include is-mobile {
         font-size: 14px;
         line-height: 140%;
@@ -146,6 +149,12 @@ onBeforeUnmount(() => {
       color: $color-primary;
       font-weight: $bold;
       font-family: $font-family-accent;
+
+      @include is-tablet {
+        font-size: 24px;
+        line-height: 140%;
+        letter-spacing: -0.13em;
+      }
 
       @include is-mobile {
         font-size: 16px;
@@ -172,6 +181,12 @@ onBeforeUnmount(() => {
       left: 51%;
       top: 43px;
       transform: translateX(-50%);
+
+      @include is-tablet {
+        width: 60px;
+        top: 63px;
+        left: 51%;
+      }
     }
 
     &--left {
@@ -208,6 +223,11 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: center;
 
+    @include is-tablet {
+      width: 150px;
+      height: 60px;
+    }
+
     @include is-mobile {
       width: 100px;
       height: 40px;
@@ -219,8 +239,8 @@ onBeforeUnmount(() => {
       transform: translateX(-470px);
 
       @include is-tablet {
-        transform: translateX(-270px);
-        top: -15px;
+        transform: translateX(-200px);
+        top: 20px;
       }
 
       @include is-mobile {
@@ -237,8 +257,8 @@ onBeforeUnmount(() => {
       transform: translateX(470px);
 
       @include is-tablet {
-        transform: translateX(270px);
-        top: -15px;
+        transform: translateX(200px);
+        top: 20px;
       }
 
       @include is-mobile {
@@ -259,6 +279,11 @@ onBeforeUnmount(() => {
     justify-content: center;
     text-align: center;
 
+    @include is-tablet {
+      width: 160px;
+      height: 40px;
+    }
+
     @include is-mobile {
       width: 96px;
       height: 26px;
@@ -270,6 +295,11 @@ onBeforeUnmount(() => {
       transform: translateX(-283px);
       background: url('/images/game-stats/block-l.png') center / 100% 100%
         no-repeat;
+
+      @include is-tablet {
+        top: 66px;
+        transform: translateX(-200px);
+      }
 
       @include is-mobile {
         left: 50%;
@@ -286,6 +316,11 @@ onBeforeUnmount(() => {
       background: url('/images/game-stats/block-r.png') center / 100% 100%
         no-repeat;
 
+      @include is-tablet {
+        top: 66px;
+        transform: translateX(210px);
+      }
+
       @include is-mobile {
         right: 50%;
         top: auto;
@@ -300,6 +335,11 @@ onBeforeUnmount(() => {
     top: 29px;
     left: 50%;
     transform: translateX(-50%);
+
+    @include is-tablet {
+      top: 17px;
+      transform: translateX(-48%);
+    }
   }
 }
 </style>

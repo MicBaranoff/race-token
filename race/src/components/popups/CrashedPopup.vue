@@ -4,6 +4,10 @@ import GameInfoRow from '@/components/blocks/GameInfoRow.vue';
 import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
 import { defineEmits, onMounted, ref } from 'vue';
 
+import { useDevice } from '@/composables/useDevice.js';
+
+const { isTouchDevice } = useDevice();
+
 const randomTitle = [
   'YOU CRASHED OUT',
   'YOU NEED TO QUIT',
@@ -33,7 +37,7 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
 
 <template>
   <div class="crash-popup">
-    <GameInfoRow class="mobile-hide" />
+    <GameInfoRow v-if="!isTouchDevice" />
 
     <div class="crash-popup__holder">
       <div class="crash-popup__row">

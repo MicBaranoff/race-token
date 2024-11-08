@@ -315,6 +315,12 @@ const onCarChooseHandler = () => {
       height: 592px;
     }
 
+    @include is-tablet {
+      width: 722px;
+      height: 592px;
+      padding: 32px;
+    }
+
     @include is-mobile {
       width: 100%;
       height: 100%;

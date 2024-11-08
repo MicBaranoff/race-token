@@ -47,7 +47,7 @@ onMounted(() => {
 
     if (current.value === countsConfig.length) {
       clearInterval(interval);
-      emit('startGame');
+      // emit('startGame');
     }
   }, 1000);
 });

@@ -111,6 +111,11 @@ defineProps({
       height: 592px;
     }
 
+    @include is-tablet {
+      width: 722px;
+      height: 592px;
+    }
+
     @include is-mobile {
       height: 100%;
     }

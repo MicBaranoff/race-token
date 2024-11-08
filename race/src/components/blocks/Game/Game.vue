@@ -11,18 +11,13 @@ import {
 import GameLighter from '@/components/blocks/GameLighter.vue';
 
 import { useGame } from '@/composables/useGame.js';
-
-import isMobile from 'ismobilejs';
+import { useDevice } from '@/composables/useDevice.js';
 
 const { initGame, startGame, togglePause, destroyGame, onKeyDown, onKeyUp } =
   useGame();
+const { isTouchDevice } = useDevice();
 
 const gameContainer = useTemplateRef('game-block');
-const isMobileDevice = ref(
-  isMobile(window.navigator).any ||
-    isMobile(window.navigator).tablet ||
-    isMobile(window.navigator).apple.tablet
-);
 
 const emit = defineEmits(['onGameEnd', 'onGamePaused', 'onGameStart']);
 
@@ -40,7 +35,6 @@ const isLeftArrowActive = ref(false);
 const isRightArrowActive = ref(false);
 
 onMounted(() => {
-  console.log(isMobile(window.navigator));
   gameInit();
 });
 
@@ -105,7 +99,7 @@ defineExpose({ gameTogglePause });
       ></GameLighter>
     </transition>
 
-    <div v-if="gameStarted && isMobileDevice" class="game-block__nav">
+    <div v-if="gameStarted && isTouchDevice" class="game-block__nav">
       <button
         @touchstart="onTouchArrow('left')"
         @touchend="onTouchArrowEnd('left')"

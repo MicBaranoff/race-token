@@ -4,6 +4,10 @@ import CButtonIconWithText from '@/components/ui/CButtonIconWithText.vue';
 import RatingTable from '@/components/blocks/RatingTable.vue';
 import CButtonExtra from '@/components/ui/CButtonExtra.vue';
 
+import { useDevice } from '@/composables/useDevice.js';
+
+const { isTouchDevice } = useDevice();
+
 import Close from '@/assets/svg/close.svg';
 
 import soundEvents from '@/configs/soundEvents.js';
@@ -68,6 +72,7 @@ const closeHandler = () => {
         <CButtonIconWithText
           class="leaderboard-screen__sound-btn"
           icon="sound-on"
+          v-if="!isTouchDevice"
         >
           sound on <br />
           (S)
