@@ -8,9 +8,11 @@ import Rotate from '@/components/popups/Rotate.vue';
 
 import { useAudio } from '@/composables/useAudio.js';
 import { useGame } from '@/composables/useGame.js';
+import { useDevice } from '@/composables/useDevice.js';
 
 const { playMenu, muteSounds, unmuteSounds, isMuted } = useAudio();
 const { createGame, loadResources } = useGame();
+const { isTouchDevice } = useDevice();
 
 const isMobile = ref(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
 const currentComponent = ref(Loader);
@@ -50,24 +52,7 @@ const trailerFinishedHandler = () => {
     @stopMenuSound="muteSounds"
     :isPlayingMenu="isMuted"
     :is="currentComponent"
+    :class="[{ 'is-touch': isTouchDevice }]"
   />
   <Rotate v-if="showRotatePopup" />
 </template>
-
-<style lang="scss" scoped>
-.app-nav {
-  position: fixed;
-  z-index: 100;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 5px;
-  background: rgba(#fff, 0.4);
-
-  button {
-    padding: 5px;
-    border: 1px solid black;
-    margin: 2px;
-  }
-}
-</style>

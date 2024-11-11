@@ -1,6 +1,6 @@
 $mobileWidth: 640px;
 $lowHeight: 875px;
-$tabletWidth: 1024px;
+$tabletWidth: 1180px;
 
 
 // Mixins for Resize
@@ -11,6 +11,12 @@ $tabletWidth: 1024px;
 }
 @mixin is-tablet {
   @media screen and (min-width: $mobileWidth) and (max-width: $tabletWidth) {
+    @content;
+  }
+}
+
+@mixin is-touch {
+  .is-touch & {
     @content;
   }
 }

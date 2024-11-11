@@ -55,7 +55,7 @@ defineProps({
   &__text {
     margin-bottom: 8px;
 
-    @include is-tablet {
+    @include is-touch {
       display: none;
     }
 
@@ -65,7 +65,7 @@ defineProps({
   }
 
   &__timer {
-    @include is-tablet {
+    @include is-touch {
       display: none;
     }
 
@@ -77,7 +77,7 @@ defineProps({
   &__item {
     width: 32px;
 
-    @include is-tablet {
+    @include is-touch {
       width: 15px;
     }
 
@@ -97,7 +97,7 @@ defineProps({
     width: 88px;
     margin: 0 auto 24px;
 
-    @include is-tablet {
+    @include is-touch {
       display: flex;
       gap: 5px;
       width: auto;
