@@ -3,7 +3,11 @@ import CButtonSimpleText from '@/components/ui/CButtonSimpleText.vue';
 
 import { defineEmits } from 'vue';
 
+import { useDevice } from '@/composables/useDevice.js';
+
 const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'skipTutorial']);
+
+const { isTouchDevice } = useDevice();
 </script>
 
 <template>
@@ -47,12 +51,14 @@ const emit = defineEmits(['playMenuSound', 'stopMenuSound', 'skipTutorial']);
       </div>
       <div class="guide-popup__item">
         <img
-          class="guide-popup__item-pic mobile-hide"
+          v-if="!isTouchDevice"
+          class="guide-popup__item-pic"
           src="/images/guide/guide-3.svg"
           alt=""
         />
         <img
-          class="guide-popup__item-pic desktop-hide"
+          v-else
+          class="guide-popup__item-pic"
           src="/images/guide/guide-3-mob.svg"
           alt=""
         />

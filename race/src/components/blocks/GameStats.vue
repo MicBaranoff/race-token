@@ -102,7 +102,7 @@ onBeforeUnmount(() => {
   justify-content: center;
 
   @include is-tablet {
-    height: 130px;
+    height: 140px;
   }
 
   @include is-mobile {
@@ -132,6 +132,10 @@ onBeforeUnmount(() => {
         font-size: 24px;
         line-height: 140%;
         letter-spacing: -0.13em;
+
+        @include is-tablet {
+          font-size: 18px;
+        }
       }
 
       @include is-mobile {
@@ -169,6 +173,10 @@ onBeforeUnmount(() => {
     background: url('/images/game-stats/middle.jpg') center / 100% 100%
       no-repeat;
 
+    @include is-tablet {
+      min-width: 385px;
+    }
+
     @include is-mobile {
       background: none;
     }
@@ -184,7 +192,7 @@ onBeforeUnmount(() => {
 
       @include is-tablet {
         width: 60px;
-        top: 63px;
+        top: 83px;
         left: 51%;
       }
     }
@@ -225,7 +233,7 @@ onBeforeUnmount(() => {
 
     @include is-tablet {
       width: 150px;
-      height: 60px;
+      height: 80px;
     }
 
     @include is-mobile {
@@ -240,7 +248,7 @@ onBeforeUnmount(() => {
 
       @include is-tablet {
         transform: translateX(-200px);
-        top: 20px;
+        top: 30px;
       }
 
       @include is-mobile {
@@ -258,7 +266,7 @@ onBeforeUnmount(() => {
 
       @include is-tablet {
         transform: translateX(200px);
-        top: 20px;
+        top: 30px;
       }
 
       @include is-mobile {
@@ -297,7 +305,7 @@ onBeforeUnmount(() => {
         no-repeat;
 
       @include is-tablet {
-        top: 66px;
+        top: 86px;
         transform: translateX(-200px);
       }
 
@@ -317,7 +325,7 @@ onBeforeUnmount(() => {
         no-repeat;
 
       @include is-tablet {
-        top: 66px;
+        top: 86px;
         transform: translateX(210px);
       }
 
@@ -337,8 +345,8 @@ onBeforeUnmount(() => {
     transform: translateX(-50%);
 
     @include is-tablet {
-      top: 17px;
-      transform: translateX(-48%);
+      top: 50px;
+      transform: translateX(-46%);
     }
   }
 }

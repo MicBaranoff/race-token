@@ -78,6 +78,10 @@ defineProps({
     width: 32px;
 
     @include is-tablet {
+      width: 15px;
+    }
+
+    @include is-mobile {
       width: 19px;
     }
   }
@@ -94,6 +98,14 @@ defineProps({
     margin: 0 auto 24px;
 
     @include is-tablet {
+      display: flex;
+      gap: 5px;
+      width: auto;
+      justify-content: center;
+      margin: 0;
+    }
+
+    @include is-mobile {
       display: flex;
       gap: 8px;
       width: auto;

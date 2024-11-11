@@ -77,8 +77,7 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
 
       <div class="crash-popup__info">
         <span class="crash-popup__font crash-popup__font--info">
-          Click to share your score on X and <i>secure</i> your
-          <i>spot</i> DURING THE COMPETITION!
+          FLEX YOUR SCORE ON X AND WIN REAL PRIZES FOR REAL ONES
         </span>
       </div>
     </div>
@@ -151,7 +150,7 @@ const emit = defineEmits(['onRestart', 'goToLeaders']);
 
     &--info {
       font-weight: $medium;
-      font-size: 12px;
+      font-size: 16px;
       line-height: 150%;
       letter-spacing: 0.04em;
       text-transform: uppercase;
