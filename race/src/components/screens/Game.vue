@@ -279,8 +279,8 @@ window.addEventListener('keydown', (e) => {
     position: relative;
 
     @include is-desktop-max-height {
-      width: 722px;
-      height: 492px;
+      width: 672px;
+      height: 442px;
     }
 
     @include is-tablet {
