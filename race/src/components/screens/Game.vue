@@ -288,6 +288,11 @@ window.addEventListener('keydown', (e) => {
       height: 592px;
     }
 
+    @include is-tablet-landscape {
+      width: 692px;
+      height: 502px;
+    }
+
     @include is-mobile {
       height: 100%;
     }

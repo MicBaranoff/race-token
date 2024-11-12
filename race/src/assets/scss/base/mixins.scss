@@ -15,6 +15,12 @@ $tabletWidth: 1180px;
   }
 }
 
+@mixin is-tablet-landscape {
+  @media screen and (min-width: $mobileWidth) and (max-width: $tabletWidth) and (orientation: landscape) {
+    @content;
+  }
+}
+
 @mixin is-touch {
   .is-touch & {
     @content;
